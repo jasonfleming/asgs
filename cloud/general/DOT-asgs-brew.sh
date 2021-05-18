@@ -62,7 +62,7 @@ help() {
   echo "           syslog              - open up SYSLOG (if set) in EDITOR for easier forensics"
   echo "   goto    <param>             - change CWD to a supported directory. Type 'goto options' to see the currently supported options"
   echo "   guess   platform            - attempts to guess the current platform as supported by platforms.sh (e.g., frontera, supermic, etc)" 
-  echo "   initadcirc                  - interactive tool for building and local registering versions of ADCIRC for use with ASGS"
+  echo "   build adcirc                  - interactive tool for building and local registering versions of ADCIRC for use with ASGS"
   echo "   inspect <option>            - alias to 'edit' for better semantics; e.g., 'inspect syslog' or 'inspect statefile'"
   echo "   list    <param>             - lists different things, please see the following options; type 'list options' to see currently supported options"
   echo "   load    profile <name>      - loads a saved profile by name; use 'list profiles' to see what's available"
@@ -80,6 +80,86 @@ help() {
   echo "   tailf   syslog              - executes 'tail -f' on ASGS instance's system log"
   echo "   verify                      - verfies Perl and Python environments"
   echo "   exit                        - exits ASGS shell, returns \$USER to login shell"
+}
+
+_is_a_num()
+{
+  re='[1-9][0-9]?$'
+  if [[ "${1}" =~ $re ]] ; then
+    echo -n $1 
+  else
+    echo -n -1 
+  fi
+  return
+}
+
+_pwd() {
+  echo "${I} ... $(pwd)"
+}
+
+# change to a directory know by asgsh
+goto() {
+  case "${1}" in
+  adcircworkdir)
+    if [ -e "$ADCIRCDIR/work" ]; then
+      cd $ADCIRCDIR/work
+      _pwd
+    else
+      echo "ADCIRCDIR not yet defined"
+    fi
+    ;;
+  adcircdir)
+    if [ -e "$ADCIRCDIR" ]; then
+      cd $ADCIRCDIR
+      _pwd
+    else
+      echo "ADCIRCDIR not yet defined"
+    fi
+    ;;
+  installdir)
+    if [ -e "$ASGS_INSTALL_PATH" ]; then
+      cd $ASGS_INSTALL_PATH
+      _pwd
+    else
+      echo "ASGS_INSTALL_PATH not defined, which is concerning. Did you complete the installation of ASGS?"
+    fi
+    ;;
+  rundir)
+    if [ -e "$RUNDIR" ]; then
+      cd $RUNDIR
+      _pwd
+    else
+      echo "RUNDIR not yet defined"
+    fi
+    ;;
+  scratchdir)
+    if [ -e "$SCRATCH" ]; then
+      cd $SCRATCH
+      _pwd
+    else
+      echo "SCRATCH not yet defined"
+    fi
+    ;;
+  scriptdir)
+    if [ "$SCRIPTDIR" ]; then
+      cd $SCRIPTDIR
+      _pwd
+    else
+      echo "scriptdir not yet defined"
+    fi
+    ;;
+  workdir)
+    if [ "$WORK" ]; then
+      cd $WORKDIR
+      _pwd
+    else
+      echo "workdir not yet defined"
+    fi
+    ;;
+  *)
+    echo 'Only "adcircdir", "rundir", "scratchdir", "scriptdir", and "workdir" are supported at this time.'
+    ;;
+  esac
 }
 
 # load environment related things like an ADCIRC environment or saved ASGS environment
@@ -677,7 +757,7 @@ fi
 export PS1='asgs (none)>'
 echo
 echo "Quick start:"
-echo "  'initadcirc' to build and local register versions of ADCIRC"
+echo "  'build adcirc' to build and local register versions of ADCIRC"
 echo "  'list profiles' to see what scenario package profiles exist"
 echo "  'load profile <profile_name>' to load saved profile"
 echo "  'list adcirc' to see what builds of ADCIRC exist"
@@ -693,8 +773,29 @@ echo " --update-shell option"
 echo
 
 # runs script to install ADCIRC interactively
-initadcirc() {
-  init-adcirc.sh
+build () {
+  if [ -z "${1}" ]; then
+    echo "The 'build' command requires an argument specifying what to build, e.g., 'build adcirc'"
+    exit
+  fi
+  TO_BUILD=${1}
+  case "${1}" in
+    adcirc)
+      init-adcirc.sh ${2}
+      ;;
+    *)
+      echo "Only 'adcirc' supported at this time."
+      exit
+      ;;
+  esac
+}
+
+# deprecation (may change *again* if we create a general install manager
+initadcirc(){
+  echo "(deprecation notice): 'initadcirc' should now be called as, 'build adcirc'."
+  echo "No action taken..."
+  echo
+  return
 }
 
 # alias to edit that may be more semantically correct in some

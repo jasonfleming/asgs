@@ -27,6 +27,8 @@ THIS=archive/enstorm_pedir_removal.sh
 # this assumes this script is executed in the dirctory that is to be archived
 SCENARIODIR=$PWD
 SCRIPTDIR=`sed -n 's/[ ^]*$//;s/path.scriptdir\s*:\s*//p' run.properties`
+#echo "scriptdir is $SCRIPTDIR" # jgfdebug
+#echo "PWD is $PWD" # jgfdebug
 . ${SCRIPTDIR}/monitoring/logging.sh
 . ${SCRIPTDIR}/platforms.sh           # contains hpc platform configurations
 . ${SCRIPTDIR}/properties.sh          # contains loadProperties subroutine
@@ -43,6 +45,7 @@ LOGFILE=${SCENARIODIR}/enstorm_pedir_removal.sh.log
 WAVES=${properties["coupling.waves"]}
 SWANHSCOMPRESSION=${properties["coupling.waves.swan.swanhscompression"]}
 hotstartcomp=${properties['adcirc.hotstartcomp']}
+#echo "hotstartcomp is $hotstartcomp" # jgfdebug
 #
 scenarioMessage "$THIS: Starting cleanup of subdomain (PE*) subdirectories." $LOGFILE
 #

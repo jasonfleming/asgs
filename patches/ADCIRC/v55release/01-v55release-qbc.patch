@@ -1,0 +1,130 @@
+diff --git a/swan/macros.inc.queenbeeC b/swan/macros.inc.queenbeeC
+new file mode 100644
+index 0000000..6def14e
+--- /dev/null
++++ b/swan/macros.inc.queenbeeC
+@@ -0,0 +1,37 @@
++F90_SER = ifort
++F90_OMP = ifort
++F90_MPI = mpif90
++FLAGS_OPT = -O2
++FLAGS_MSC = -W0 -assume byterecl -traceback -diag-disable 8290 -diag-disable 8291 -diag-disable 8293 -assume buffered_io -xCORE-AVX512
++FLAGS90_MSC = $(FLAGS_MSC)
++FLAGS_SER =
++FLAGS_OMP = -openmp
++FLAGS_MPI =
++NETCDFROOT =
++ifneq ($(NETCDFROOT),)
++  INCS_SER = -I$(NETCDFROOT)/include
++  INCS_OMP = -I$(NETCDFROOT)/include
++  INCS_MPI = -I$(NETCDFROOT)/include
++  LIBS_SER = -L$(NETCDFROOT)/lib -lnetcdf -lnetcdff
++  LIBS_OMP = -L$(NETCDFROOT)/lib -lnetcdf -lnetcdff
++  LIBS_MPI = -L$(NETCDFROOT)/lib -lnetcdf -lnetcdff
++  NCF_OBJS = nctablemd.o agioncmd.o swn_outnc.o
++else
++  INCS_SER =
++  INCS_OMP =
++  INCS_MPI =
++  LIBS_SER =
++  LIBS_OMP =
++  LIBS_MPI =
++  NCF_OBJS =
++endif
++O_DIR = ../work/odir4/
++OUT = -o 
++EXTO = o
++MAKE = make
++RM = rm -f
++ifneq ($(NETCDFROOT),)
++  swch = -unix -impi -netcdf
++else
++  swch = -unix -impi
++endif
+diff --git a/swan/macros.inc.supermic b/swan/macros.inc.supermic
+new file mode 100644
+index 0000000..94d190e
+--- /dev/null
++++ b/swan/macros.inc.supermic
+@@ -0,0 +1,37 @@
++F90_SER = ifort
++F90_OMP = ifort
++F90_MPI = mpif90
++FLAGS_OPT = -O2
++FLAGS_MSC = -W0 -assume byterecl -traceback -diag-disable 8290 -diag-disable 8291 -diag-disable 8293 -assume buffered_io -xAVX
++FLAGS90_MSC = $(FLAGS_MSC)
++FLAGS_SER =
++FLAGS_OMP = -openmp
++FLAGS_MPI =
++NETCDFROOT =
++ifneq ($(NETCDFROOT),)
++  INCS_SER = -I$(NETCDFROOT)/include
++  INCS_OMP = -I$(NETCDFROOT)/include
++  INCS_MPI = -I$(NETCDFROOT)/include
++  LIBS_SER = -L$(NETCDFROOT)/lib -lnetcdf -lnetcdff
++  LIBS_OMP = -L$(NETCDFROOT)/lib -lnetcdf -lnetcdff
++  LIBS_MPI = -L$(NETCDFROOT)/lib -lnetcdf -lnetcdff
++  NCF_OBJS = nctablemd.o agioncmd.o swn_outnc.o
++else
++  INCS_SER =
++  INCS_OMP =
++  INCS_MPI =
++  LIBS_SER =
++  LIBS_OMP =
++  LIBS_MPI =
++  NCF_OBJS =
++endif
++O_DIR = ../work/odir4/
++OUT = -o 
++EXTO = o
++MAKE = make
++RM = rm -f
++ifneq ($(NETCDFROOT),)
++  swch = -unix -impi -netcdf
++else
++  swch = -unix -impi
++endif
+diff --git a/work/cmplrflags.mk b/work/cmplrflags.mk
+index 50d4603..28bf127 100644
+--- a/work/cmplrflags.mk
++++ b/work/cmplrflags.mk
+@@ -290,6 +290,26 @@ ifeq ($(compiler),intel)
+         FLIBS   := $(INCDIRS) -xAVX
+      endif
+   endif
++  ifeq ($(MACHINENAME),queenbeeC) 
++     FFLAGS1 := $(INCDIRS) -O3 -FI -assume byterecl -132 -xCORE-AVX512 -assume buffered_io
++     CFLAGS  := $(INCDIRS) -O3 -DLINUX -xCORE-AVX512 
++     FLIBS   := $(INCDIRS) -xCORE-AVX512 
++     ifeq ($(DEBUG),trace)
++        FFLAGS1 := $(INCDIRS) -g -O0 -traceback -FI -assume byterecl -132 -xCORE-AVX512 -assume buffered_io
++        CFLAGS  := $(INCDIRS) -g -O0 -traceback -DLINUX -xCORE-AVX512 
++        FLIBS   := $(INCDIRS) -xCORE-AVX512 
++     endif
++  ifeq ($(MACHINENAME),supermic) 
++     FFLAGS1 := $(INCDIRS) -O3 -FI -assume byterecl -132 -xAVX -assume buffered_io
++     CFLAGS  := $(INCDIRS) -O3 -DLINUX -xAVX
++     FLIBS   := $(INCDIRS) -xAVX
++     ifeq ($(DEBUG),trace)
++        FFLAGS1 := $(INCDIRS) -g -O0 -traceback -FI -assume byterecl -132 -xAVX -assume buffered_io
++        CFLAGS  := $(INCDIRS) -g -O0 -traceback -DLINUX  -xAVX 
++        FLIBS   := $(INCDIRS) -xAVX
++     endif
++  endif
++  endif
+   endif
+   #
+   #@jasonfleming Added to fix bus error on hatteras@renci
+@@ -321,7 +341,11 @@ ifeq ($(compiler),intel)
+      # netcdf_fortran modules prior to compiling or executing ADCIRC
+      ifeq ($(MACHINENAME),queenbee)
+         FLIBS       := $(FLIBS) -L/usr/local/packages/netcdf/4.2.1.1/INTEL-140-MVAPICH2-2.0/lib -lnetcdff -lnetcdf
+-        NETCDFHOME    :=/usr/local/packages/netcdf/4.2.1.1/INTEL-140-MVAPICH2-2.0
++        NETCDFHOME  :=/usr/local/packages/netcdf/4.2.1.1/INTEL-140-MVAPICH2-2.0
++     endif
++     ifeq ($(MACHINENAME),queenbeeC)
++        FLIBS       := $(FLIBS) -L/usr/local/packages/netcdf/4.2.1.1/INTEL-140-MVAPICH2-2.0/lib -lnetcdff -lnetcdf
++        NETCDFHOME  :=/usr/local/packages/netcdf/4.2.1.1/INTEL-140-MVAPICH2-2.0
+      endif
+      ifeq ($(MACHINENAME),supermic)
+         FLIBS      := $(FLIBS) -L /usr/local/packages/netcdf_fortran/4.2/INTEL-140-MVAPICH2-2.0/lib -lnetcdff -L/usr/local/packages/netcdf/4.2.1.1/INTEL-140-MVAPICH2-2.0/lib -lnetcdf -lnetcdf -liomp5 -lpthread

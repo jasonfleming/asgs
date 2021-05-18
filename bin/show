@@ -5,6 +5,9 @@ if [ -z "$_ASGSH_PID" ]; then
   exit 1;
 fi
 
+I="(info)   "
+W="(warning)"
+
 # prints value of provided variable name
 _show() {
   if [ -z "${1}" ]; then
@@ -14,86 +17,86 @@ _show() {
   case "${1}" in
     config)
       if [ -n "${ASGS_CONFIG}" ]; then
-        echo "ASGS_CONFIG is defined as '${ASGS_CONFIG}'"
+        echo "${I} ASGS_CONFIG is defined as '${ASGS_CONFIG}'"
       else
-        echo "ASGS_CONFIG is not defined as anything. Try, 'define config /path/to/asgs/config.sh' first"
+        echo "${W} ASGS_CONFIG is not defined as anything. Try, 'define config /path/to/asgs/config.sh' first"
       fi
       ;;
     adcircbase)
       if [ -n "${ADCIRCBASE}" ]; then
-        echo "ADCIRCBASE is defined as '${ADCIRCBASE}'"
+        echo "${I} ADCIRCBASE is defined as '${ADCIRCBASE}'"
       else
-        echo "ADCIRCBASE is not defined as anything. Try, 'define adcircbase /path/to/adcirc/dir' first"
+        echo "${W} ADCIRCBASE is not defined as anything. Try, 'define adcircbase /path/to/adcirc/dir' first"
       fi
       ;;
     adcircdir)
       if [ -n "${ADCIRCDIR}" ]; then
-        echo "ADCIRCDIR is defined as '${ADCIRCDIR}'"
+        echo "${I} ADCIRCDIR is defined as '${ADCIRCDIR}'"
       else
-        echo "ADCIRCDIR is not defined as anything. Try, 'define adcircdir /path/to/adcirc/dir' first"
+        echo "${W} ADCIRCDIR is not defined as anything. Try, 'define adcircdir /path/to/adcirc/dir' first"
       fi
       ;;
     adcircbranch)
       if [ -n "${ADCIRC_GIT_BRANCH}" ]; then
-        echo "ADCIRC_GIT_BRANCH is defined as '${ADCIRC_GIT_BRANCH}'"
+        echo "${I} ADCIRC_GIT_BRANCH is defined as '${ADCIRC_GIT_BRANCH}'"
       else
-        echo "ADCIRC_GIT_BRANCH is not defined as anything. Try, 'define adcircbranch git-branch-tag-or-sha' first"
+        echo "${W} ADCIRC_GIT_BRANCH is not defined as anything. Try, 'define adcircbranch git-branch-tag-or-sha' first"
       fi
       ;;
     adcircremote)
       if [ -n "${ADCIRC_GIT_REMOTE}" ]; then
-        echo "ADCIRC_GIT_REMOTE is defined as '${ADCIRC_GIT_REMOTE}'"
+        echo "${I} ADCIRC_GIT_REMOTE is defined as '${ADCIRC_GIT_REMOTE}'"
       else
-        echo "ADCIRC_GIT_REMOTE is not defined as anything. Try, 'define adcircremote https://|ssh://adcirc-remote-url' first"
+        echo "${W} ADCIRC_GIT_REMOTE is not defined as anything. Try, 'define adcircremote https://|ssh://adcirc-remote-url' first"
       fi
       ;;
     machinename)
       if [ -n "${ASGS_MACHINE_NAME}" ]; then
-        echo "ASGS_MACHINE_NAME is defined as '${ASGS_MACHINE_NAME}'"
+        echo "${I} ASGS_MACHINE_NAME is defined as '${ASGS_MACHINE_NAME}'"
       else
-        echo "ASGS_MACHINE_NAME is not defined as anything. This should have been defined via asgs-brew.pl."
+        echo "${W} ASGS_MACHINE_NAME is not defined as anything. This should have been defined via asgs-brew.pl."
       fi
       ;;
     adcirccompiler)
       if [ -n "${ADCIRC_COMPILER}" ]; then
-        echo "ADCIRC_COMPILER is defined as '${ADCIRC_COMPILER}'"
+        echo "${I} ADCIRC_COMPILER is defined as '${ADCIRC_COMPILER}'"
       else
-        echo "ADCIRC_COMPILER is not defined as anything. This should have been defined via asgs-brew.pl."
+        echo "${W} ADCIRC_COMPILER is not defined as anything. This should have been defined via asgs-brew.pl."
       fi
       ;;
     asgscompiler)
       if [ -n "${ASGS_COMPILER}" ]; then
-        echo "ASGS_COMPILER is defined as '${ASGS_COMPILER}'"
+        echo "${I} ASGS_COMPILER is defined as '${ASGS_COMPILER}'"
       else
-        echo "ASGS_COMPILER is not defined as anything. This should have been defined via asgs-brew.pl."
+        echo "${W} ASGS_COMPILER is not defined as anything. This should have been defined via asgs-brew.pl."
       fi
       ;;
     home)
       if [ -n "${ASGS_HOME}" ]; then
-        echo "ASGS_HOME is defined as '${ASGS_HOME}'"
+        echo "${I} ASGS_HOME is defined as '${ASGS_HOME}'"
       else
-        echo "ASGS_HOME is not defined as anything. This should have been defined via asgs-brew.pl."
+        echo "${W} ASGS_HOME is not defined as anything. This should have been defined via asgs-brew.pl."
       fi
       ;;
     installpath)
       if [ -n "${ASGS_INSTALL_PATH}" ]; then
-        echo "ASGS_INSTALL_PATH is defined as '${ASGS_INSTALL_PATH}'"
+        echo "${I} ASGS_INSTALL_PATH is defined as '${ASGS_INSTALL_PATH}'"
       else
-        echo "ASGS_INSTALL_PATH is not defined as anything. This should have been defined via asgs-brew.pl."
+        echo "${W} ASGS_INSTALL_PATH is not defined as anything. This should have been defined via asgs-brew.pl."
       fi
       ;;
     brewflags)
       if [ -n "${ASGS_BREW_FLAGS}" ]; then
-        echo "ASGS_BREW_FLAGS is defined as '${ASGS_BREW_FLAGS}'"
+        echo "${I} ASGS_BREW_FLAGS is defined as '${ASGS_BREW_FLAGS}'"
       else
-        echo "ASGS_BREW_FLAGS is not defined as anything. This should have been defined via asgs-brew.pl."
+        echo "${W} ASGS_BREW_FLAGS is not defined as anything. This should have been defined via asgs-brew.pl."
       fi
       ;;
     editor)
       if [ -n "${EDITOR}" ]; then
-        echo "EDITOR is defined as '${EDITOR}'"
+        echo "${I} EDITOR is defined as '${EDITOR}'"
       else
-        echo "EDITOR is not defined as anything. Try, 'define editor vi' first"
+        echo "${W} EDITOR is not defined as anything. Try, 'define editor vi' first"
       fi
       ;;
     exported)
@@ -103,82 +106,82 @@ _show() {
       ;;
     instancename)
       if [ -n "${INSTANCENAME}" ]; then
-        echo "INSTANCENAME is defined as '${INSTANCENAME}'"
+        echo "${I} INSTANCENAME is defined as '${INSTANCENAME}'"
       else
-        echo "INSTANCENAME is not defined as anything. Have you defined the config file yet?"
+        echo "${W} INSTANCENAME is not defined as anything. Have you defined the config file yet?"
       fi
       ;;
     ld_include_path)
       if [ -n "${LD_INCLUDE_PATH}" ]; then
-        echo "LD_INCLUDE_PATH is consists of the following paths:"
+        echo "${I} LD_INCLUDE_PATH is consists of the following paths:"
         echo -e ${LD_INCLUDE_PATH//:/\\n}
       else
-        echo "LD_INCLUDE_PATH is not defined, which is concerning. Did you complete installation of ASGS?"
+        echo "${W} LD_INCLUDE_PATH is not defined, which is concerning. Did you complete installation of ASGS?"
       fi
       ;;
     ld_library_path)
       if [ -n "${LD_LIBRARY_PATH}" ]; then
-        echo "LD_LIBRARY_PATH is consists of the following paths:"
+        echo "${I} LD_LIBRARY_PATH is consists of the following paths:"
         echo -e ${LD_LIBRARY_PATH//:/\\n}
       else
-        echo "LD_LIBRARY_PATH is not defined, which is concerning. Did you complete installation of ASGS?"
+        echo "${W} LD_LIBRARY_PATH is not defined, which is concerning. Did you complete installation of ASGS?"
       fi
       ;;
     path)
       if [ -n "${PATH}" ]; then
-        echo "PATH is consists of the following paths:"
+        echo "${I} PATH is consists of the following paths:"
         echo -e ${PATH//:/\\n}
       else
-        echo "PATH is not defined, which is concerning. Did you complete installation of ASGS?"
+        echo "${W} PATH is not defined, which is concerning. Did you complete installation of ASGS?"
       fi
       ;;
     profile)
       if [ -n "${_ASGSH_CURRENT_PROFILE}" ]; then
-        echo "profile is defined as '${_ASGSH_CURRENT_PROFILE}'"
+        echo "${I} profile is defined as '${_ASGSH_CURRENT_PROFILE}'"
       else
-        echo "profile is not defined as anything. Does state file exist?" 
+        echo "${W} profile is not defined as anything. Does state file exist?" 
       fi
       ;;
     rundir)
       if [ -n "${RUNDIR}" ]; then
-        echo "RUNDIR is defined as '${RUNDIR}'"
+        echo "${I} RUNDIR is defined as '${RUNDIR}'"
       else
-        echo "RUNDIR is not defined as anything. Does state file exist?" 
+        echo "${W} RUNDIR is not defined as anything. Does state file exist?" 
       fi
       ;;
     scratchdir)
       if [ -n "${SCRATCH}" ]; then
-        echo "SCRATCH is defined as '${SCRATCH}'"
+        echo "${I} SCRATCH is defined as '${SCRATCH}'"
       else
-        echo "SCRATCH is not defined as anything. Try, 'define scratch /path/to/scratch' first"
+        echo "${W} SCRATCH is not defined as anything. Try, 'define scratch /path/to/scratch' first"
       fi
       ;;
     scriptdir)
       if [ -n "${SCRIPTDIR}" ]; then
-        echo "SCRIPTDIR is defined as '${SCRIPTDIR}'"
+        echo "${I} SCRIPTDIR is defined as '${SCRIPTDIR}'"
       else
-        echo "SCRIPTDIR is not defined. This is concerning, please make sure your installation of ASGS is complete."
+        echo "${W} SCRIPTDIR is not defined. This is concerning, please make sure your installation of ASGS is complete."
       fi
       ;;
     statefile)
       if [ -n "${STATEFILE}" ]; then
-        echo "STATEFILE is defined as '${STATEFILE}'"
+        echo "${I} STATEFILE is defined as '${STATEFILE}'"
       else
-        echo "STATEFILE is not defined as anything. Does state file exist?"
+        echo "${W} STATEFILE is not defined as anything. Does state file exist?"
       fi
       ;;
     syslog)
       if [ -n "${SYSLOG}" ]; then
-        echo "SYSLOG is defined as '${SYSLOG}'"
+        echo "${I} SYSLOG is defined as '${SYSLOG}'"
       else
-        echo "SYSLOG is not defined as anything. Does state file exist?"
+        echo "${W} SYSLOG is not defined as anything. Does state file exist?"
       fi
       ;;
     workdir)
       if [ -n "${WORK}" ]; then
-        echo "WORK is defined as '${WORK}'"
+        echo "${I} WORK is defined as '${WORK}'"
       else
-        echo "WORK is not defined as anything. Try, 'define config /path/to/work' first"
+        echo "${W} WORK is not defined as anything. Try, 'define config /path/to/work' first"
       fi
       ;;
     *) echo "'show' requires one of the supported parameters:"

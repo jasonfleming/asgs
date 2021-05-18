@@ -1,0 +1,64 @@
+FROM ubuntu:latest
+
+RUN apt-get -y update
+RUN apt-get -y install software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get -y install git tcsh pkg-config gfortran netcdf-bin libnetcdf-dev libnetcdff-dev openmpi-bin  \
+      libopenmpi-dev bash vim curl wget jq zip unzip make build-essential                                \
+      python3.7 zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev \
+      ca-certificates bzip2 libglib2.0-0 libxext6 libsm6 libxrender1
+
+ENV ESMF_DIR=/root/src/esmf
+ENV ESMF_INSTALL_PREFIX=/usr/local/esmf
+ENV ESMF_OS=Linux
+ENV ESMF_NETCDF="local"
+ENV ESMF_F90COMPILER=gfortran
+ENV ESMF_CXXCOMPILER=g++
+ENV ESMF_TESTEXHAUSTIVE=on
+ENV ESMF_TESTSHAREDOBJ=on
+ENV ESMF_NETCDF_INCLUDE=/usr/include
+ENV ESMF_NETCDF_LIBS="-lnetcdf -lnetcdff"
+ENV ESMF_NETCDF_LIBPATH=/usr/local/lib
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+ENV ESMF_COMM=mpiuni
+#ENV ESMF_COMM=openmpi
+ENV ESMF_ABI=64
+ENV ESMF_CONFIG_FILE=src/esmf/lib/libO/Linux.gfortran.64.mpiuni.default/esmf.mk
+
+WORKDIR /root/src
+RUN wget https://github.com/esmf-org/esmf/archive/refs/tags/ESMF_8_1_0.tar.gz
+RUN tar zxvf ESMF_8_1_0.tar.gz
+
+RUN mv esmf-ESMF_8_1_0 /root/src/esmf
+RUN cd esmf           && \
+    make all          && \
+    make install      && \
+    make installcheck
+
+WORKDIR /root/src
+RUN wget https://github.com/esmf-org/esmf/archive/refs/tags/ESMF_8_1_0.tar.gz
+RUN tar zxvf ESMF_8_1_0.tar.gz
+
+RUN mv esmf-ESMF_8_1_0 /root/src/esmf
+RUN cd esmf           && \
+    make all          && \
+    make install      && \
+    make installcheck
+
+ENV ESMF_CONFIG_FILE=/root/src/esmf/lib/libO/Linux.gfortran.64.mpiuni.default/esmf.mk
+
+WORKDIR /root
+ENV FC=mpif90
+RUN rm -f master.zip > /dev/null 2>&1
+RUN wget https://github.com/ccht-ncsu/Adcirpolate/archive/refs/heads/master.zip
+RUN rm -rf Adcirpolate-master > /dev/null 2>&1
+RUN unzip master.zip
+
+RUN apt-get -y install cmake
+#WORKDIR /root/Adcirpolate-master
+#RUN cmake ./CMakeLists.txt
+#RUN make all
+
+CMD [ "tail", "-f", "/dev/null" ]

@@ -195,8 +195,8 @@ if ( $stormDir eq "null" ) {
 }
 #
 # create a hash of properties from run.properties
-my %runProp; 
-# open properties file 
+my %runProp;
+# open properties file
 unless (open(RUNPROP,"<$stormDir/run.properties")) {
    stderrMessage("ERROR","Failed to open $stormDir/run.properties: $!.");
    die;
@@ -403,15 +403,15 @@ $fluxdata = &getPeriodicFlux($periodicflux);
 # apply static offset if specified
 my $offsetline = "NO LINE HERE";
 $staticoffset = $runProp{'forcing.staticoffset'};
-if ( $staticoffset ne "null" && $staticoffset ne "0.0" ) { 
+if ( $staticoffset ne "null" && $staticoffset ne "0.0" ) {
    my $unitoffsetfile = $runProp{'adcirc.file.input.unitoffsetfile'};
    my $inputdir = $runProp{'path.inputdir'};
-   # open static unit offset file 
+   # open static unit offset file
    unless (open(STATICOFFSET,"<$inputdir/$unitoffsetfile")) {
       stderrMessage("ERROR","Failed to open $inputdir/$unitoffsetfile: $!.");
       die;
    }
-   # open static offset file 
+   # open static offset file
    unless (open(OFFSET,">$stormDir/offset.dat")) {
       stderrMessage("ERROR","Failed to open $stormDir/offset.dat: $!.");
       die;
@@ -525,15 +525,21 @@ if ( $waves eq "on" ) {
    #
    stderrMessage("INFO","Filling in swan control template (fort.26).");
    while(<TEMPLATE>) {
+       # use the year as the run number
+       my $ny72 = substr($ny,0,4);                  # 'nr' in SWAN documentation, max 4 characters
+       s/%nr%/$ny72/;
        # if we are looking at the first line, fill in the name of the storm
        # and the advisory number, if available
-       s/%StormName%/$rundesc/;
+       my $rundesc72 = substr($rundesc,0,72);       # 'title1' in SWAN documentation, max 72 char
+       s/%StormName%/$rundesc72/;
        # if we are looking at the DT line, fill in the time step (seconds)
        s/%swandt%/$swandt/;
        # fill in ensemble name -- this is in the comment line
+       my $ensembleid72 = substr($ensembleid,0,72); # 'title2' in SWAN documentation, max 72 char
        s/%EnsembleID%/$ensembleid/;
        # may be asymmetric parameters, or wtiminc, rstiminc, etc
-       s/%WTIMINC%/$wtiminc/;
+       my $wtiminc72 = substr($wtiminc,0,72);
+       s/%WTIMINC%/$wtiminc72/;                     # 'title3' in SWAN documentation, max 72 char
        #
        s/%hotstart%/$swanhs/;
        # swan start time -- corresponds to adcirc hot start time
@@ -582,7 +588,7 @@ my $rp_fname = $model_type . $gridname . "-UNC_" . $wind_model . "_" . $date1 . 
 my $prodid = $model_type . $gridname . "-UNC_" . $wind_model . "_" . $date1 . "_" . $date2 . "_" . $date3 . "_" . $cycle_hour . "<field>_Z.nc.gz";
 stderrMessage("INFO","Opening run.properties file for writing.");
 unless (open(RUNPROPS,">>$stormDir/run.properties")) {
-   stderrMessage("ERROR","Failed to open the $stormDir/run.properties file for writing: $!.");
+   stderrMessage("ERROR","Failed to open the $stormDir/run.properties file for appending: $!.");
    die;
 }
 # If we aren't using a vortex met model, we don't have a track
@@ -590,9 +596,9 @@ unless (open(RUNPROPS,">>$stormDir/run.properties")) {
 # properties. In the case of a vortex met model, these values are
 # filled in by the storm_track_gen.pl script.
 if ( abs($nws) != 19 && abs($nws) != 319 && abs($nws) != 20 && abs($nws) != 320 ) {
-   printf RUNPROPS "track_raw_dat : notrack\n"; 
-   printf RUNPROPS "track_raw_fst : notrack\n"; 
-   printf RUNPROPS "track_modified : notrack\n"; 
+   printf RUNPROPS "track_raw_dat : notrack\n";
+   printf RUNPROPS "track_raw_fst : notrack\n";
+   printf RUNPROPS "track_modified : notrack\n";
 }
 printf RUNPROPS "year : $ny\n";
 printf RUNPROPS "directory storm : $stormDir\n";
@@ -603,13 +609,13 @@ printf RUNPROPS "ADCIRCgrid : $gridname\n";
 # already in the properties file
 # FIXME: if the stormname property exists but is null or empty, it should be
 # removed from the run.properties file
-if ( abs($nws) == 19 || abs($nws) == 319 || abs($nws) == 20 || abs($nws) == 320 || abs($nws) == 8 || abs($nws) == 309 ) { 
-   if ( ! exists $runProp{'stormname'} || $runProp{'stormname'} eq "" || $runProp{'stormname'} eq "null" ) { 
+if ( abs($nws) == 19 || abs($nws) == 319 || abs($nws) == 20 || abs($nws) == 320 || abs($nws) == 8 || abs($nws) == 309 ) {
+   if ( ! exists $runProp{'stormname'} || $runProp{'stormname'} eq "" || $runProp{'stormname'} eq "null" ) {
       printf RUNPROPS "stormname : $nhcName\n";
    }
 }
-if ( abs($nws) == 19 || abs($nws) == 319 || abs($nws) == 20 || abs($nws) == 320 || abs($nws) == 8 || abs($nws) == 309 ) { 
-   if ( ! exists $runProp{'forcing.tropicalcyclone.stormname'} || $runProp{'forcing.tropicalcyclone.stormname'} eq "" || $runProp{'forcing.tropicalcyclone.stormname'} eq "null" ) { 
+if ( abs($nws) == 19 || abs($nws) == 319 || abs($nws) == 20 || abs($nws) == 320 || abs($nws) == 8 || abs($nws) == 309 ) {
+   if ( ! exists $runProp{'forcing.tropicalcyclone.stormname'} || $runProp{'forcing.tropicalcyclone.stormname'} eq "" || $runProp{'forcing.tropicalcyclone.stormname'} eq "null" ) {
       printf RUNPROPS "forcing.tropicalcyclone.stormname : $nhcName\n";
    }
 }
@@ -654,7 +660,7 @@ if ($inundationOutput eq "on") {
    &writeFileName("initiallydry.63",$fort63specifier);
    &writeFileName("inundationtime.63",$fort63specifier);
    &writeFileName("maxinundepth.63",$fort63specifier);
-   &writeFileName("everdried.63",$fort63specifier); 
+   &writeFileName("everdried.63",$fort63specifier);
    &writeFileName("endrisinginun.63",$fort63specifier);
 }
 close(RUNPROPS);
@@ -707,7 +713,7 @@ sub writeFileName () {
    $ids_descs{"initiallydry.63"} = "Initially Dry";
    $ids_descs{"inundationtime.63"} = "Inundation Time";
    $ids_descs{"maxinundepth.63"} = "Maximum Inundation Depth";
-   $ids_descs{"everdried.63"} = "Ever Dried"; 
+   $ids_descs{"everdried.63"} = "Ever Dried";
    $ids_descs{"endrisinginun.63"} = "End Rising Inundation";
    #
    if ( abs($specifier) == 3 || abs($specifier) == 5 ) {
@@ -839,7 +845,7 @@ sub getPeriodicFlux {
    stderrMessage("INFO","Inserting periodic inflow boundary data from $flux_file.");
    chomp $fluxdata;
    return $fluxdata;
-}   
+}
 #
 #
 #--------------------------------------------------------------------------
@@ -864,14 +870,14 @@ sub hindcastParameters () {
 #   S U B    C U S T O M   P A R A M E T E R S
 #
 # Determines parameter values for the control file when running
-# ADCIRC without external forcing (e.g., for running ADCIRC tests). 
+# ADCIRC without external forcing (e.g., for running ADCIRC tests).
 #--------------------------------------------------------------------------
 sub customParameters () {
     $rundesc = "cs:$csdate"."0000 cy: ASGS";
     my $alreadyElapsedDays = 0.0;
     if ( defined $hstime && $hstime != 0 ) {
-       $alreadyElapsedDays = $hstime / 86400.0; 
-    }       
+       $alreadyElapsedDays = $hstime / 86400.0;
+    }
     $RNDAY = $specifiedRunLength + $alreadyElapsedDays;
     $NHSINC = int(($RNDAY*86400.0)/$dt);
     $nws = 0;
@@ -894,15 +900,15 @@ sub customParameters () {
       $ns = 0;
    }
    ($ey,$em,$ed,$eh,$emin,$es) =
-      Date::Calc::Add_Delta_DHMS($ny,$nm,$nd,$nh,0,0,$specifiedRunLength,0,0,0);    
+      Date::Calc::Add_Delta_DHMS($ny,$nm,$nd,$nh,0,0,$specifiedRunLength,0,0,0);
     $wtiminc = "NO LINE HERE";
    # create the runme file, if this is a nowcast that has an ending time
    # that is later than the previous hotstart
    if ( $enstorm eq "nowcast" && $specifiedRunLength != 0 ) {
       open(RUNME,">$stormDir/runme") || die "ERROR: control_file_gen.pl: Failed to open runme file for writing in the directory $stormDir: $!.";
-      printf RUNME "$specifiedRunLength day nowcast\n";     
+      printf RUNME "$specifiedRunLength day nowcast\n";
       close(RUNME);
-   }   
+   }
    stderrMessage("DEBUG","Finished setting specified run length.");
 }
 
@@ -966,7 +972,7 @@ sub owiParameters () {
          $owistart = $fields221[-2];
          $owiend = $fields221[-1];
       }
-   } 
+   }
    # create run description
    $rundesc = "cs:$csdate"."0000 cy:$owistart ASGS NAM";
    $owistart =~ m/(\d\d\d\d)(\d\d)(\d\d)(\d\d)/;
@@ -1033,7 +1039,7 @@ sub owiParameters () {
    # create the runme file, if this is a nowcast
    if ( $enstorm eq "nowcast" ) {
       open(RUNME,">$stormDir/runme") || die "ERROR: control_file_gen.pl: Failed to open runme file for writing in the directory $stormDir: $!.";
-      printf RUNME "$ensembleid\n";     
+      printf RUNME "$ensembleid\n";
    }
    close(RUNME);
 }
@@ -1042,7 +1048,7 @@ sub owiParameters () {
 #   S U B   V O R T E X   M O D E L   P A R A M E T E R S
 #
 # Determines parameter values for the control file when running
-# the with tropical cyclone vortex models (asymmetric, nws=19; or 
+# the with tropical cyclone vortex models (asymmetric, nws=19; or
 # generalized asymmetric holland model, nws=20).
 #--------------------------------------------------------------------------
 sub vortexModelParameters () {
@@ -1171,9 +1177,9 @@ sub vortexModelParameters () {
               last; # jump out of loop with current track as last track
            }
         }
-        # compute the end date and time using the yyyymmdd date and the 
+        # compute the end date and time using the yyyymmdd date and the
         # tau from the track file when using the symmetric vortex model
-        if ( $nws == 8 || $nws == 308 ) { 
+        if ( $nws == 8 || $nws == 308 ) {
            $end =~ m/(\d\d\d\d)(\d\d)(\d\d)(\d\d)/;
            $ey = $1;
            $em = $2;
@@ -1280,13 +1286,13 @@ sub vortexModelParameters () {
    if ( $RNDAY != $RNDAY_orig ) {
       ($ey,$em,$ed,$eh,$emin,$es) =
        Date::Calc::Add_Delta_DHMS($cy,$cm,$cd,$ch,$cmin,$cs,$RNDAY,0,0,0);
-   } 
+   }
    # create the runme file, if this is a nowcast that has an ending time
    # that is later than the previous hotstart
    if ( $enstorm eq "nowcast" && $goodRunlength == 1 ) {
       my $runlengthHours = ( $RNDAY*86400.0 - $hstime ) / 3600.0;
       open(RUNME,">$stormDir/runme") || die "ERROR: control_file_gen.pl: Failed to open runme file for writing in the directory $stormDir: $!.";
-      printf RUNME "$runlengthHours hour nowcast\n";     
+      printf RUNME "$runlengthHours hour nowcast\n";
       close(RUNME);
    }
    #
@@ -1296,7 +1302,7 @@ sub vortexModelParameters () {
    $wtiminc = $cy." ".$cm." ".$cd." ".$ch." 1 ".$bladj;
    if ( abs($nws) == 20 || abs($nws) == 320 ) {
       $wtiminc .= " $geofactor";
-   } 
+   }
 }
 #
 #--------------------------------------------------------------------------

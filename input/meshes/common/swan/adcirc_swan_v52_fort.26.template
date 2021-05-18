@@ -1,0 +1,124 @@
+$*************************HEADING************************
+$ This file contains courant limiters on the spectral
+$ propagation velocities and is suitable for use
+$ with ADCIRC+SWAN v52 but not versions before or 
+$ after that. 
+$
+$ comment lines:
+PROJ 'ASGS' '%nr%'
+'StormName: %StormName%'
+'EnsembleID: %EnsembleID%'
+'WTIMINC Line in ADCIRC fort.15: %WTIMINC%'
+$
+$********************MODEL INPUT*************************
+$
+$ set values of general parameters
+$
+$ specify an increase in water level that is constant in
+$ space and time
+SET LEVEL 0.0
+$
+$ any depths shallower than "DEPMIN" will be set to this value
+SET DEPMIN 0.1
+$
+$ specify output to be based on "true energy" not variance
+SET INRHOG 1
+$
+$ specify nonstationary computations (can be 1D or 2D; default is 2D)
+MODE NONSTATIONARY
+$
+$ specify spherical coordinates in central conformal mercator projection
+COORDINATES SPHERICAL CCM
+$
+$ define dimension of computational mesh; spectral directions
+$ cover the full CIRCLE (as opposed to a certain sector); 36 meshes
+$ in theta-space (10 degree spectral directional resolution);
+$ FLOW indicates lowest descrete frequency to be used in the calculation
+$ is 0.031384 Hz; MSC is equal to one less than the number of
+$ frequencies ... SWAN calculates the resulting high frequency
+$ and writes it to its log file ... for FLOW=0.031384 and MSC=30 it had 
+$ the following log entry: FHIGH =  0.5476.
+CGRID UNSTRUCTURED CIRCLE MDC=36 FLOW=0.031384 MSC=30
+READ UNSTRUCTURED
+$
+$ specify initial wave field ... this may be overridden later in this file
+INIT ZERO
+$
+$ Define dimension of water level mesh relative to datum level, positive up
+$ EXCEPTION causes SWAN to ignore dry nodes and not perform computations there.
+$ Dry nodes are indicated by values equal to the number after EXCEPTION;
+$ nonstationary mode;
+$ start date/time of yyyymmdd.hhmmss;
+$ swandt second SWAN time step;
+$ ending date/time of yyyymmdd.hhmmss
+INPGRID WLEV UNSTRUCTURED EXCEPTION 0.1  NONSTAT %startdatetime% %swandt% SEC %enddatetime%
+READINP ADCWL
+$
+$ define mesh for current field
+INPGRID  CUR UNSTRUCTURED EXCEPTION 0.   NONSTAT %startdatetime% %swandt% SEC %enddatetime%
+READINP ADCCUR
+$
+$ define mesh for wind field
+INPGRID WIND UNSTRUCTURED EXCEPTION 0.   NONSTAT %startdatetime% %swandt% SEC %enddatetime%
+READINP ADCWIND
+$
+$ specify initial wave field and associated hot start file;
+$ may override previous 'INIT ZERO'
+%hotstart%
+$
+$ "GEN3" activates wind input, whitecapping, and quadruplets;
+$ KOMEN AGROW activates linear growth, with wave growth term of
+$ Cavaleri and Malanotte-Rizzoli (1981) specifically enabled by "AGROW" ...
+$ without AGROW, this C&M-R term is not active and exponential growth
+$ KOMEN is used
+GEN3 KOMEN AGROW
+$
+$ activate Komen et al. (1984) whitecapping
+WCAP KOMEN 2.36E-5 3.02E-3 2.0 1.0 1.0
+$
+$ activate dissipation by depth-induced breaking; default is
+$ CONSTANT with alpha=1.0 and gamma=0.73
+BREAKING
+$
+$ activate dissipation by bottom friction, default is JONSWAP with
+$ default cfjon=0.067
+FRICTION
+$
+$ activate three wave-wave interactions (triads)
+$jgf20120321: turned this off per Rick's instruction
+$ TRIADS 
+$
+$ choose numerical propagation scheme, BSBT is first order
+$ Backward Space Backward Time
+PROP BSBT
+$
+$ Choose numerical properties of SWAN:
+$ STOPC specifies convergence criteria based only
+$ on the significant wave height (Hs) and and the 2nd derivative of
+$ its iteration curve, as follows: (1) absolute change  in local Hs
+$ is less than DABS; OR (2a) relative change in Hs is less than DREL
+$ and (2b) the curvature of the iteration curve of Hs normalized
+$ with Hs is less than CURVAT. The solution is considered converged
+$ if thses criteria are true at NPNTS percent of the wet nodes.
+$ SWAN will stop iterating and go to the next time step after
+$ 'NONSTAT MXITNS' iterations in any case.
+NUM STOPC DABS=0.005 DREL=0.01 CURVAT=0.005 NPNTS=95 NONSTAT MXITNS=20 CSIGMA CFL=0.25 CTHETA CFL=0.25
+$
+$*************************************************************
+$
+$ define properties of output quantities
+$ HS significant wave height
+$ DIR mean wave direction
+$ TM01 mean absolute wave period
+QUANTITY HS DIR TM01 FMIN=0.031384 FMAX=0.547632
+$
+$ request an output of intermediate results for testing purposes ...
+$ itest=1 prints timings data to log file, 0 turns off tracing
+TEST 1,0
+$
+$ start the computation
+COMPUTE %startdatetime% %swandt% SEC %enddatetime%
+$
+$ end of user's input
+STOP
+$

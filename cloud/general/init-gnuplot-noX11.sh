@@ -32,7 +32,7 @@ rm -rf ./$GNUP_DIR 2> /dev/null
 tar zxvf ./$GNUP_TGZ
 
 cd $GNUP_DIR
-./configure --prefix=$OPT
+./configure --prefix=$OPT --without-qt --without-cairo --disable-wxwidgets
 make -j $JOBS
 make install
 

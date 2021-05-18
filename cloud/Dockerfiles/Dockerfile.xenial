@@ -21,8 +21,8 @@ FROM ubuntu:xenial
 RUN apt-get update
 RUN apt-get install -y build-essential checkinstall
 RUN apt-get install -y zlib1g-dev libssl-dev libexpat1-dev
-RUN apt-get install -y gfortran wget curl vim screen htop tmux git sudo
-RUN apt-get install -y zip
+RUN apt-get install -y gfortran wget curl vim screen htop tmux git sudo bc
+RUN apt-get install -y zip flex
 
 # symlink for /bin/env
 RUN ln -s /usr/bin/env /bin/env > /dev/null 2>&1 || echo /usr/bin/env already links to /bin/env
@@ -31,7 +31,7 @@ RUN ln -s /usr/bin/env /bin/env > /dev/null 2>&1 || echo /usr/bin/env already li
 ENV _ASGS_CONTAINER="docker"
 
 # asgsuser
-RUN useradd -ms /bin/bash asgsuser 
+RUN useradd -ms /bin/bash asgsuser
 RUN echo "asgsuser ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # set up WORK and SCRATCH targets

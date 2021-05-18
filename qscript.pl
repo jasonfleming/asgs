@@ -4,19 +4,19 @@
 #--------------------------------------------------------------------------
 # Copyright(C) 2006--2019 Jason Fleming
 # Copyright(C) 2006, 2007 Brett Estrade
-# 
+#
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
-# 
+#
 # The ASGS is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # ASGS is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #
@@ -30,7 +30,7 @@ use Date::Handler;
 #
 my $ncpu = "null";      # number of CPUs the job should run on
 my $totalcpu = "null";  # ncpu + numwriters
-my $nnodes = "null";    # number of cluster nodes 
+my $nnodes = "null";    # number of cluster nodes
 my $queuename;    # name of the queue to submit the job to
 my $queuesys;     # name of the queue to submit the job to
 my $parallelism;  # "serial" or "parallel"
@@ -42,11 +42,11 @@ my $inputdir;     # directory where the template files are stored
 my $scenario;     # name of the ensemble member (nowcast, storm3, etc)
 my $notifyuser;   # email address of the user to be notified in case of error
 my $submitstring; # string to use to submit a job to the parallel queue
-my $walltime;     # estimated maximum wall clock time  
-my $wallminutes;  # integer number of minutes, calculated from HH:MM:SS 
+my $walltime;     # estimated maximum wall clock time
+my $wallminutes;  # integer number of minutes, calculated from HH:MM:SS
 my $qscripttemplate; # template file to use for the queue submission script
 my $qscript;      # queue submission script we're producing
-my $syslog;       # the log file that the ASGS uses 
+my $syslog;       # the log file that the ASGS uses
 my $ppn;          # the number of processors per node
 my $qos = "null"; # quality of service
 my $cloptions=""; # command line options for adcirc, if any
@@ -72,7 +72,7 @@ GetOptions("jobtype=s" => \$jobtype );
 #       R E A D   R U N . P R O P E R T I E S   F I L E
 #
 #-----------------------------------------------------------------
-if ( -e "run.properties" ) { 
+if ( -e "run.properties" ) {
    unless (open(RP,"<run.properties")) {
       print STDERR "ERROR: Found the run.properties file but could not open it: $!.";
       die;
@@ -89,7 +89,7 @@ while (<RP>) {
    my $v = substr($_,$sep+1);  # value
    # strip leading and trailing spaces
    $k =~ s/^\s+//g;
-   $k =~ s/\s+$//g; 
+   $k =~ s/\s+$//g;
    $v =~ s/^\s+//g;
    $v =~ s/\s+$//g;
    $properties{$k} = $v
@@ -97,7 +97,7 @@ while (<RP>) {
 close(RP);
 #-----------------------------------------------------------------
 #
-#                S E T   P A R A M E T E R S 
+#                S E T   P A R A M E T E R S
 #
 #-----------------------------------------------------------------
 $cloptions = "";
@@ -107,14 +107,14 @@ $adcircdir = $properties{"path.adcircdir"};
 $scriptdir = $properties{"path.scriptdir"};
 # type of queueing system
 $queuesys = $properties{"hpc.queuesys"};
-# determine whether this is a parallel job 
+# determine whether this is a parallel job
 $parallelism = $properties{"hpc.job.$jobtype.parallelism"};
 # get the scenario log file
 $scenariolog = $properties{"monitoring.logging.file.scenariolog"};
 # get number of processors per node
-$ppn = $properties{"hpc.job.$jobtype.ppn"}; 
+$ppn = $properties{"hpc.job.$jobtype.ppn"};
 # get quality of service if any
-# 
+#
 # construct command line for running adcprep or serial job
 if ( $parallelism eq "serial" ) {
    $totalcpu = 1; # these are serial jobs
@@ -130,10 +130,10 @@ if ( $parallelism eq "serial" ) {
    # when a priority queue is used
    my $serqueue = $properties{"hpc.job.$jobtype.serqueue"};
    my $hpcenvshort = $properties{"hpc.hpcenvshort"};
-   if ( $serqueue eq "priority" && ( $hpcenvshort eq "queenbee" || $hpcenvshort eq "supermic" ) ) { 
+   if ( $serqueue eq "priority" && ( $hpcenvshort eq "queenbee" || $hpcenvshort eq "supermic" ) ) {
       $ppn = 20;
-   } 
-} 
+   }
+}
 #
 # construct command line for running padcirc, padcswan, or other parallel job
 if ( $jobtype eq "padcirc" || $jobtype eq "padcswan" ){
@@ -141,10 +141,10 @@ if ( $jobtype eq "padcirc" || $jobtype eq "padcswan" ){
    $ncpu = $properties{"hpc.job.$jobtype.ncpu"};
    # set subdomain hotstart files if specified
    if ( $properties{"adcirc.hotstartcomp"} eq "subdomain" ) {
-      $cloptions .= "-S";
+      $cloptions .= "-S -R";
    }
    # set dedicated writer processors
-   $numwriters = $properties{"hpc.job.$jobtype.numwriters"}; 
+   $numwriters = $properties{"hpc.job.$jobtype.numwriters"};
    if ( $numwriters != 0 ) {
       $cloptions = $cloptions . " -W " . $numwriters;
       $totalcpu = $ncpu + $numwriters;
@@ -152,8 +152,8 @@ if ( $jobtype eq "padcirc" || $jobtype eq "padcswan" ){
       $totalcpu = $ncpu;
    }
    # determine number of compute nodes to request
-   if ( $ppn ne "null" ) { 
-      $nnodes = int($totalcpu/$ppn); 
+   if ( $ppn ne "null" ) {
+      $nnodes = int($totalcpu/$ppn);
       if ( ($totalcpu%$ppn) != 0 ) {
          $nnodes++;
       }
@@ -167,7 +167,7 @@ if ( $jobtype eq "padcirc" || $jobtype eq "padcswan" ){
    $joblauncher =~ s/%nnodes%/$nnodes/g;
    $cmd="$joblauncher $adcircdir/$jobtype $cloptions";
 }
-# 
+#
 # compute wall clock time HH:MM:SS in minutes
 $walltime = $properties{"hpc.job.$jobtype.limit.walltime"};
 $walltime =~ /(\d+):(\d+):(\d+)/;
@@ -182,10 +182,10 @@ $qscript = $jobtype . "." . $queuesyslc;
 #
 #-----------------------------------------------------------------
 #
-#              F I L L   I N   T E M P L A T E 
+#              F I L L   I N   T E M P L A T E
 #
 #-----------------------------------------------------------------
-if ( -e $qscripttemplate ) { 
+if ( -e $qscripttemplate ) {
    unless (open(TEMPLATE,"<$qscripttemplate")) {
       print STDERR "Found the $qscripttemplate template file but could not open it: $!.";
       die;
@@ -200,15 +200,15 @@ unless (open(QSCRIPT,">$qscript")) {
 }
 #
 while(<TEMPLATE>) {
-    # remove queue system directives from queueing systems other than 
-    # the one specified and then fill in the correct environment 
+    # remove queue system directives from queueing systems other than
+    # the one specified and then fill in the correct environment
     # variables for the queue system we ar using
     if ( $queuesys eq "PBS" ) {
        s/#SBATCH/null/g;
        s/%JOBID%/PBS_JOBID/g;
        s/%JOBDIR%/PBS_O_WORKDIR/g;
        s/%JOBHOST%/PBS_O_HOST/g;
-       s/%JOBNODES%/PBS_NODEFILE/g;
+       s/%JOBNODES%/"`cat \$PBS_NODEFILE`"/g;  # PBS var contains name of node list file
        s/%JOBNNODES%/PBS_NUM_NODES/g;
        s/%JOBNTASKSPERNODE%/PBS_NUM_PPN/g;
        s/%JOBNTASKS%/PBS_TASKNUM/g;
@@ -218,21 +218,21 @@ while(<TEMPLATE>) {
        s/%JOBID%/SLURM_JOBID/g;
        s/%JOBDIR%/SLURM_SUBMIT_DIR/g;
        s/%JOBHOST%/SLURM_SUBMIT_HOST/g;
-       s/%JOBNODES%/SLURM_JOB_NODELIST/g;
+       s/%JOBNODES%/\$SLURM_JOB_NODELIST/g;  # SLURM var contains node list
        s/%JOBNNODES%/SLURM_NNODES/g;
        s/%JOBNTASKSPERNODE%/SLURM_NTASKS_PER_NODE/g;
        s/%JOBNTASKS%/SLURM_NTASKS/g;
     }
     # fill in the lower case name of the queueing system
     s/%queuesyslc%/$queuesyslc/g;
-    # fill in the name of the queueing system (typicall upper case in the 
-    # run.properties file 
+    # fill in the name of the queueing system (typicall upper case in the
+    # run.properties file
     s/%queuesys%/$queuesys/g;
     # fill in the number of compute cores (i.e., not including writers)
     s/%ncpu%/$ncpu/;
     # number of cores per compute node
     s/%ppn%/$ppn/;
-    # fill in the total number of cores 
+    # fill in the total number of cores
     s/%totalcpu%/$totalcpu/;
     # the estimated amount of wall clock time
     if ( $properties{"hpc.walltimeformat"} eq "minutes" ) {
@@ -247,10 +247,10 @@ while(<TEMPLATE>) {
     # directory where asgs executables are located
     s/%scriptdir%/$properties{"path.scriptdir"}/;
     # directory for this particular advisory
-    s/%advisdir%/$properties{"path.advisdir"}/;  
+    s/%advisdir%/$properties{"path.advisdir"}/;
     # name of this member of the ensemble (nowcast, storm3, etc)
-    s/%scenario%/$properties{"scenario"}/g;  
-    # name of overall asgs log file 
+    s/%scenario%/$properties{"scenario"}/g;
+    # name of overall asgs log file
     s/%syslog%/$properties{"monitoring.logging.file.syslog"}/g;
     # fill in command line options
     s/%cloptions%/$cloptions/;
@@ -259,7 +259,7 @@ while(<TEMPLATE>) {
     # the type of job that is being submitted (partmesh, prep15, padcirc, etc)
     s/%jobtype%/$jobtype/g;
     # the email address of the ASGS Operator
-    if ( $properties{"notification.emailnotify"} eq "yes" ) { 
+    if ( $properties{"notification.emailnotify"} eq "yes" ) {
        s/%notifyuser%/$properties{"notification.hpc.email.notifyuser"}/g;
     } else {
        s/%notifyuser%/null/g;
@@ -280,23 +280,16 @@ while(<TEMPLATE>) {
     }
     # fills in the number of nodes on platforms that require it
     s/%nnodes%/$nnodes/g;
-    # fill in the module commands generally needed on this platform
-    s/%platformmodules%/$properties{"hpc.platformmodules"}/g;
-    # fill in serial modules for serial job
+    # fill in serial queue
     if ( $parallelism eq "serial" ) {
-       s/%jobmodules%/$properties{"hpc.job.$jobtype.serialmodules"}/g;   
        # name of the queue on which to run
        s/%queuename%/$properties{"hpc.job.$jobtype.serqueue"}/;
     }
-    # fill in parallel modules for parallel job 
+    # fill in parallel queue
     if ( $parallelism eq "parallel" ) {
-       s/%jobmodules%/$properties{"hpc.job.$jobtype.parallelmodules"}/g;
        # name of the queue on which to run
        s/%queuename%/$properties{"hpc.job.$jobtype.queuename"}/;
     }
-    # fill in job library paths and executable paths
-    s/%jobenv%/$properties{"hpc.job.$jobtype.jobenv"}/g;
-    s/%jobenvdir%/$properties{"hpc.job.$jobtype.path.jobenvdir"}/g;
     # copy non-null lines to the queue script
     unless ( $_ =~ /noLineHere/ || $_ =~ /null/ ) {
        print QSCRIPT $_;
@@ -309,6 +302,6 @@ close(QSCRIPT);
 unless (open(RP,">>run.properties")) {
    print STDERR "ERROR: Could not open run.properties file: $!.";
    die;
-} 
+}
 print RP "hpc.job.$jobtype.file.qscript : $qscript\n";
 close(RP);

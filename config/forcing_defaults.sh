@@ -1,7 +1,7 @@
 #!/bin/bash
 #----------------------------------------------------------------
 # forcing_defaults.sh : Functions required for initializing
-# parameters that are only related to the forcing.  
+# parameters that are only related to the forcing.
 #----------------------------------------------------------------
 # Copyright(C) 2019 Jason Fleming
 #
@@ -27,7 +27,7 @@ allMessage "$THIS: Setting default parameters for forcing."
 CYCLETIMELIMIT="05:00:00"
 #
 #  Meteorological Forcing : Tropical Cyclones
-# 
+#
 #RSSSITE=filesystem
 #FTPSITE=filesystem
 #FDIR=~/asgs/branches/2014stable/input/sample_advisories/2018
@@ -45,7 +45,7 @@ VORTEXMODEL="GAHM"
 PSEUDOSTORM="no"
 #
 #  Meteorological Forcing : North American Mesoscale (NAM) Model
-# 
+#
 FORECASTCYCLE="06"
 BACKSITE="ftp.ncep.noaa.gov"          # NAM forecast data from NCEP
 BACKDIR="/pub/data/nccf/com/nam/prod" # contains the nam.yyyymmdd files
@@ -54,6 +54,7 @@ PTFILE="ptFile_oneEighth.txt"         # the lat/lons for the OWI background met
 ALTNAMDIR="/projects/ncfs/data/asgs5463","/projects/ncfs/data/asgs14174"
 VELOCITYMULTIPLIER=1.0
 forecastSelection="latest"            # "latest" or "strict"
+forecastDownload="only-to-run"        # "only-to-run" or "all"
 #
 # External data sources : River Flux
 #

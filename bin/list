@@ -7,13 +7,15 @@ fi
 
 # list interface for lists of important things (registered ADCIRC builds, ASGS profiles)
 _list() {
+  LISTNUM=1
   case "${1}" in
-    adcirc)
+    adcirc|adcircs)
       if [ ! -d "$ADCIRC_META_DIR/" ]; then
-        echo "nothing is available to list, run 'initadcirc' to build and register a version of ADCIRC."
+        echo "nothing is available to list, run 'build adcirc' to build and register a version of ADCIRC."
       else
         for adcirc in $(ls -1 "$ADCIRC_META_DIR/" | sort); do
-          echo "- $adcirc"
+          printf "% 2d. %s\n" $LISTNUM $adcirc
+          LISTNUM=$(($LISTNUM+1))
         done
         return
       fi
@@ -34,17 +36,21 @@ _list() {
       fi
       ;;
     meshes)
-      cat $ASGS_MESH_DEFAULTS | grep '")' | sed 's/[")]//g' | awk '{print "- " $1}'
+      for m in $(cat $ASGS_MESH_DEFAULTS | grep '")' | sed 's/[")]//g' | awk '{print $1}'); do
+        printf "% 2d. %s\n" $LISTNUM $m
+        LISTNUM=$(($LISTNUM+1))
+      done
       ;;
     platforms)
       cat $ASGS_PLATFORMS | egrep '^init_' | sed 's/init_//g' | sed 's/()//g' | awk '{print "- " $1}'
       ;;
-    profiles)
+    profile|profiles)
       if [ ! -d "$ASGS_HOME/.asgs/" ]; then
         echo "nothing is available to list, use the 'save' command to save this profile"
       else
         for profile in $(ls -1 "$ASGS_HOME/.asgs/" | sort); do
-          echo "- $profile"
+          printf "% 2d. %s\n" $LISTNUM $profile
+          LISTNUM=$(($LISTNUM+1))
         done
         return
       fi

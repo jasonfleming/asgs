@@ -1,4 +1,0 @@
-165c165
-< my $LIBS_magick = '-L../../magick/.libs -lMagickCore-@MAGICK_MAJOR_VERSION@.@MAGICK_ABI_SUFFIX@ -lperl @MATH_LIBS@';
----
-> my $LIBS_magick = '-L../magick/.libs -lMagickCore-@MAGICK_MAJOR_VERSION@.@MAGICK_ABI_SUFFIX@ @MATH_LIBS@ -L' . $Config{'archlib'} . '/CORE';

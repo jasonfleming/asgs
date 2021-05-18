@@ -81,6 +81,7 @@ our $had_enough = 0;
 my @nowcasts_downloaded;  # list of nowcast files that were
                           # successfully downloaded
 my $forecastselection = "null"; # "strict" or "latest"
+my $forecastdownload = "only-to-run"; # "only-to-run" or "all"
 #
 our @grib_fields = ( "PRMSL","UGRD:10 m above ground","VGRD:10 m above ground" );
 #
@@ -97,6 +98,7 @@ GetOptions(
            "archivedruns=s" => \$archivedruns,
            "forecastcycle=s" => \@forecastcycle,
            "forecastselection=s" => \$forecastselection,
+           "forecastdownload=s" => \$forecastdownload,
            "scriptdir=s" => \$scriptDir
           );
 #
@@ -141,6 +143,25 @@ if ( $forecastselection eq "null" ) {
    }
 } else {
    &appMessage("WARNING","forecastselection was set to '$forecastselection' on  the command line.");
+}
+#
+# get forecast download setting from run.properties
+# file if it was not specified on the command line
+# (i.e., command line option takes precedence)
+# FIXME : this is repeated code with forecastselection from above that should be turned into a sub
+# TODO : eventually get this parameter setting from scenario.json instead of run.properties
+if ( $forecastdownload eq "null" ) {
+   &appMessage("INFO","forecastdownload was not specified on the command line.");
+   if ( $have_properties &&
+     exists($properties{"forcing.nam.forecast.download"}) ) {
+      $forecastdownload = $properties{"forcing.nam.forecast.download"};
+      &appMessage("INFO","forcing.nam.forecast.download was set to '$forecastdownload' from the run.properties file.");
+   } else {
+      $forecastdownload = "only-to-run";
+      &appMessage("INFO","forcing.nam.forecast.download was not available from the run.properties file. Setting it to the default value of 'only-to-run'.");
+   }
+} else {
+   &appMessage("WARNING","forecastdownload was set to '$forecastdownload' on  the command line.");
 }
 #
 &appMessage("DEBUG","hstime is $hstime");
@@ -252,6 +273,14 @@ foreach my $dir (@sortedNamDirs) {
    } else {
       push(@targetDirs,$dir);
    }
+}
+# getting the directory listin with NAM data directories in it;
+# if so, it is generally harmles because the asgs will just respawn get_nam.pl
+my $numTargetDirs = @targetDirs;
+if ( $numTargetDirs == 0 ) {
+   stderrMessage("INFO","Failed to find any NAM data directories. This script will be respawned.");
+   printf STDOUT $dl;
+   exit;
 }
 #
 # determine the most recent date/hour ... this is the latest nam cycle time
@@ -653,10 +682,17 @@ sub getForecastData() {
       }
       printf RUNME $rationale;
       close(RUNME);
+   } else {
+      # don't download forecast files that are not needed unless
+      # specifically requested
+      if ( $forecastdownload eq "only-to-run" ) {
+         stderrMessage("INFO","This forecast is not scheduled to run so the files will not be downloaded.");
+         printf STDOUT "forecast-not-needed";
+         exit 0;
+      }
    }
    #
-   # in any case, whether we are actually going to run the forecast or not,
-   # we always want to download the files
+   # download the forecast files
    stderrMessage("INFO","Downloading from directory 'nam.$cycledate'.");
    $hcDirSuccess = $ftp->cwd("nam.".$cycledate);
    unless ( $hcDirSuccess ) {

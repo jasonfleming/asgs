@@ -27,6 +27,8 @@ _guess_platform()
     default_platform=stampede2
   elif [ 1 -eq $(hostname --fqdn | grep -c frontera) ]; then
     default_platform=frontera
+  elif [ 1 -eq $(hostname --fqdn | grep -c rostam) ]; then
+    default_platform=rostam
   fi
   if [ $default_platform != unknown ]; then
     echo "$default_platform"

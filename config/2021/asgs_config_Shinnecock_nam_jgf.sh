@@ -53,7 +53,7 @@ FORECASTCYCLE="06"
 TROPICALCYCLONE=off   # tropical cyclone forcing
 #STORM=07             # storm number, e.g. 05=ernesto in 2006
 #YEAR=2018            # year of the storm
-WAVES=off             # wave forcing
+WAVES=on              # wave forcing
 #STATICOFFSET=0.1524
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
@@ -76,11 +76,10 @@ TDS=( )
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2021030700
+COLDSTARTDATE=2021042500
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 # location on lonestar5 ______________________________________________
 LASTSUBDIR=null
-COLDSTARTDATE=2021030700  # updated this on a different branch
 
 # Scenario package
 

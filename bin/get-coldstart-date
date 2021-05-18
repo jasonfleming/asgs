@@ -1,0 +1,18 @@
+#!/bin/sh
+
+#
+# Note: this script is available via asgsh's $PATH
+#
+# Usage, in an ASGS config script:
+#
+#   HINDCASTLENGTH=30
+#   COLDSTARTDATE=$(get-coldstart-date ${HINDCASTLENGTH})
+#
+
+HINDCASTLENGTH=${1:-30}
+defaultHINDCASTENDDATE=$(date +%Y%m%d)  # e.g., 20210505
+HINDCASTENDDATE=${2:-$defaultHINDCASTENDDATE} 
+COLDSTARTDATE=$(date --date="${HINDCASTENDDATE} -${HINDCASTLENGTH} days" +%Y%m%d%H)
+echo -n $COLDSTARTDATE
+
+exit 0

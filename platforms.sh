@@ -2,9 +2,9 @@
 #----------------------------------------------------------------
 #
 # $THIS: This file contains functions required for initializing
-# variables that are architecture (platform) dependent. 
-# It is sourced by asgs_main.sh and any other shell script that 
-# is platform dependent. 
+# variables that are architecture (platform) dependent.
+# It is sourced by asgs_main.sh and any other shell script that
+# is platform dependent.
 #
 #----------------------------------------------------------------
 # Copyright(C) 2012--2019 Jason Fleming
@@ -80,23 +80,7 @@ init_queenbee()
   RMQMessaging_NcoHome="$HOME/local"
   JOBLAUNCHER='mpirun -np %totalcpu% -machinefile $PBS_NODEFILE'
   ACCOUNT=null
-  PLATFORMMODULES='module load intel netcdf netcdf_fortran'
-  # modules for CPRA post processing
-  MATLABEXE=script # "script" means just execute matlab
-  MCRROOT=/usr/local/packages/license/matlab/r2017a
-  SERIALMODULES='module load matlab/r2015b'
-  PARALLELMODULES='module load mvapich2'
-  JOBENVDIR=$SCRIPTDIR/config/machines/queenbee
-  JOBENV=( )
   TDS=( lsu_tds )
-  # needed for asgs perl
-  #source ~/perl5/perlbrew/etc/bashrc
-  if [ -z "$_ASGSH_PID" ]; then 
-    module purge
-    $PLATFORMMODULES
-    $SERIALMODULES
-  fi
-  THIS=platforms.sh
   SSHKEY=~/.ssh/id_rsa.pub
   REMOVALCMD="rmpurge"
   ARCHIVE=enstorm_pedir_removal.sh
@@ -119,29 +103,22 @@ init_rostam()
   QSUMMARYCMD=squeue
   QUOTACHECKCMD=null
   ALLOCCHECKCMD=null
-  QUEUENAME=marvin  # same as SLURM partition 
+  QUEUENAME=marvin  # same as SLURM partition
   SERQUEUE=marvin
   ACCOUNT=null
   SUBMITSTRING=sbatch
-  #JOBLAUNCHER='srun -N %nnodes%'
-  JOBLAUNCHER='salloc -p marvin -N %nnodes% -n %totalcpu%' 
+  JOBLAUNCHER='srun -N %nnodes%'
   ARCHIVE=enstorm_pedir_removal.sh
   ARCHIVEBASE=$SCRATCH
   ARCHIVEDIR=$SCRATCH
   SSHKEY=~/.ssh/id_rsa.pub
-  QSCRIPT=rostam.template.slurm
-  QSCRIPTGEN=hatteras.slurm.pl
-  PPN=16
+  QSCRIPTTEMPLATE=$SCRIPTDIR/qscript.template
+  QSCRIPTGEN=qscript.pl
+  PPN=40
   CONSTRAINT=null
   RESERVATION=null
   REMOVALCMD="rm"
   TDS=( lsu_tds )
-  PLATFORMMODULES='module load mpi/mpich-3.0-x86_64'
-  $PLATFORMMODULES
-  # modules for CPRA post processing
-  #module load mpi/mpich-3.0-x86_64
-  module purge 
-  module load impi/2017.3.196 
   MAKEJOBS=8
 }
 init_supermic()
@@ -167,15 +144,7 @@ init_supermic()
   RMQMessaging_NcoHome="$HOME/local"
   JOBLAUNCHER='mpirun -np %totalcpu% -machinefile $PBS_NODEFILE'
   ACCOUNT=null
-  PLATFORMMODULES='module load intel/14.0.2 hdf5/1.8.12/INTEL-140-MVAPICH2-2.0 netcdf/4.2.1.1/INTEL-140-MVAPICH2-2.0 netcdf_fortran/4.2/INTEL-140-MVAPICH2-2.0'
-  # modules for CPRA post processing
-  MATLABEXE=script # "script" means just execute matlab; only for LSU staff, not affiliates
-  MCRROOT=/usr/local/packages/license/matlab/r2017a
-  SERIALMODULES='module load matlab/r2017a'
-  PARALLELMODULES='module load mvapich2'
-  JOBENVDIR=$SCRIPTDIR/config/machines/supermic
   PERL5LIB=${PERL5LIB}:${SCRIPTDIR}/PERL
-  JOBENV=( )
   THIS="platforms.sh>env_dispatch()>init_supermic()"
   SSHKEY=~/.ssh/id_rsa.pub
   REMOVALCMD="rmpurge"
@@ -183,17 +152,12 @@ init_supermic()
   ARCHIVEBASE=$SCRATCH
   ARCHIVEDIR=$SCRATCH
   TDS=( lsu_tds )
-  module purge
-  $PLATFORMMODULES
-  $SERIALMODULES
   MAKEJOBS=8
 }
 
 # Note 0: This entry is meant to model a minimal entry
 # Note 1: We're moving to placing conditional environements based on user or operator
 # into $HOME/.asgsh_profile; e.g., setting MATLABEXE ('mex' or 'script' should go there)
-# Note 2: We're moving modules to load that are not already done so in a user's default shell
-# out of here
 # Note 3: Anything that is initialized without a value or as "null" should not be in here, but
 # the variables should be documented somewhere
 # Note 4: init-asgsh.sh should be run to ensure $WORK and $SCRATCH is set properly so that it
@@ -217,7 +181,6 @@ init_queenbeeC()
   RMQMessaging_Enable="on"      # "on"|"off"
   RMQMessaging_Transmit="on"    #  enables message transmission ("on" | "off")
   RMQMessaging_NcoHome=$WORK/local
-  JOBENVDIR=$SCRIPTDIR/config/machines/queenbee3
   ARCHIVE=enstorm_pedir_removal.sh
   ARCHIVEBASE=$SCRATCH
   ARCHIVEDIR=$SCRATCH
@@ -247,11 +210,6 @@ init_pod()
   RMQMessaging_Transmit="on"    #  enables message transmission ("on" | "off")
   RMQMessaging_NcoHome="$HOME/local"
   JOBLAUNCHER='mpirun -np %totalcpu% -machinefile $PBS_NODEFILE'
-  PLATFORMMODULES='module load gcc/6.2.0'
-  # modules for CPRA post processing
-  SERIALMODULES='module load '
-  PARALLELMODULES='module load openmpi/2.1.2/gcc.6.2.0'
-  JOBENV=( )
   THIS="platforms.sh>env_dispatch()>init_pod()"
   SSHKEY=~/.ssh/id_rsa.pub
   RESERVATION=null
@@ -260,9 +218,6 @@ init_pod()
   ARCHIVEBASE=$SCRATCH
   ARCHIVEDIR=$SCRATCH
   TDS=(renci_tds)
-  module purge
-  $PLATFORMMODULES
-  $SERIALMODULES
   MAKEJOBS=8
 }
 init_hatteras()
@@ -290,7 +245,7 @@ init_hatteras()
   QUOTACHECKCMD="df -h /projects/ncfs"
   ALLOCCHECKCMD=null
   TDS=( renci_tds )
-  # 
+  #
   MATLABEXE=script # "script" means just execute matlab (don't use mex files)
   #
   RMQMessaging_Enable="on"      # "on"|"off"
@@ -300,17 +255,11 @@ init_hatteras()
   RMQMessaging_ClusterName="Hatteras"
 
   #
-  # specify location of platform- and Operator-specific scripts to 
+  # specify location of platform- and Operator-specific scripts to
   # set up environment for different types of jobs
-  JOBENVDIR=$SCRIPTDIR/config/machines/hatteras
-  JOBENV=( gdal.sh gmt.sh fftw.sh netcdf.sh )
   ARCHIVE=enstorm_pedir_removal.sh
   ARCHIVEBASE=$SCRATCH
   ARCHIVEDIR=$SCRATCH
-  module purge
-  $PLATFORMMODULES
-  $PARALLELMODULES
-  $SERIALMODULES
   MAKEJOBS=8
 }
 #
@@ -344,14 +293,12 @@ init_frontera()
   RMQMessaging_Transmit="on"    #  enables message transmission ("on" | "off")
   RMQMessaging_NcoHome=$WORK/local
   MATLABEXE=script # "script" means just execute matlab (don't use mex files)
-  # specify location of platform- and Operator-specific scripts to 
+  # specify location of platform- and Operator-specific scripts to
   # set up environment for different types of jobs
-  JOBENVDIR=$SCRIPTDIR/config/machines/frontera
-  JOBENV=( )
   THIS="platforms.sh>env_dispatch()>init_frontera()"
   ARCHIVE=enstorm_pedir_removal.sh
   ARCHIVEBASE=/corral-tacc/utexas/hurricane/ASGS
-  ARCHIVEDIR=2020 # is this used? 
+  ARCHIVEDIR=2020 # is this used?
   TDS=( tacc_tds )
   MAKEJOBS=8
 }
@@ -384,8 +331,6 @@ init_stampede2()
   RMQMessaging_Enable="on"              # "on"|"off"
   RMQMessaging_Transmit="on"            #  enables message transmission ("on" | "off")
   RMQMessaging_NcoHome=$WORK/local
-  JOBENVDIR=$SCRIPTDIR/config/machines/stampede2
-  JOBENV=( )
   THIS="platforms.sh>env_dispatch()>init_stampede2()"
   ARCHIVE=enstorm_pedir_removal.sh
   ARCHIVEBASE=/corral-tacc/utexas/hurricane/ASGS
@@ -425,17 +370,11 @@ init_lonestar5()
   RMQMessaging_Enable="on"      # "on"|"off"
   RMQMessaging_Transmit="on"    #  enables message transmission ("on" | "off")
   RMQMessaging_NcoHome=$WORK/local
-  PLATFORMMODULES='module load TACC/1.0' # BDE - for some reason this is required
-  # specify location of platform- and Operator-specific scripts to
-  # set up environment for different types of jobs
-  JOBENVDIR=$SCRIPTDIR/config/machines/lonestar5
-  JOBENV=( )
   THIS="platforms.sh>env_dispatch()>init_lonestar5()"
   ARCHIVE=enstorm_pedir_removal.sh
   ARCHIVEBASE=/corral-tacc/utexas/hurricane/ASGS
   ARCHIVEDIR=2020
   TDS=(tacc_tds)
-  $PLATFORMMODULES
   MAKEJOBS=8
 }
 
@@ -481,7 +420,7 @@ init_desktop()
   MAKEJOBS=1
 }
 
-init_desktop_serial() # changed from init_desktop-serial due to bash complaints 
+init_desktop_serial() # changed from init_desktop-serial due to bash complaints
 {
   THIS="platforms.sh>env_dispatch()>init_desktop-serial()"
   scenarioMessage "$THIS: Setting platforms-specific parameters."
@@ -537,8 +476,8 @@ init_test()
   MAKEJOBS=1
 }
 #
-# Writes properties related to the combination of the HPC platform, the Operator, 
-# and the THREDDS data server the results are to be posted to. 
+# Writes properties related to the combination of the HPC platform, the Operator,
+# and the THREDDS data server the results are to be posted to.
 writeTDSProperties()
 {
    THIS="platforms.sh>writeTDSProperties()"
@@ -567,7 +506,7 @@ writeTDSProperties()
       ;;
 
    # THREDDS Data Server (TDS, i.e., OPeNDAP server) at LSU
-   "lsu_tds") 
+   "lsu_tds")
       THREDDSHOST=fortytwo.cct.lsu.edu
       OPENDAPHOST=lsu_tds
       OPENDAPPORT=":443"
@@ -612,7 +551,7 @@ writeTDSProperties()
    echo "post.opendap.${SERVER}.downloadprefix : $OPENDAPPROTOCOL://$THREDDSHOST$OPENDAPPORT/thredds/fileServer$DOWNLOADPREFIX" >> run.properties
    echo "post.opendap.${SERVER}.catalogprefix : $OPENDAPPROTOCOL://$THREDDSHOST$OPENDAPPORT/thredds/catalog$CATALOGPREFIX" >> run.properties
    echo "post.opendap.${SERVER}.opendapbasedir : $OPENDAPBASEDIR" >> run.properties
-   # if the Operator has an asgs-global.conf file, assume that a perl mail client capability is 
+   # if the Operator has an asgs-global.conf file, assume that a perl mail client capability is
    # set up and ready to use
    # FIXME: create something more reliable/repeatable
    if [[ -e $HOME/asgs-global.conf ]]; then
@@ -625,10 +564,15 @@ writeTDSProperties()
 set_hpc() {
    THIS="platforms.sh>set_hpc()"
    echo "$THIS: Setting the values of HPCENV and HPCENVSHORT."
-   fqdn=`hostname --long` 
+   fqdn=`hostname --long`
    echo "$THIS: The fully qualified domain name is ${fqdn}."
    HPCENV=null
    HPCENVSHORT=null
+   if [[ ${fqdn:(-18)} = "rostam.cct.lsu.edu" ]]; then
+      HPCENV=${fqdn:(-18)}
+      HPCENVSHORT=rostam
+      return
+   fi
    if [[ ${fqdn:(-25)} = "stampede2.tacc.utexas.edu" ]]; then
       HPCENV=${fqdn:(-25)}
       HPCENVSHORT=stampede2
@@ -658,16 +602,16 @@ set_hpc() {
    fi
    if [[ ${fqdn:0:4} = "smic" ]]; then
       HPCENV=supermic.hpc.lsu.edu
-      HPCENVSHORT=supermic 
+      HPCENVSHORT=supermic
    fi
    if [[ ${fqdn:0:2} = "ht" ]]; then
       HPCENV=hatteras.renci.org
       HPCENVSHORT=hatteras
-   fi 
+   fi
    if [[ ${fqdn:0:5} = "jason" ]]; then
       HPCENV=desktop.seahorsecoastal.com
       HPCENVSHORT=desktop
-   fi 
+   fi
    # this whole function will be replaced with guess, but for now ...
    if [[ $HPCENVSHORT = "null" ]]; then
       plat=`$WORK/asgs/bin/guess platform`
@@ -683,7 +627,7 @@ env_dispatch() {
  HPCENVSHORT=$1
  THIS="platforms.sh>env_dispatch()"
  scenarioMessage "$THIS: Initializing settings for ${HPCENVSHORT}."
- echo "$THIS: Initializing settings for ${HPCENVSHORT}."
+ echo "(info)    $THIS: Initializing settings for ${HPCENVSHORT}."
  case $HPCENVSHORT in
   "pod") allMessage "$THIS: POD (Penguin) configuration found."
           init_pod
@@ -729,7 +673,7 @@ env_dispatch() {
            ;;
   "vagrant") allMessage "$THIS: vagrant configuration found."
           init_vagrant
-           ;; 
+           ;;
   "docker") allMessage "$THIS: docker configuration found."
           init_docker
            ;;

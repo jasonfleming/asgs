@@ -62,6 +62,14 @@ case "$platform" in
     SCRATCH=${SCRATCH:-/scratch}
     DEFAULT_COMPILER=gfortran
     ;; 
+  rostam)
+    DEFAULT_COMPILER=gfortran
+    WORK=${WORK:-/work/$USER}
+    SCRATCH=${SCRATCH:-$WORK}
+    # <-needed for OpenMPI to compile on Rostam + gcc version 10.2.0
+    export FCFLAGS="${FCFLAGS} -fallow-argument-mismatch"
+    export FFLAGS="${FFLAGS} -fallow-argument-mismatch"
+    ;;
   hatteras)
     WORK=${WORK:-$HOME}
     SCRATCH=${SCRATCH:-"/projects/$USER"}
@@ -101,7 +109,7 @@ echo
 
 # Note: if BATCH is set, then "." is assumed and no "git checkout" is performed
 if [ -z "$BATCH" ]; then
-  read -p "Does the above system information look correct? [Y] " _looks_correct
+  read -p "Does the above system information look correct? [Y/n] " _looks_correct
   if [[ -n "$_looks_correct" && "$_looks_correct" != Y ]]; then
     echo Set up aborted. Ensure platform is supported, then try again. exiting...
     exit
@@ -117,7 +125,7 @@ if [ -z "$BATCH" ]; then
     git checkout $repo 2> /dev/null
     if [ $? -gt 0 ]; then
      echo error checking out $repo
-     read -p "skip checkout and proceed? [n] " skip
+     read -p "skip checkout and proceed? [y/N] " skip
      if [[ -z "$skip" || "$skip" = "n" ]]; then
        echo exiting ...
        exit
@@ -157,8 +165,8 @@ fi
 if [ -z "$BATCH" ]; then
   if [ -d "$installpath" ]; then
     echo
-    read -p "warning - '$installpath' exists. To prevent overwriting existing files, would you like to quit and do the needful? [y] " quit 
-    if [[ -z "$quit" || "$quit" = y ]]; then
+    read -p "(warning) - '$installpath' exists. To prevent overwriting existing files, would you like to quit and do the needful? [Y/n] " quit 
+    if [[ -z "$quit" || "$quit" = Y ]]; then
       echo exiting ...
       exit 
     fi
@@ -178,7 +186,7 @@ fi
 if [ -z "$BATCH" ]; then
   if [ -e $HOME/.asgs/default ]; then
     echo
-    read -p "warning - it appears an 'default' profile already exists from a previous installation. Is it okay to proceed and overwrite? [n] " overwrite
+    read -p "(warning) - it appears an 'default' profile already exists from a previous installation. Is it okay to proceed and overwrite? [y/N] " overwrite
     if [[ -z "$overwrite" || "$overwrite" = "no" ]]; then
       echo exiting ...
       exit

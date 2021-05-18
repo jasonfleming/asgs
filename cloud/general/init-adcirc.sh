@@ -30,6 +30,54 @@ if [ "${1}" = "clean" ]; then
   exit 0
 fi
 
+ADCIRCS=(
+"v53release"
+"v53release-qbc"
+"v53release-gfortran-10"
+"v53release-testsuite"
+"v53release-adcircpolate"
+"v55release"
+"v55release-qbc"
+"v55release-swan-gfortran"
+"v55release-swan-gfortran-10"
+)
+NUM_ADC=${#ADCIRCS[@]}
+
+_show_supported_versions()
+{
+  echo  '                                              ||ASGS Supported ADCIRC versions||'
+  echo  '/~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\'
+  echo  '|1. v53release                 | standard version traditionally used           |'
+  echo  '|2. v53release-qbc             | v53 with makefile support for LONIs qbc       |'
+  echo  '|3. v53release-gfortran-10     | v53 with makefile support for gfortran 10     |'
+  echo  '|4. v53release-testsuite       | v53 with tools supporting testsuite           |'
+  echo  '|5. v53release-adcircpolate    | v53 with required ADCIRCpolate support        |'
+  echo  '|6. v55release                 | standard version + build support for LONIs qbc|'
+  echo  '|7. v55release-swan-gfortran   | v55release with gfortran default for swan     |'
+  echo  '|8. v55release-swan-gfortran-10| v55release with gfortran 10 default for swan  |'
+  echo  '\~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~/'
+  echo
+  if [ "${1}" != "noexit" ]; then
+    # exits on error if '1' is optionally passed, defaults to 0 (no error)
+    exit ${1:-0} 
+  fi
+}
+
+_is_a_num()
+{
+  re='[1-9][0-9]?$'
+  if [[ "${1}" =~ $re ]] ; then
+    echo -n $1 
+  else
+    echo -n -1 
+  fi
+  return
+}
+
+if [ "${1}" = "supported" ]; then
+  _show_supported_versions
+fi
+
 # preconditions
 if [ -z "$ADCIRC_META_DIR" ]; then
   echo "ADCIRC_META_DIR is not set. Run interactively through asgsh or automatically via asgs-brew.pl."
@@ -51,21 +99,96 @@ fi
 
 # Ask user for preferences, but offer defaults in the present in the asgsh environment
 if [ "$INTERACTIVE" == "yes" ]; then
-  echo NOTE: ASGS generally uses the "'v53release'" version of ADCIRC. 
-  echo
+  _show_supported_versions noexit 
   # get branch/tag/sha to checkout
-  __ADCIRC_GIT_BRANCH=v53release # current preferred default
-  read -p "What git branch (or tag, commit SHA) of the ADCIRC source do you wish to build? [$__ADCIRC_GIT_BRANCH] " _ADCIRC_GIT_BRANCH
+  __ADCIRC_GIT_BRANCH=${ADCIRCS[0]} # current preferred default
+  read -p "What supported 'version' of the ADCIRC source do you wish to build (by name or select 1-${NUM_ADC})? [$__ADCIRC_GIT_BRANCH] " _ADCIRC_GIT_BRANCH
+
+  #
+#   # Handles selection by number
+  #
   if [ -n "$_ADCIRC_GIT_BRANCH" ]; then
+    echo
+    # check for number selection
+    _isnum=$(_is_a_num $_ADCIRC_GIT_BRANCH)
+    if [ $_isnum -gt -1 ]; then
+      _ADCIRC_GIT_BRANCH=${ADCIRCS[$(($_isnum-1))]} # zero indexed
+      if [ -z "$_ADCIRC_GIT_BRANCH" ]; then
+        echo "(fatal) invalid value..."
+        echo
+        exit 1
+      else
+        echo "(info) Selection: '$_ADCIRC_GIT_BRANCH'"
+      fi
+    fi
     # do not export, don't affect current environment after build
     ADCIRC_GIT_BRANCH=$_ADCIRC_GIT_BRANCH
   else
     ADCIRC_GIT_BRANCH=$__ADCIRC_GIT_BRANCH
   fi
 
+# First pass check
+  __ADCIRC_PATCHSET_BASE=${SCRIPTDIR}/patches/ADCIRC
+  PATCHSET_NAME=
+  PATCHSET_DIR=
+  case "${ADCIRC_GIT_BRANCH}" in
+    v53release|v54release)
+      #noop - branches exist "upstream"
+      ;;
+    v53release-gfortran-10)
+      PATCHSET_NAME="v53release-gfortran-10"
+      PATCHSET_DIR=${__ADCIRC_PATCHSET_BASE}/${PATCHSET_NAME}
+      # update to proper base branch
+      ADCIRC_GIT_BRANCH=v53release
+      ;;
+    v53release-qbc)
+      PATCHSET_NAME="v53release-qbc"
+      PATCHSET_DIR=${__ADCIRC_PATCHSET_BASE}/${PATCHSET_NAME}
+      # update to proper base branch
+      ADCIRC_GIT_BRANCH=v53release
+      ;;
+    v53release-adcircpolate)
+      PATCHSET_NAME="v53release-adcircpolate"
+      PATCHSET_DIR=${__ADCIRC_PATCHSET_BASE}/${PATCHSET_NAME}
+      # update to proper base branch
+      ADCIRC_GIT_BRANCH=v53release
+      ;;
+    v53release-testsuite)
+      PATCHSET_NAME="v53release-testsuite"
+      PATCHSET_DIR=${__ADCIRC_PATCHSET_BASE}/${PATCHSET_NAME}
+      # update to proper base branch
+      ADCIRC_GIT_BRANCH=v53release
+      ;;
+    v55release)
+      PATCHSET_NAME="v55release"
+      PATCHSET_DIR=${__ADCIRC_PATCHSET_BASE}/${PATCHSET_NAME}
+      # update to proper base branch
+      ADCIRC_GIT_BRANCH=92ccdb974b7fb150 # v55release
+      ;;
+    v55release-swan-gfortran)
+      PATCHSET_NAME="v55release-swan-gfortran"
+      PATCHSET_DIR=${__ADCIRC_PATCHSET_BASE}/${PATCHSET_NAME}
+      # update to proper base branch
+      ADCIRC_GIT_BRANCH=92ccdb974b7fb150 # v55release
+      ;;
+    v55release-swan-gfortran-10)
+      PATCHSET_NAME="v55release-swan-gfortran-10"
+      PATCHSET_DIR=${__ADCIRC_PATCHSET_BASE}/${PATCHSET_NAME}
+      # update to proper base branch
+      ADCIRC_GIT_BRANCH=92ccdb974b7fb150 # v55release
+      ;;
+    *)
+      echo "ADCIRC 'version' '${ADCIRC_GIT_BRANCH}' is not officially supported at this time."
+      exit 1
+  esac
+
   echo
   # determine what to name the ADCIRC profile
-  __ADCIRC_PROFILE_NAME=$ADCIRC_GIT_BRANCH-$ADCIRC_COMPILER
+  if [ -n "$PATCHSET_NAME" ]; then
+    __ADCIRC_PROFILE_NAME=${PATCHSET_NAME}-${ADCIRC_COMPILER}
+  else
+    __ADCIRC_PROFILE_NAME=${ADCIRC_GIT_BRANCH}-${ADCIRC_COMPILER}
+  fi
   read -p "What would you like to name this ADCIRC build profile? [$__ADCIRC_PROFILE_NAME] " _ADCIRC_PROFILE_NAME
   if [ -n "$_ADCIRC_PROFILE_NAME" ]; then
     ADCIRC_PROFILE_NAME=$_ADCIRC_PROFILE_NAME
@@ -76,18 +199,38 @@ if [ "$INTERACTIVE" == "yes" ]; then
 
   # determine where to look for source directory or checkout git repo for the build
   if [ -e "$WORK" ]; then
-    __ADCIRCBASE=$WORK/adcirc-cg-$ADCIRC_PROFILE_NAME
+    __ADCIRCBASE=${WORK}/adcirc-cg-${ADCIRC_PROFILE_NAME}
   else
-    __ADCIRCBASE=$ASGS_HOME/adcirc-cg-$ADCIRC_PROFILE_NAME
+    __ADCIRCBASE=${ASGS_HOME}/adcirc-cg-${ADCIRC_PROFILE_NAME}
   fi
-  read -p "In what directory would you like to build ADCIRC? [$__ADCIRCBASE] " _ADCIRCBASE
-  if [ -n "$_ADCIRCBASE" ]; then
+  read -p "In what directory would you like to build ADCIRC? [${__ADCIRCBASE}] " _ADCIRCBASE
+  if [ -n "${_ADCIRCBASE}" ]; then
     ADCIRCBASE=$_ADCIRCBASE
   else
     ADCIRCBASE=$__ADCIRCBASE
   fi
   echo
 fi
+
+  ADCIRCDIR=${ADCIRCBASE}/work
+  # deal with SWAN coupling build based on supported ADCIRC branches (versions):
+  # and potential patching of ADCIRC or SWAN
+  __ADCIRC_PATCHSET_BASE=${SCRIPTDIR}/patches/ADCIRC
+  case "${ADCIRC_GIT_BRANCH}" in
+    v53release|v53release-qbc|v53release-gfortran-10|v53release-adcircpolate)
+      SWANDIR=${ADCIRCBASE}/swan
+      ;;
+    v54release)
+      SWANDIR=${ADCIRCBASE}/swan
+      ;;
+    v55release|v55release-swan-gfortran|v55release-swan-gfortran-10|92ccdb974b7fb150)
+      # Note v55release = sha256:92ccdb974b7fb150bb42b2536fce4d8c0bcee726
+      SWANDIR=${ADCIRCBASE}/thirdparty/swan
+      ;;   
+    *)
+      echo Branch \"${ADCIRC_GIT_BRANCH}\" is not officially supported at this time. 
+      exit 1
+  esac
 
 # meant to be run under the asgs-brew.pl environment
 # looks for:
@@ -119,7 +262,7 @@ if [ ! -d ${ADCIRCBASE} ]; then
       answer=$_answer
     fi
     if [ "$answer" != 'yes' ]; then
-      echo 'no directory was created. Exiting install.'
+      echo '(fatal) no directory was created. Exiting install.'
       exit
     fi
     echo
@@ -140,7 +283,6 @@ if [ ! -d ${ADCIRCBASE}/.git ]; then
       echo
       git clone ${ADCIRC_GIT_URL}/${ADCIRC_GIT_REPO}.git ${ADCIRCBASE}
     fi
-    echo
   fi
 else
   echo "$ADCIRCBASE appears to already contain a git repository."
@@ -150,7 +292,7 @@ fi
 # requested is available locally (via origin or any other manually
 # added remotes (see, git remote --help for more information)
 if [ ! -d "$ADCIRCBASE" ]; then
-  echo "$ADCIRCBASE not found. Exiting install."
+  echo "(fatal) $ADCIRCBASE not found. Exiting install."
   exit 1
 else
   cd ${ADCIRCBASE}
@@ -174,41 +316,59 @@ if [ -d "$ADCIRCBASE/.git" ]; then
   if [ "$do_checkout" == "yes" ]; then
     CURRENT_BRANCH=$(git branch | egrep '^\*' | awk '{ print $2 }')
     if [ "${ADCIRC_GIT_BRANCH}" != "${CURRENT_BRANCH}" ]; then
-      git checkout ${ADCIRC_GIT_BRANCH}
+      git config advice.detachedHead=false
+      git -c advice.detachedHead=false checkout ${ADCIRC_GIT_BRANCH}
       EXIT=$?
       if [ $EXIT -gt 0 ]; then
-        echo "error checking out git repository. Exiting ($EXIT)."
+        echo "(fatal) error checking out git repository. Exiting ($EXIT)."
         exit $EXIT
-      fi
-      # check to make sure we're really on the desired branch
-      CURRENT_BRANCH=$(git branch | egrep '^\*' | awk '{ print $2 }')
-      if [ "${ADCIRC_GIT_BRANCH}" != "${CURRENT_BRANCH}" ]; then
-        echo "git branch in $ADCIRCBASE isn't '$ADCIRC_GIT_BRANCH' (currently '$CURRENT_BRANCH')"
-        exit 1
       fi
     fi
   fi
 fi
 
-ADCIRCDIR=${ADCIRCBASE}/work
-
-# deal with SWAN coupling build based on supported ADCIRC branches (versions):
-case "${ADCIRC_GIT_BRANCH}" in
-  v53release|v53release-qbc|v54release)
-    SWANDIR=${ADCIRCBASE}/swan
-    ;;
-  v55release|v55release-qbc)
-    SWANDIR=${ADCIRCBASE}/thirdparty/swan
-    ;;   
-  *)
-    echo Branch \"${ADCIRC_GIT_BRANCH}\" is not officially supported at this time. 
-    exit 1
-esac
-
 # final check to make sure it looks like the expected ADCIRC source
 if [ ! -d "$ADCIRCDIR" ]; then
-  echo "$ADCIRCDIR is missing the './work' directory. Exiting install."
+  echo "(fatal) $ADCIRCDIR is missing the './work' directory. Exiting install."
   exit 1
+fi
+
+# ~ A P P L Y  P A T C H S E T ~
+#
+# Notes:
+# 1. Fails if patchset is define, but directory doesn't exit
+# 2. Informs and skips patching if patches have already been applied
+# 3. Adding a patch set is not too difficult, but is not done here; look "up"
+#
+PTOUCH="$(pwd)/${ADCIRC_GIT_BRANCH}-applied.out"
+if [ -n "${PATCHSET_DIR}" ]; then
+  if [ -e "${PTOUCH}" ]; then
+    echo "(info) patches already applied, skipping ..."
+  else
+    if [ ! -d "${PATCHSET_DIR}" ]; then
+      echo "(fatal) patch set directory not found. Exiting."
+      exit 1
+    fi
+    echo
+    echo applying patches from $PATCHSET_DIR ...
+    # apply from perspective of $ADCIRCBASE, since it's possible we could also
+    # be patching in a third party directory
+    pCOUNT=1
+    for diff in $(find ${PATCHSET_DIR} -type f  | sort -n); do
+      printf "patch %02d - applying %s\n" $pCOUNT $diff
+      OUT=$(patch -p1 < $diff 2>&1)
+      EXIT=$?
+      if [ $EXIT -gt 0 ]; then
+        echo $OUT
+        echo "(fatal) error applying patch: $diff"
+        echo Exiting.
+        exit $EXIT
+      fi
+      _app_date=$(date "+%D %T %Z")
+      echo "$_app_date $diff" >> $PTOUCH
+      pCOUNT=$((pCOUNT+1))
+    done
+  fi
 fi
 
 if [ "$INTERACTIVE" = "yes" ]; then

@@ -4,18 +4,18 @@
 #----------------------------------------------------------------------------
 #PBS -N %jobtype%.%scenario%
 #PBS -l walltime=%walltime%
-#PBS -l nodes=%nnodes%:ppn=%ppn% 
+#PBS -l nodes=%nnodes%:ppn=%ppn%
 #PBS -q %queuename%
 #PBS -A %account%
 #PBS -o %advisdir%/%scenario%/%jobtype%.out
 #PBS -V
-#PBS -j oe  
-#PBS -m a   
+#PBS -j oe
+#PBS -m a
 #PBS -M %notifyuser%
 #SBATCH --job-name="%jobtype%.%scenario%"
 #SBATCH --time=%walltime%
-#SBATCH --ntasks-per-node=%ppn% 
-#SBATCH --ntasks=%totalcpu% 
+#SBATCH --ntasks-per-node=%ppn%
+#SBATCH --ntasks=%totalcpu%
 #SBATCH --nodes=%nnodes%
 #SBATCH --partition=%queuename%
 #SBATCH --reservation=%reservation%
@@ -28,7 +28,7 @@
 echo "------------------------------------------------------------------------"
 #
 #----------------------------------------------------------------------------
-#  I N I T I A L I Z E   D I R E C T O R Y   A N D   F I L E   N A M E S 
+#  I N I T I A L I Z E   D I R E C T O R Y   A N D   F I L E   N A M E S
 #----------------------------------------------------------------------------
 THIS=%jobtype%.%queuesyslc%  # name of this script for use in log messages
 SCRIPTDIR=%scriptdir%
@@ -43,36 +43,12 @@ SCENARIOLOG=$SCENARIODIR/scenario.log
 cd $SCENARIODIR 2> >(awk -v this=$THIS -v level=ERROR -f $SCRIPTDIR/monitoring/timestamp.awk | tee -a $SYSLOG | tee -a $CYCLELOG | tee -a $SCENARIOLOG )
 #
 #----------------------------------------------------------------------------
-#            C R E A T E   J O B   E N V I R O N M E N T      
-#----------------------------------------------------------------------------
-# Note: we don't want to load modules that are not already present in the asgsh
-# environment in the queue script
-if [ -z "$_ASGSH_PID" ]; then
-  module purge
-  %platformmodules%
-  %jobmodules%
-else
-  echo "asgsh environment detected, not loading unexpected modules; if you need"
-  echo "an environment provided by a module, please load it inside of asgsh"
-  echo "directly before running asgs_main.sh or submitting a job to the queues"
-fi
-module list
-
-# source scripts to set required PATH and LD_LIBRARY_PATH
-declare -a JOBENV
-JOBENV=%jobenv%
-for script in ${JOBENV[*]}; do
-   source %jobenvdir%/$script
-done
-THIS=%jobtype%.%queuesyslc%  # reset script name for use in log messages
-#
-#----------------------------------------------------------------------------
 #        L O G   M E S S A G E S   T O   S T A R T   T H E   J O B
 #----------------------------------------------------------------------------
 echo "Starting $THIS in $SCENARIODIR with %queuesys% Job ID ${%JOBID%}; %queuesys% submit directory ${%JOBDIR%}; and %queuesys% submit host ${%JOBHOST%}."  2>&1 | awk -v this=$THIS -v level=INFO -f $SCRIPTDIR/monitoring/timestamp.awk | tee --append $SCENARIOLOG | tee --append $CYCLELOG | tee --append $SYSLOG | tee --append %jobtype%.%scenario%.run.start
 # record which cluster nodes we have to scenario.log
-echo "INFO: $THIS: %JOBNODES%: $%JOBNODES%" 
-echo "INFO: $THIS: hostname: "`hostname` 
+echo "INFO: $THIS: %JOBNODES%: $%JOBNODES%"
+echo "INFO: $THIS: hostname: "`hostname`
 echo "INFO: $THIS: PATH : $PATH"
 echo "INFO: $THIS: LD_LIBRARY_PATH : $LD_LIBRARY_PATH"
 #
@@ -83,21 +59,20 @@ echo "INFO: $THIS: LD_LIBRARY_PATH : $LD_LIBRARY_PATH"
 DATETIME=`date +'%Y-%h-%d-T%H:%M:%S%z'`
 echo "time.hpc.job.%jobtype%.start : $DATETIME" >> run.properties
 echo "hpc.job.%jobtype%.jobid : ${%JOBID%}" >> run.properties
-#PBS_JOB_NODELIST=`cat $%JOBNODES%`
-echo "hpc.job.%jobtype%.nodelist : ( $%JOBNODES% )" >> run.properties
+echo "hpc.job.%jobtype%.nodelist : ( %JOBNODES% )" >> run.properties
 echo "hpc.job.%jobtype%.hostname : $HOSTNAME" >> run.properties
 echo "hpc.job.%jobtype%.qnnodes : $%JOBNNODES%" >> run.properties
-echo "hpc.job.%jobtype%.qntasks-per-node : $%JOBNTASKSPERNODE%" >> run.properties 
+echo "hpc.job.%jobtype%.qntasks-per-node : $%JOBNTASKSPERNODE%" >> run.properties
 echo "hpc.job.%jobtype%.qntasks : $%JOBNTASKS%" >> run.properties
 echo "hpc.job.%jobtype%.joblog : %advisdir%/%scenario%/%jobtype%.out" >> run.properties
 #
 #----------------------------------------------------------------------------
 #                  E X E C U T E   T H E   J O B
 #----------------------------------------------------------------------------
-# log the command to run 
+# log the command to run
 CMD="%cmd%"
 echo "cycle $CYCLE: $SCENARIO: $THIS: %jobtype%.%scenario% job ${%JOBID%} starting in $SCENARIODIR with the following command: $CMD" 2>&1 | awk -v level=INFO -v this=$THIS -f $SCRIPTDIR/monitoring/timestamp.awk | tee --append $SCENARIOLOG | tee --append $CYCLELOG | tee --append $SYSLOG | tee --append %jobtype%.%scenario%.run.start
-$CMD 
+$CMD
 #
 #----------------------------------------------------------------------------
 #           C H E C K   S T A T U S   O F   R E S U L T S

@@ -3,33 +3,33 @@
 # to users via https://hub.docker.com (pending) by ASGS
 # maintainers.
 #
-# This Dockerfile.dev has the ASGS code outside the container 
-# to enable development of ASGS as well as the 
+# This Dockerfile.dev has the ASGS code outside the container
+# to enable development of ASGS as well as the
 # simultaneous installation and use of different versions
 # of ASGS as well as installation alongside an ASGS that has
 # been directly installed on a host machine (i.e., without
 # the use of Docker).
 #
-# The idea behind this Dockerfile.dev is that the containers 
+# The idea behind this Dockerfile.dev is that the containers
 # are ephemeral but the ASGS source code should be persistent.
-# This is a different goal than the main Dockerfile which is 
-# meant to encapsulate absolutely everything that is needed 
-# for deployment, since it won't need to be modified in production. 
+# This is a different goal than the main Dockerfile which is
+# meant to encapsulate absolutely everything that is needed
+# for deployment, since it won't need to be modified in production.
 #
-# As a result, this image also doesn't contain ADCIRC 
+# As a result, this image also doesn't contain ADCIRC
 # source or binaries; run `initadcirc` in ASGS Shell to
 # obtain. It also doesn't contain ASGS source or binaries;
-# the ASGS repository is cloned and edited outside the 
-# container and then built inside the container. Running ASGS 
+# the ASGS repository is cloned and edited outside the
+# container and then built inside the container. Running ASGS
 # for nowcast/forecast cycles will require entering the
-# container and using asgsh as asgsuser.  
+# container and using asgsh as asgsuser.
 #
 # Step by step instructions
 #
-# Make a directory where you want to work on ASGS code 
-# (using sudo if necessary, and possibly needing to 
+# Make a directory where you want to work on ASGS code
+# (using sudo if necessary, and possibly needing to
 # chown to $USER and chgrp to something appropriate):
-# 
+#
 #   mkdir -p /srv/work/asgs.dev
 #
 # Make directory where you want the nowcasts and forecasts
@@ -42,11 +42,11 @@
 #
 #   mkdir -p ${HOME}/asgsuser/asgs.dev
 #
-# For now, copy the ${HOME}/asgs-global.conf file and 
+# For now, copy the ${HOME}/asgs-global.conf file and
 # ${HOME}/.ssh subdirectory to ${HOME}/asgsuser/asgs.dev
-# (this step will eventually be replaced by injecting 
-# environment variables every time the container is 
-# instantiated) ... make sure both these files are 
+# (this step will eventually be replaced by injecting
+# environment variables every time the container is
+# instantiated) ... make sure both these files are
 # up to date, and redo this step if these files change :
 #
 #   cp ${HOME}/asgs-global.conf ${HOME}/asgsuser/asgs.dev
@@ -54,10 +54,10 @@
 #   cp -a ${HOME}/.ssh ${HOME}/asgsuser/asgs.dev
 #
 # Git credentials are not needed in the container since
-# the ASGS and ADCIRC source files will be edited, 
+# the ASGS and ADCIRC source files will be edited,
 # committed, and push/pulled outside the container.
 # In contrast, any building, rebuilding, or execution of
-# ADCIRC and ASGS will have to be done inside the container.  
+# ADCIRC and ASGS will have to be done inside the container.
 #
 # Go to the directory where you want to work on the code
 # and clone the repository :
@@ -65,22 +65,24 @@
 #   cd /srv/work/asgs.dev && git clone https://github.com/jasonfleming/asgs
 #
 # Switch to your development branch (if necessary)
-# 
+#
 #   git checkout mybranch  # (if necessary)
 #
 # Either pull the asgs.dev.image from dockerhub (not yet) or build it :
 #
 #   # get from dockerhub (FIXME: not yet)
-#   FIXME (not yet): docker pull asgsdockerhub/master    
+#   FIXME (not yet): docker pull asgsdockerhub/master
 #
-#     or 
+#     or
 #
-#     cd ./asgs/cloud/general && docker build . --file Dockerfile.dev -t asgs.dev.image
-# 
+#     cd ./asgs/cloud/Dockerfiles && docker build . --no-cache=true --file Dockerfile.dev -t asgs.dev.image
+#
+# The --no-cache=true option prevents the use of the Docker cache and
+# so that 'RUN apt-get update' works properly.
 # This image expects its containers to have /work /scratch and
 # /home/asgsuser mounted to appropriate places on the command line
 # that instantiated the container. These locations have the
-# following meaning : 
+# following meaning :
 #
 # /work           where the ASGS source/scripts/executables directory
 #                 is found (i.e., it looks for the asgs dir there)
@@ -88,13 +90,13 @@
 # /scratch        where the ASGS runs and produces
 #                 input and output for nowcasts and forecasts
 #
-# /home/asgsuser  where the asgsh installation artifacts are stored  
+# /home/asgsuser  where the asgsh installation artifacts are stored
 #                 (like /home/asgsuser/bin/asgsh etc) and where
 #                 configuration (like ~/.ssh and ~/asgs-global.conf)
-#                 artifacts are found (for now ... this will be 
+#                 artifacts are found (for now ... this will be
 #                 replaced by passing env vars in the future)
 #
-# This can be accomplished with something like the following:  
+# This can be accomplished with something like the following:
 #
 #    docker run --rm                                            \
 #               --name asgs.dev                                 \
@@ -113,7 +115,7 @@
 #               -v /srv/scratch/asgs.dev:/scratch               \
 #               -v /home/jason/asgsuser/asgs.dev:/home/asgsuser \
 #               -v /home/jason:/project01                       \
-#               -v /media/jason/Drobo:/project02                \ 
+#               -v /media/jason/Drobo:/project02                \
 #               -v /media/jason/47a495f2-907a-4561-9ccd-d5ec5ae60ddc:/project03 \
 #               -t asgs.dev.image
 #
@@ -121,11 +123,11 @@
 # additional configuration and secrets to the container to deal with
 # ssh configuration and asgs-global.conf etc ... for now we are just
 # just copying these files manually. This manual copying can happen
-# before or after starting the container but must happen before 
-# starting asgsh inside the container. 
+# before or after starting the container but must happen before
+# starting asgsh inside the container.
 #
 # Then you can get into the running container via the following:
-# 
+#
 #    docker exec -i -t asgs.dev /bin/bash
 #
 # From there, build/install ASGS and ADCIRC the usual way. For more.
@@ -133,29 +135,29 @@
 #
 #    https://hub.docker.com/repository/docker/asgsdockerhub/asgs
 #
-# After building ASGS and ADCIRC, the final step is to copy the 
+# After building ASGS and ADCIRC, the final step is to copy the
 # bash startup files to the new home directory (the originals
-# cannot be used because we have mounted over them with our 
-# specially named home directory). 
+# cannot be used because we have mounted over them with our
+# specially named home directory).
 #
 # While still inside the container :
-# 
-#   cd /home/asgsuser
-#   cp /etc/skel/.bash_logout . 
-#   cp /etc/skel/.bashrc . 
-#   cp /etc/skel/.profile .
-#   echo "export PATH=${PATH}:/home/asgsuser/bin" >> ~/.bashrc  
 #
-#   to enable the use of git while inside the container, fill in 
+#   cd /home/asgsuser
+#   cp /etc/skel/.bash_logout .
+#   cp /etc/skel/.bashrc .
+#   cp /etc/skel/.profile .
+#   echo "export PATH=${PATH}:/home/asgsuser/bin" >> ~/.bashrc
+#
+#   to enable the use of git while inside the container, fill in
 #   your name and email address :
 #   cd /work/asgs && git config --global user.email "<<me@noemail>>" && git config --global user.name "<<my.name>>"
 #
 #
-# After following this process of installation, you will be able 
+# After following this process of installation, you will be able
 # to stop and start containers from this image and the installation
-# files and Operator/Machine configuration will still be there 
-# for you. :-) 
-# 
+# files and Operator/Machine configuration will still be there
+# for you. :-)
+#
 # ----------------------------------------------------
 #
 # using xenial because newer versions of Ubuntu come
@@ -166,10 +168,11 @@ FROM ubuntu:xenial
 RUN apt-get update
 
 # install require libraries and tools
-RUN apt-get install -y build-essential checkinstall
+RUN apt-get install -y build-essential checkinstall pkg-config
 RUN apt-get install -y zlib1g-dev libssl-dev libexpat1-dev
-RUN apt-get install -y gfortran wget curl vim screen htop tmux git sudo
-RUN apt-get install -y zip
+RUN apt-get install -y gfortran wget curl vim screen htop tmux git sudo bc
+RUN apt-get install -y zip flex
+RUN apt-get install -y libgd-dev
 
 # symlink for /bin/env
 RUN ln -s /usr/bin/env /bin/env > /dev/null 2>&1 || echo /usr/bin/env already links to /bin/env
@@ -184,7 +187,7 @@ RUN useradd -ms /bin/bash asgsuser
 RUN echo "asgsuser ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # set up WORK and SCRATCH targets to emulate how most other systems
-# break up their disk space domains. 
+# break up their disk space domains.
 RUN mkdir /work && mkdir /scratch
 
 # I've added project directories so the Operator can mount

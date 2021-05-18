@@ -1,0 +1,45 @@
+-89.321943  30.327307     !   8747437  Bay Waveland Yacht Club   MS  NOAA_NOS                 -nld 7-11-12 moved from -89.3258 30.3264 so stays wet
+-93.3007 30.1903      !   8767961  Bulk Terminal   LA  NOAA_NOS 
+-93.3429 29.7682      !   8768094  Calcasieu Pass  LA  NOAA_NOS 
+-90.1355 29.9329      !   8761955  Carrollton  LA  NOAA_NOS 
+-88.04596 30.63918    !   8736897  Coast Guard Sector Mobile   AL  NOAA_NOS                              -- nld 6-29-09 moved from  -88.0583 30.6483  
+-91.8800 29.7134      !   8765251  Cypremort Point   LA  NOAA_NOS                                     
+-88.071023 30.250663  !   8735180  Dauphin Island  AL  NOAA_NOS                                         -- nld 6-29-09 moved from  -88.0750 30.2500   
+-90.367792  30.057955      !   8762372  *East Bank 1 - Norco - B. LaBranche   LA  NOAA_NOS           --nld 7-11-2012 moved from -90.3680 30.0503 into lake so stays wet, B. LaBranche not resolved          ??  
+-92.3050 29.5550      !   8766072  Freshwater Canal Locks  LA  NOAA_NOS                               
+-89.960729 29.266989  !   8761724  Grand Isle  LA  NOAA_NOS                                             -- nld 6-29-09 moved from  -89.9567 29.2633       
+-89.0817 30.3600      !   8745557  Gulfport Harbor   MS  NOAA_NOS                                     
+-93.223270  30.223774      !   8767816  Lake Charles  LA  NOAA_NOS                                   --nld 7-11-2012  moved from -93.2217 30.2236 into lake       
+-91.3381 29.4496      !   8764227  LAWMA - Amerada Pass  LA  NOAA_NOS                                 
+-90.111086  30.029446   !   8761927  New Canal Station   LA  NOAA_NOS                               --nld 7-11-2012 moved from -90.11309 30.026204  into wet eleme in lake       -- nld 6-29-09 moved from  -90.1134 30.0272        
+-89.4067 28.9317      !   8760922  Pilots Station East - SW Pass   LA  NOAA_NOS                       
+-93.931239  29.866856      !   8770475  Port Arthur   TX  NOAA_NOS                                       --nld 7-11-2012 moved from -93.9300 29.8667 to wet elem in channel  
+-90.208187 29.112673  !   8762075  Port Fourchon   LA  NOAA_NOS                                          -- nld 6-29-09 moved from  -90.1992 29.1142        
+-93.881713  29.980675      !   8770520  *Rainbow Bridge   TX  NOAA_NOS                                   --nld 7-11-2012 moved from -93.8817 29.9800  to wet elem in channel      -- nld 6-29-09 water body not resolved            ??  
+-93.8701 29.7284      !   8770570  Sabine Pass North   TX  NOAA_NOS                                   
+-89.67301 29.87021    !   8761305  Shell Beach   LA  NOAA_NOS  NOAA_NOS                                  -- nld 6-29-09 moved from  -89.6732 29.8681      
+-91.2376 29.6675      !   8764044  Tesoro Marine Terminal  LA  NOAA_NOS                               
+-90.43477 29.78621    !   8762482  West Bank 1 - Bayou Gauche  LA  NOAA_NOS                             -- nld 6-29-09 moved from  -90.4202 29.7886       
+-91.2110 29.6940      !   MCGL1  Atchafalaya River at Morgan City  LA  NOAA_RFS                       
+-91.4460 29.8930      !   GNDL1  Atchafalaya River at Myette Point   LA  NOAA_RFS                     
+-93.1446 30.2902      !   OTBL1  *Calcasieu River at Old Town Bay  LA  NOAA_RFS                          -- nld 6-29-09 water body not resolved            ?? 
+-93.217280  30.253399      !   LCHL1  *Calcasieu River at Saltwater Barrier   LA  NOAA_RFS                --nld 7-11-2012  moved from -93.2183 30.2533 to upstream side of barrier     -- which side of barrier                          ??  
+-92.5903 30.1897      !   MRML1  *Mermentau River 2 S Mermentau  LA  NOAA_RFS                            -- nld 6-29-09 Mermentau not resolved             ?? 
+-90.583777  30.053792    !   RRVL1  Mississippi River at Reserve  LA  NOAA_RFS      --nld 7-11-2012 moved from -90.58397 30.05479 to wet elem in river      -- nld 6-29-09 moved from  -90.5830 30.0830       
+-93.7319 30.0903      !   ORNT2  *Sabine River 1.5 NE Orange   TX  NOAA_RFS                               -- nld 6-29-09 Sabine River not resolved          ??  
+-89.73717 30.16993    !   301001089442600  Rigolets at Hwy 90 near Slidell   LA  USGS                    -- nld 6-29-09 moved from  -89.7405 30.1669        
+-89.8107 30.1962      !   0738023335   Lake Pontchartrain -  I10 Turnaround near Slidell   LA  USGS 
+-89.7969 29.5711      !   01400  Mississippi River at West Point A La Hache  LA  USACE  
+-89.2465 29.1338      !   01545  Mississippi River at Head of Passes   LA  USACE  
+-89.90992 29.84569  ! 295124089542100   Caernarvon Outfall Channel at Caernarvon   LA   USGS
+-90.13000 29.47000  ! 292800090060000   Little Lake near Bay Dosgris E of Galliano   LA   USGS 
+-90.09000 29.67000  ! 82875    Barataria Waterway at Lafitte   LA   USACE
+-89.53000 29.54000  ! 07374527   Northeast Bay Gardene near Point-A-LA-Hache   LA   USGS
+-89.64000 29.53000  ! 073745258   Cow B. at American Bay near Point-A-LA-Hache   LA   USGS
+-89.87000 29.57000  ! 07380241    Suzie Bayou at L. Hermitage Rd near Deer Range   LA   USGS 
+-89.26617 30.14194  ! 3007220891501   Mississippi Sound at Grand Pass   MS   USGS
+-90.243390 29.337136  ! 82260   Bayou Lafourche At Golden Meadow Floodgate   LA   USACE    --nld mmoved from -90.24154 29.33743
+-90.091639 30.363029 ! 85575   Lake Pontchartrain at Mandeville   LA   USACE --nld 10-24-2012 moved after Scott Lincoln pointed out previous position was incorrect. this location is a bit south of actual location to keep it in wet element.:
+-89.93285 29.26176  ! 073802516   Barataria Pass at Grand Isle   LA   USGS
+-90.88696 29.03295  ! 073813498   Caillou Bay SW of Cocodrie   LA   USGS 
+-90.07482 30.03242  ! 85626   London Ave Canal 1 - ICS Lakeside   LA   USACE

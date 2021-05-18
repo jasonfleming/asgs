@@ -1,0 +1,108 @@
+diff --git a/swan/macros.inc b/swan/macros.inc
+index 0958e02..da86f43 100644
+--- a/swan/macros.inc
++++ b/swan/macros.inc
+@@ -5,7 +5,7 @@ F90_SER = gfortran
+ F90_OMP = gfortran
+ F90_MPI = mpif90
+ FLAGS_OPT = -O
+-FLAGS_MSC = -w -fno-second-underscore -ffree-line-length-none
++FLAGS_MSC = -w -fno-second-underscore -ffree-line-length-none -fallow-argument-mismatch
+ FLAGS90_MSC = $(FLAGS_MSC) -ffree-line-length-none
+ FLAGS_SER =
+ FLAGS_OMP = -fopenmp
+diff --git a/work/cmplrflags.mk b/work/cmplrflags.mk
+index 2c0eb06..ba86480 100644
+--- a/work/cmplrflags.mk
++++ b/work/cmplrflags.mk
+@@ -14,7 +14,7 @@ ifeq ($(compiler),gnu)
+   PPFC		:=  gfortran
+   FC		:=  gfortran
+   PFC		:=  mpif90
+-  FFLAGS1	:=  $(INCDIRS) -O2 -mcmodel=medium -ffixed-line-length-none -march=corei7-avx -m64 -static
++  FFLAGS1	:=  $(INCDIRS) -O2 -mcmodel=medium -ffixed-line-length-none -fallow-argument-mismatch -march=corei7-avx -m64 -static
+   FFLAGS2	:=  $(FFLAGS1)
+   FFLAGS3	:=  $(FFLAGS1)
+   DA		:=  -DREAL8 -DLINUX -DCSCA
+@@ -74,7 +74,7 @@ ifeq ($(compiler),gnu)
+   PPFC		:=  gfortran
+   FC		:=  gfortran
+   PFC		:=  mpif90
+-  FFLAGS1	:=  $(INCDIRS) -O2 -mcmodel=medium -ffixed-line-length-none -march=k8 -m64
++  FFLAGS1	:=  $(INCDIRS) -O2 -mcmodel=medium -ffixed-line-length-none -fallow-argument-mismatch -march=k8 -m64
+   FFLAGS2	:=  $(FFLAGS1)
+   FFLAGS3	:=  $(FFLAGS1)
+   DA		:=  -DREAL8 -DLINUX -DCSCA
+@@ -117,24 +117,24 @@ ifeq ($(compiler),gfortran)
+   PPFC		:=  gfortran
+   FC		:=  gfortran
+   PFC		:=  mpif90
+-  FFLAGS1	:=  $(INCDIRS) -O2 -ffixed-line-length-none 
++  FFLAGS1	:=  $(INCDIRS) -O2 -ffixed-line-length-none -fallow-argument-mismatch 
+   ifeq ($(PROFILE),enable)
+-    FFLAGS1	:=  $(INCDIRS) -pg -O0 -fprofile-arcs -ftest-coverage -ffixed-line-length-none 
++    FFLAGS1	:=  $(INCDIRS) -pg -O0 -fprofile-arcs -ftest-coverage -ffixed-line-length-none -fallow-argument-mismatch 
+   endif
+   ifeq ($(DEBUG),full)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fbacktrace -fbounds-check -ffpe-trap=zero,invalid,overflow,denormal -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND -DDEBUG_WARN_ELEV
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fallow-argument-mismatch -fbacktrace -fbounds-check -ffpe-trap=zero,invalid,overflow,denormal -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND -DDEBUG_WARN_ELEV
+   endif
+   ifeq ($(DEBUG),compiler-warnings)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -Wall -Wextra -ffixed-line-length-none -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -Wall -Wextra -ffixed-line-length-none -fallow-argument-mismatch -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK
+   endif
+   ifeq ($(DEBUG),full-not-warnelev)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fbacktrace -fbounds-check -ffpe-trap=zero,invalid,overflow,denormal -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND 
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fallow-argument-mismatch -fbacktrace -fbounds-check -ffpe-trap=zero,invalid,overflow,denormal -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND 
+   endif
+   ifeq ($(DEBUG),full-not-fpe)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fbacktrace -fbounds-check -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fallow-argument-mismatch -fbacktrace -fbounds-check -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND
+   endif
+   ifeq ($(DEBUG),trace)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fbacktrace -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fallow-argument-mismatch -fbacktrace -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK
+   endif
+ #  ifneq ($(MACHINENAME),jason-desktop)
+ #     FFLAGS1 := $(FFLAGS1) -fno-underscoring
+@@ -836,7 +836,7 @@ ifeq ($(compiler),circleci)
+   PPFC		:=  gfortran
+   FC		:=  gfortran
+   PFC		:=  mpif90
+-  FFLAGS1	:=  $(INCDIRS) -O0 -g -mcmodel=medium -ffixed-line-length-none -m64
++  FFLAGS1	:=  $(INCDIRS) -O0 -g -mcmodel=medium -ffixed-line-length-none -fallow-argument-mismatch -m64
+   FFLAGS2	:=  $(FFLAGS1)
+   FFLAGS3	:=  $(FFLAGS1)
+   DA		:=  -DREAL8 -DLINUX -DCSCA
+@@ -997,24 +997,24 @@ ifeq ($(compiler),gfortran)
+   PPFC		:=  gfortran
+   FC		:=  gfortran
+   PFC		:=  mpif90
+-  FFLAGS1	:=  $(INCDIRS) -O2 -ffixed-line-length-none 
++  FFLAGS1	:=  $(INCDIRS) -O2 -ffixed-line-length-none -fallow-argument-mismatch 
+   ifeq ($(PROFILE),enable)
+-    FFLAGS1	:=  $(INCDIRS) -pg -O0 -fprofile-arcs -ftest-coverage -ffixed-line-length-none 
++    FFLAGS1	:=  $(INCDIRS) -pg -O0 -fprofile-arcs -ftest-coverage -ffixed-line-length-none -fallow-argument-mismatch 
+   endif
+   ifeq ($(DEBUG),full)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fbacktrace -fbounds-check -ffpe-trap=zero,invalid,overflow,denormal -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND -DDEBUG_WARN_ELEV
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fallow-argument-mismatch -fbacktrace -fbounds-check -ffpe-trap=zero,invalid,overflow,denormal -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND -DDEBUG_WARN_ELEV
+   endif
+   ifeq ($(DEBUG),compiler-warnings)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -Wall -Wextra -ffixed-line-length-none -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -Wall -Wextra -ffixed-line-length-none -fallow-argument-mismatch -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK
+   endif
+   ifeq ($(DEBUG),full-not-warnelev)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fbacktrace -fbounds-check -ffpe-trap=zero,invalid,overflow,denormal -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND 
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fallow-argument-mismatch -fbacktrace -fbounds-check -ffpe-trap=zero,invalid,overflow,denormal -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND 
+   endif
+   ifeq ($(DEBUG),full-not-fpe)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fbacktrace -fbounds-check -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fallow-argument-mismatch -fbacktrace -fbounds-check -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK -DDEBUG_HOLLAND
+   endif
+   ifeq ($(DEBUG),trace)
+-    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fbacktrace -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK
++    FFLAGS1	:=  $(INCDIRS) -g -O0 -ffixed-line-length-none -fallow-argument-mismatch -fbacktrace -DALL_TRACE -DFLUSH_MESSAGES -DFULL_STACK
+   endif
+   ifneq ($(MACHINENAME),jason-desktop)
+      FFLAGS1 := $(FFLAGS1) -fno-underscoring

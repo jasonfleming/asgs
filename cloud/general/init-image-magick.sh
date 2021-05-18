@@ -4,7 +4,7 @@ OPT=${1-$ASGS_INSTALL_PATH}
 JOBS=${2-$ASGS_MAKEJOBS}
 TMP=/tmp/$USER-asgs
 
-IMAGEMAGICK_VERSION="7.0.10-57"
+IMAGEMAGICK_VERSION="7.0.11-10"
 
 if [ "$2" == "clean" ]; then 
   echo Cleaning Image Magick libraries and utilities
@@ -53,12 +53,6 @@ cd ImageMagick-$IMAGEMAGICK_VERSION
 
 export CC=gcc
 export MAGICK_HOME=$ASGS_INSTALL_PATH
-
-# apply patches to Makefile.PL.in files before ./configure is run
-echo Patching Makefile.PL.in files ...
-patch ./PerlMagick/Makefile.PL.in $SCRIPTDIR/patches/ImageMagick-7/PerlMagic/Makefile.PL.in.patch
-patch ./PerlMagick/default/Makefile.PL.in $SCRIPTDIR/patches/ImageMagick-7/PerlMagic/default/Makefile.PL.in.patch
-patch ./PerlMagick/quantum/Makefile.PL.in $SCRIPTDIR/patches/ImageMagick-7/PerlMagic/quantum/Makefile.PL.in.patch
 
 ./configure --prefix=$ASGS_INSTALL_PATH --with-gcc-arch=native --with-perl=$(which perl) \
     --without-magick-plus-plus --disable-openmp

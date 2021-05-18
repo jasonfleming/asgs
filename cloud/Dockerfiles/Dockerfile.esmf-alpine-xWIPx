@@ -1,0 +1,88 @@
+FROM alpine:latest
+
+#RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apk update
+RUN apk add alpine-sdk
+RUN apk add git
+RUN apk add tcsh
+RUN apk add gfortran
+RUN apk add netcdf
+RUN apk add netcdf-dev
+RUN apk add netcdf-fortran 
+RUN apk add netcdf-fortran-dev
+RUN apk add openmpi
+RUN apk add openmpi-dev
+RUN apk add bash
+RUN apk add vim
+RUN apk add curl
+RUN apk add wget
+RUN apk add jq
+RUN apk add zip
+RUN apk add unzip
+RUN apk add make
+RUN apk add python3
+RUN apk add zlib-dev
+RUN apk add ncurses-dev
+RUN apk add gdbm-dev
+RUN apk add nss-dev
+RUN apk add openssl-dev
+RUN apk add readline-dev
+RUN apk add libffi-dev
+RUN apk add bzip2
+RUN apk add imlib2-dev
+RUN apk add libxext
+RUN apk add libsm
+RUN apk add libxrender-dev
+
+ENV ESMF_DIR=/root/src/esmf
+ENV ESMF_INSTALL_PREFIX=/usr/local/esmf
+ENV ESMF_OS=Linux
+ENV ESMF_NETCDF="local"
+ENV ESMF_F90COMPILER=gfortran
+ENV ESMF_CXXCOMPILER=g++
+ENV ESMF_TESTEXHAUSTIVE=on
+ENV ESMF_TESTSHAREDOBJ=on
+ENV ESMF_NETCDF_INCLUDE=/usr/include
+ENV ESMF_NETCDF_LIBS="-lnetcdf -lnetcdff"
+ENV ESMF_NETCDF_LIBPATH=/usr/local/lib
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+ENV ESMF_COMM=mpiuni
+#ENV ESMF_COMM=openmpi
+ENV ESMF_ABI=64
+ENV ESMF_CONFIG_FILE=src/esmf/lib/libO/Linux.gfortran.64.mpiuni.default/esmf.mk
+
+WORKDIR /root/src
+RUN wget https://github.com/esmf-org/esmf/archive/refs/tags/ESMF_8_1_0.tar.gz
+RUN tar zxvf ESMF_8_1_0.tar.gz
+
+RUN mv esmf-ESMF_8_1_0 /root/src/esmf
+RUN cd esmf           && \
+    make all          && \
+    make install      && \
+    make installcheck
+
+WORKDIR /root/src
+RUN wget https://github.com/esmf-org/esmf/archive/refs/tags/ESMF_8_1_0.tar.gz
+RUN tar zxvf ESMF_8_1_0.tar.gz
+
+RUN mv esmf-ESMF_8_1_0 /root/src/esmf
+RUN cd esmf           && \
+    make all          && \
+    make install      && \
+    make installcheck
+
+ENV ESMF_CONFIG_FILE=/root/src/esmf/lib/libO/Linux.gfortran.64.mpiuni.default/esmf.mk
+
+WORKDIR /root
+ENV FC=mpif90
+RUN rm -f master.zip > /dev/null 2>&1
+RUN wget https://github.com/ccht-ncsu/Adcirpolate/archive/refs/heads/master.zip
+RUN rm -rf Adcirpolate-master > /dev/null 2>&1
+RUN unzip master.zip
+
+RUN apk -y install cmake
+#WORKDIR /root/Adcirpolate-master
+#RUN cmake ./CMakeLists.txt
+#RUN make all
+
+CMD [ "tail", "-f", "/dev/null" ]

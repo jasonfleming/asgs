@@ -1,0 +1,9 @@
+Patch sets are broken down by:
+
+- program (e.g., ImageMagick-7, ADCIRC)
+- if necessary, there should one additional directory hierarchy that
+  is a combined "patchset", i.e., all patches that can be applied and have
+  been grouped so there are no conflicts
+- "patchset" directories may very well contain an intersection of patches,
+  but should not be totally identical; this means that some patches will
+  be duplicated in different patchsets

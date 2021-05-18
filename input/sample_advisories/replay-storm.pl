@@ -144,6 +144,23 @@ sub update_rss {
 
     print qq{[RSS] $xml_src_file (inserted/updated) $xml_dest_file\n};
 
+    # copy .dat to $_rss_root/$ftp_hdir to allow for grabbing "ftp" via http(s) to
+    # emulate what NHC provides
+    my $_ftp_root = $config->{$storm}->{FTP_ROOT} // $config->{global}->{FTP_ROOT};
+    my $_ftp_hdir = $config->{$storm}->{FTP_HDIR} // $config->{global}->{FTP_HDIR};
+
+    # source best track
+    my $btk_src_file = sprintf( "%s/%02d.b%s%s%s.dat", $_src_path, $_index, $_basin, $_storm, $_year );
+
+    # copy btk to WWW served subdirectory
+    my $_btk_root     = sprintf( "%s%s",           $_rss_root, $_ftp_hdir );
+    my $btk_dest_file = sprintf( "%s/b%s%s%s.dat", $_btk_root, $_basin, $_storm, $_year );
+
+    # replace best track
+    File::Copy::copy $btk_src_file, $btk_dest_file;
+
+    print qq{[WWW] $btk_src_file (replaced) $btk_dest_file\n};
+
     return;
 }
 

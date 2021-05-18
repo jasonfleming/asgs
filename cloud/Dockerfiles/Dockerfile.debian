@@ -6,8 +6,8 @@ FROM debian:stretch-slim
 RUN apt-get update
 RUN apt-get install -y apt-utils build-essential checkinstall
 RUN apt-get install -y zlib1g-dev libssl-dev libexpat1-dev
-RUN apt-get install -y gfortran wget curl vim screen htop tmux git sudo
-RUN apt-get install -y zip
+RUN apt-get install -y gfortran wget curl vim screen htop tmux git sudo bc
+RUN apt-get install -y zip flex
 
 # symlink for /bin/env
 RUN ln -s /usr/bin/env /bin/env > /dev/null 2>&1 || echo /usr/bin/env already links to /bin/env
