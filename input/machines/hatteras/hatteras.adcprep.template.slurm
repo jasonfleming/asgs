@@ -47,11 +47,11 @@ module load mvapich2/2.0-acis
 #----------------------------------------------------------------------------
 cd %advisdir%/%enstorm%
 $CMD 2>&1
+ERROVALUE=$?
 # 
 #----------------------------------------------------------------------------
 #           C H E C K   S T A T U S   O F   R E S U L T S
 #----------------------------------------------------------------------------
-ERROVALUE=$?
 # FIXME: insert code to detect failures in adcprep that still allow it to 
 # finish with a normal exit code
 if [ $ERROVALUE == 0 ] ; then

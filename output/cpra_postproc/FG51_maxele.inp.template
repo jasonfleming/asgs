@@ -4,7 +4,7 @@ FOR BEST RESULTS, PLEASE KEEP COMMENTS OUT OF THE FIRST 50 CHARACTERS ON EACH LI
                                                    ! Path where GMT executables are located.
                                                    ! Path where GhostScript executable is located.
 Temp/                                              ! Path where temporary files will be created.
-%cycle%_%scenario%_maxele_
+%cycle%_namforecast_maxele_
 0,%Title%                                          ! Plot label flag and plot label.
 0,2005,8,23,18,0,0                                 ! Time bar flag: 0 to ignore, 1 to plot time bar.
 -94.00                                             ! Lat/lon box.
@@ -16,7 +16,7 @@ fort.14                                            ! Name of grid file.
 PARAMETERS FOR CONTOURS:
 1                                                  ! Contour fill flag: 0 to ignore, 1 to plot filled contours, 2 to plot differences.
 0                                                  ! Contour lines flag: 0 to ignore, 1 to plot contour lines, 2 to plot differences.
-maxele.63.nc
+%cycle%_namforecast.maxele.63.nc
 ADCIRC-OUTPUT                                      ! Contour file format flag: ADCIRC-OUTPUT, GRID-BATH/SIZE/DECOMP-#, 13-MANNING/CANOPY/TAU0/EVIS/WIND-REDUCTION(-#).
 3.280840                                           ! Unit conversion factor for contours.
 ft                                                 ! Alphanumeric label for units after conversion.
@@ -49,7 +49,7 @@ m/s                                                ! Alphanumeric label for unit
 PARAMETERS FOR OVERALL PLOT(S):
 1,Brown                                            ! Boundaries flag: 0 to ignore, 1 to plot roads/levees from grid.
 0,Gray,4,4,0.5                                     ! Coastline flag: 0 to ignore, 1 to plot coastline with color, resolution (1[Least]-4[Most]), water bodies (1[Least]-4[Most]).
-%addTrackline%,Black,fort.22.trk,1.0               ! Dots/lines flag: 0 to ignore, 1 to plot unconnected dots, 2 to plot connected line segments from an external file.
+0,Black,fort.22.trk,1.0                            ! Dots/lines flag: 0 to ignore, 1 to plot unconnected dots, 2 to plot connected line segments from an external file.
 0,labels.txt                                       ! Labels flag: 0 to ignore, 1 to plot labels from external file.
 0,TR,1.75,LSU_UCF.eps                              ! Logo flag: 0 to ignore, 1 to plot logo at position (TL,TR,BL,BR) and width (inches) from an external file.
 0,MSAL-Oceans.txt                                  ! Background images: 0 to ignore, 1 to plot geo-referenced images from a list in an external file.

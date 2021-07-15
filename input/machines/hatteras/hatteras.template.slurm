@@ -57,11 +57,11 @@ module load mvapich2/2.0-acis
 #----------------------------------------------------------------------------
 ERROMSG=""
 $CMD 
+ERROVALUE=$?  # capture exit status
 # 
 #----------------------------------------------------------------------------
 #           C H E C K   S T A T U S   O F   R E S U L T S
 #----------------------------------------------------------------------------
-ERROVALUE=$?  # capture exit status
 if [ $ERROVALUE = 0 ] ; then
    for file in adcirc.log %advisdir%/%enstorm%/%jobtype%.%enstorm%.out ; do
       if [ -e $file ]; then

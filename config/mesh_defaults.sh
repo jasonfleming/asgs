@@ -655,6 +655,34 @@ case $GRIDNAME in
       FORECASTWALLTIME="07:00:00" # forecast wall clock time
       UNITOFFSETFILE=null
       ;;
+   "PRVI15")
+      #
+      INPUTDIR=$SCRIPTDIR/input/meshes/PRVI
+      GRIDFILE=PRVI15_fort.14  # mesh (fort.14) file
+      MESHPROPERTIES=${GRIDFILE}.properties
+      CONTROLTEMPLATE=PRVI15_fort.15.template  # designed for 2s timestep (any adcirc version)
+      TIMESTEPSIZE=1.0            # adcirc time step size (seconds)
+      # CONTROLTEMPLATE=openwater_adcircv55.fort.15.template # designed for larger timestep (adcirc v55 only)
+      # TIMESTEPSIZE=50.0            # adcirc time step size (seconds)
+      # wind at 10m fort.15 template
+      CONTROLTEMPLATENOROUGH=PRVI15_norough_fort.15.template
+      CONTROLPROPERTIES=${CONTROLTEMPLATE}.properties
+      ELEVSTATIONS=hsofs_stations_20180907.txt
+      VELSTATIONS=$ELEVSTATIONS
+      METSTATIONS=$ELEVSTATIONS
+      NAFILE=PRVI15_fort.13
+      NAPROPERTIES=${NAFILE}.properties
+      RIVERINIT=null                          # this mesh has no rivers ...RIVERFLUX=null
+      HINDCASTRIVERFLUX=null
+      # interaction between mesh and models:
+      SWANDT=600                 # swan timestep / coupling interval (seconds)
+      # intersection between mesh, models, hpc platform, and number of compute cores:
+      HINDCASTWALLTIME="24:00:00" # hindcast wall clock time
+      ADCPREPWALLTIME="02:00:00"  # adcprep wall clock time, including partmesh
+      NOWCASTWALLTIME="07:00:00"  # longest nowcast wall clock time
+      FORECASTWALLTIME="07:00:00" # forecast wall clock time
+      UNITOFFSETFILE=null
+      ;;
    *)
       warn "cycle $CYCLE: $SCENARIO: $THIS: Mesh GRIDNAME $GRIDNAME was not recognized."
       ;;

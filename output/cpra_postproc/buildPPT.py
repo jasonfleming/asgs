@@ -41,7 +41,6 @@ fnames = ['WSE_IHNC02_USACE_76030.png',
          'WSE_LPV149_USACE_85760.png',
          'WSE_BayouBienv_USACE_76025.png',
          'WSE_WBV90_USACE_76265.png',
-         'WSE_HarveyCanalBoom_USACE_76230.png',
          'WSE_Lafitte_USACE_82875.png',
          'WSE_WBV162_USACE_82742.png',
          'WSE_WBV7274_USACE_82715.png',
@@ -72,13 +71,12 @@ staName = ['IHNC Surge Barrier East - Flood Side, LA (IHNC-02, CPRA) (76030, USA
             'Caernarvon Canal Sector Gate - South/Flood Side, LA (LPV-149, CPRA)\n(85760, USACE)',
             'Bayou Bienvenue Floodgate, LA (BayouBienv, CPRA) (76025, USACE)',
             'GIWW at West Closure Complex - Flood Side, LA (WBV-90, CPRA)\n(76265, USACE)',
-            'Harvey Canal at Boomtown Casino, LA (HarveyCanalBoom, CPRA)\n(76230, USACE)',
             'Barataria Waterway at Lafitte, LA (Lafitte, CPRA) (82875, USACE)',
             'Bayou Segnette Closure - Flood Side, LA (WBV-16.2, CPRA) (82742, USACE)',
             'Bayou Verret / W. Tie-In Sector Gate Flood Side, LA (WBV-72/74, CPRA)\n(82715, USACE)',
             'Hero Canal Stop-Log Gate - Flood Side/West, LA (WBV-09b, CPRA)\n(82762, USACE)',
             'MS River at Empire Floodgate, LA (NOV-13, CPRA) (07380260, USGS)',
-            'Baratria Pass at Grand Isle, LA (BaraPass, CPRA) (073802516, USGS)',
+            'Barataria Pass at Grand Isle, LA (BaraPass, CPRA) (073802516, USGS)',
             'Houma Navigation Canal (76305, USACE)',
             'GIWW at Bayou Sale (76560, USACE)',
             'Bayou Boeuf at Railroad Bridge (073814675, USGS)',
@@ -102,13 +100,12 @@ staName_short = ['IHNC Surge Barrier East (IHNC-02)',
             'Caernarvon Canal Sector Gate',
             'Bayou Bienvenue Floodgate',
             'GIWW at West Closure Complex (WBV-90)',
-            'Harvey Canal at Boomtown Casino',
             'Barataria Waterway at Lafitte',
             'Bayou Segnette Closure (WBV-16.2)',
             'Bayou Verret / W. Tie-In Sector Gate (WBV-72/74)',
             'Hero Canal Stop-Log Gate (WBV-09b)',
             'MS River at Empire Floodgate',
-            'Baratria Pass at Grand Isle',
+            'Barataria Pass at Grand Isle',
             'Houma Navigation Canal',
             'GIWW at Bayou Sale',
             'Bayou Boeuf at Railroad Bridge',
@@ -163,8 +160,8 @@ title_slide_layout = prs.slide_layouts[0]
 slide = prs.slides.add_slide(title_slide_layout)
 title = slide.shapes.title
 subtitle = slide.placeholders[1]
-#if runProp['config.forcing.tropicalcyclone'] != "off": 
-if runProp['forcing.tropicalcyclone'] != "off": 
+#if runProp['config.forcing.tropicalcyclone'] != "off":
+if runProp['forcing.tropicalcyclone'] != "off":
     title.text = runProp['storm class'] + ' ' + runProp['stormname'] + ', ' + scenario_readable + ' Scenario'
     subtitle.text = "Advisory " + runProp['advisory'] + " Issued on " + advisory_dt_long + " CDT" + "\n\n" + \
             'PPT generated on ' + today.strftime('%B %d, %Y %I:%M %p') + ' CDT'
@@ -193,8 +190,8 @@ img_path = fname
 slide = prs.slides.add_slide(slide_layout)
 title = slide.shapes.title
 subtitle = slide.placeholders[1]
-#if runProp['config.forcing.tropicalcyclone'] != "off": 
-if runProp['forcing.tropicalcyclone'] != "off": 
+#if runProp['config.forcing.tropicalcyclone'] != "off":
+if runProp['forcing.tropicalcyclone'] != "off":
     title.text = 'NHC Advisory ' + runProp['advisory'] + ' ' + scenario_readable + ' Scenario'
 else:
     title.text = 'NAM Cycle Forecast Scenario Issued on ' + advisory_dt_long + ' CDT'
@@ -242,7 +239,7 @@ iheight = Inches(5.69)
 
 i = 0
 for image in fnames:
-    try: 
+    try:
         slide = prs.slides.add_slide(slide_layout_hydro)
         title = slide.shapes.title
         title.text = staName[i]
@@ -261,12 +258,12 @@ for image in fnames:
 #for slide in slides:
         #print('slide number %s' % str(slides.index(slide)+1))
 
-#if runProp['config.forcing.tropicalcyclone'] != "off": 
-if runProp['forcing.tropicalcyclone'] != "off": 
+#if runProp['config.forcing.tropicalcyclone'] != "off":
+if runProp['forcing.tropicalcyclone'] != "off":
     pptFile = runProp['stormname'] + "_Adv" + runProp['advisory'] + "_" + scenario + "_" + runProp['forecastValidStart'] + ".pptx"
 else:
     #pptFile = runProp['WindModel'] + "_Cycle" + runProp['advisory'] + "_" + scenario + "_" + runProp['forecastValidStart'] + ".pptx"
-    pptFile = scenario + "_Cycle_" + runProp['advisory'] + "UTC" + "+gahm.pptx"
+    pptFile = scenario + "_Cycle_" + runProp['advisory'] + "UTC" + ".pptx"
 prs.save(pptFile)
 pFile = open('pptFile.temp','w')
 pFile.write(pptFile)

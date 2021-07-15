@@ -21,9 +21,9 @@
 # You should have received a copy of the GNU General Public License
 # along with the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #--------------------------------------------------------------------------
-# 
+#
 # This makefile contains support for several different machines, but perhaps
-# not yours, although that will be easy to add. All you have to do is add a 
+# not yours, although that will be easy to add. All you have to do is add a
 # line that shows where the netCDF library is installed.
 #
 # For example, have a look at the following lines for the queenbee machine:
@@ -32,7 +32,7 @@
 #      NETCDFPATH  := /usr/local/packages/netcdf/4.2.1.1/INTEL-140-MVAPICH2-2.0
 #  endif
 #
-# In order to support your machine, you'll have to add something similar to 
+# In order to support your machine, you'll have to add something similar to
 # define the NETCDFPATH variable. I do this by typing
 #
 # which ncdump
@@ -41,7 +41,7 @@
 #
 # /usr/local/packages/netcdf/4.2.1.1/INTEL-140-MVAPICH2-2.0/bin
 #
-# so I set the NETCDFPATH to that but without the "/bin" at the end. 
+# so I set the NETCDFPATH to that but without the "/bin" at the end.
 # Then I compile by using the following command line:
 #
 #  make netcdf2adcirc compiler=intel MACHINENAME=queenbee NETCDF=enable NETCDF4=enable NETCDF4_COMPRESSION=enable
@@ -55,10 +55,10 @@ ifeq ($(compiler),gfortran)
       FFLAGS := -cpp -ffree-line-length-none -g -O0 -fbacktrace -fbounds-check -ffpe-trap=zero,invalid,underflow,overflow,denormal -DDEBUGSEGFAULT
    endif
    ifeq ($(DEBUG),trace)
-      FFLAGS := -cpp -ffree-line-length-none -g -O0 -fbacktrace 
+      FFLAGS := -cpp -ffree-line-length-none -g -O0 -fbacktrace
    endif
    ifeq ($(MACHINENAME),jason-desktop)
-      FFLAGS := $(FFLAGS) -DOLDGFORTRAN 
+      FFLAGS := $(FFLAGS) -DOLDGFORTRAN
    endif
    ifeq ($(MACHINENAME),vagrant)
       FFLAGS := $(FFLAGS) -DOLDGFORTRAN
@@ -67,19 +67,19 @@ ifeq ($(compiler),gfortran)
       FFLAGS := $(FFLAGS) -DOLDGFORTRAN
    endif
    ifeq ($(DEBUG),trace)
-      FFLAGS := -cpp -ffree-line-length-none -g -O0 -fbacktrace 
+      FFLAGS := -cpp -ffree-line-length-none -g -O0 -fbacktrace
    endif
 endif
 #
 # specify compiler=intel on the make command line
 #
-# For ifort 13.0.0 add -heap-arrays flag to prevent segmentation fault 
+# For ifort 13.0.0 add -heap-arrays flag to prevent segmentation fault
 # due possible compiler bug. Flag not needed for ifort version 13.1.3 and later. -nld
 ifeq ($(compiler),intel)
    FC := ifort
    FFLAGS := -cpp -shared-intel -DINTEL
    ifeq ($(DEBUG),trace)
-      FFLAGS := -g -O0 -fpp -traceback 
+      FFLAGS := -g -O0 -fpp -traceback
    endif
    ifeq ($(DEBUG),full)
       FFLAGS := -cpp -g -O0 -traceback -debug all -check all -ftrapuv -fpe0 -shared-intel -DDEBUGSEGFAULT
@@ -99,16 +99,16 @@ ifeq ($(compiler),pgf90)
    endif
 endif
 #
-INCLUDES := -I. 
+INCLUDES := -I.
 #
-# if netcdf libraries are available on the target platform, 
+# if netcdf libraries are available on the target platform,
 # use NETCDF=enable on the make command line
 ifeq ($(NETCDF),enable)
    FFLAGS      := $(FFLAGS) -DASGSNETCDF
    NETCDFPATH  := /usr
    #
    # jgf20150616: Added netcdf paths for stampede at TACC.
-   ifeq ($(MACHINENAME),stampede2) 
+   ifeq ($(MACHINENAME),stampede2)
       NETCDFPATH := /opt/apps/intel17/netcdf/4.3.3.1/x86_64
       ifeq ($(USER),jgflemin)
          NETCDFPATH  := $(WORK)/local
@@ -187,16 +187,19 @@ ifeq ($(NETCDF4_COMPRESSION),enable)
 endif
 #
 #
-OBJ := adcmesh.o asgsio.o nodalattr.o logging.o 
+OBJ := adcmesh.o asgsio.o nodalattr.o logging.o
 # JDB March 2019, added ioutil.mod to MODS
 MODS := ioutil.mod adcmesh.mod asgsio.mod nodalattr.mod logging.mod
 #
 # targets
-all : adcirc2netcdf netcdf2adcirc makeMax generateXDMF pullStationTimeSeries generateCPP inundationMask HottifySWAN checkAdcircMesh resultScope highResolutionRegion stationProcessor collectMinMax 
+all : adcirc2netcdf netcdf2adcirc makeMax generateXDMF pullStationTimeSeries generateCPP inundationMask HottifySWAN checkAdcircMesh resultScope highResolutionRegion stationProcessor collectMinMax addMeshToNetCDF
 #
 clean :
 	rm -f *.o *.mod *.x FigureGen/*.mod FigureGen/*.x
 #
+#
+addMeshToNetCDF : $(MODS) addMeshToNetCDF.f90 logging.mod
+	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -o $@.x $@.f90 $(OBJ) $(LDFLAGS)
 # FIXME: make FigureGen is not working yet
 FigureGen : FigureGen/FigureGen.F90
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -o $@/$@.x $@/$@.F90 $(LDFLAGS)
@@ -207,21 +210,21 @@ adcirc2netcdf : $(MODS) adcirc2netcdf.f90 nodalattr.mod logging.mod
 netcdf2adcirc : $(MODS) netcdf2adcirc.f90
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -o $@.x $@.f90 $(OBJ) $(LDFLAGS)
 #
-asgsio.mod : logging.mod ioutil.mod adcmesh.mod nodalattr.mod asgsio.f90 
+asgsio.mod : logging.mod ioutil.mod adcmesh.mod nodalattr.mod asgsio.f90
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -c asgsio.f90 $(LDFLAGS)
 #
 adcmesh.mod : adcmesh.f90 logging.mod
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -c adcmesh.f90 $(LDFLAGS)
 #
-logging.mod : logging.f90 
+logging.mod : logging.f90
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -c logging.f90 $(LDFLAGS)
 #
-ioutil.mod : logging.f90 
+ioutil.mod : logging.f90
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -c logging.f90 $(LDFLAGS)
-# 
+#
 makeMax : asgsio.mod adcmesh.mod ../util/makeMax.f90
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -o ../util/$@.x ../util/$@.f90 $(OBJ) $(LDFLAGS)
-# 
+#
 inundationMask : $(MODS) inundationMask.f90
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -o $@.x $@.f90 $(OBJ) $(LDFLAGS)
 #
@@ -258,5 +261,5 @@ collectMinMax : adcmesh.mod asgsio.mod collectMinMax.f90
 resultScope : adcmesh.mod asgsio.mod resultScope.f90
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -o $@.x $@.f90 $(OBJ) $(LDFLAGS)
 #
-nodalattr.mod : ../util/input/nodalattr/nodalattr.f90 adcmesh.mod 
+nodalattr.mod : ../util/input/nodalattr/nodalattr.f90 adcmesh.mod
 	$(FC) $(FFLAGS) $(INCLUDES) $(LIBS) -c ../util/input/nodalattr/nodalattr.f90 $(LDFLAGS)

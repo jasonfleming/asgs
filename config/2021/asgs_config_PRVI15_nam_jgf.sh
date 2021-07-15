@@ -36,11 +36,11 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_nam_akheir  # "name" of this ASGS process
+INSTANCENAME=PRVI15_nam_jgf  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=HSOFS
+GRIDNAME=PRVI15
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
@@ -51,9 +51,9 @@ BACKGROUNDMET=on      # NAM download/forcing
 FORECASTCYCLE="06"
    forecastSelection="strict"
 TROPICALCYCLONE=off   # tropical cyclone forcing
-#STORM=07             # storm number, e.g. 05=ernesto in 2006
-#YEAR=2018            # year of the storm
-WAVES=off             # wave forcing
+STORM=05             # storm number, e.g. 05=ernesto in 2006
+YEAR=2021            # year of the storm
+WAVES=on             # wave forcing
 #STATICOFFSET=0.1524
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
@@ -67,17 +67,15 @@ NCPUCAPACITY=9999
 
 # Post processing and publication
 
-INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
-POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
-OPENDAPNOTIFY="asgs.cera.lsu@gmail.com,jason.g.fleming@gmail.com,cera.asgs.tk@gmail.com,asgsnotes4ian@gmail.com,asgsnotifications@opayq.com,kheirkhahan@gmail.com,janelle.fleming@seahorsecoastal.com"
-TDS=( lsu_tds )
+INTENDEDAUDIENCE=developers-only    # can also be "developers-only" or "professional"
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
+OPENDAPNOTIFY="asgs.cera.lsu@gmail.com,jason.g.fleming@gmail.com"
 
-#RMQMessaging_Enable=off
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=auto
-HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2021/nam/2021062118/HSOFS/supermic.hpc.lsu.edu/HSOFS_nam_bde/namforecast/
+COLDSTARTDATE=2021061000
+HOTORCOLD=coldstart      # "hotstart" or "coldstart"
+LASTSUBDIR=null
 
 # Scenario package 
 

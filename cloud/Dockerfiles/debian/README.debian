@@ -1,0 +1,30 @@
+The process has been encapsulated in a Makefile.
+
+Step 1: Build the image:
+
+      make build
+
+Step 2: Start container
+
+      make start
+
+Step 3: set up ssh keys
+
+  Option 1: Add existing keys created when container is first started
+    and no /home/asgsuser/.ssh exists. To get the public key to add to
+    your Github account,
+
+      make showkey
+
+    This outputs the pubkey that should be added to Github.
+
+  Option 2: Copy keys from existing host ~/.ssh
+
+      make copykey # copies only ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub
+
+    This is handy if you wish to use keys that are already on your docker
+    host and they're already registed on your Github account
+
+Step 4: Launch ASGS Shell
+
+      make asgs 

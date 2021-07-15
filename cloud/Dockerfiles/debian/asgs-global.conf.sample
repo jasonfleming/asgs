@@ -1,0 +1,17 @@
+;;; this file contains information that should NOT 
+;;; be stored in a git repository with live values.
+;;; Live config file should exists as $HOME/asgs-global.conf
+
+[email]
+from_address=info@stormsurge.email
+reply_to_address=info@stormsurge.email
+smtp_host=email-smtp.us-east-1.amazonaws.com
+smtp_port=587
+smtp_username=<get from lead operator>
+smtp_password=<get from lead operator>
+
+;;; note, "from" addresses must be verified via Amazon's SES console
+;;; before deviating from 'info@stormsurge.email' 
+;;; note, from_address is not what it may look like it came from,
+;;; currently it may be slightly different because this part of it
+;;; is actually managed by AWS on their end 

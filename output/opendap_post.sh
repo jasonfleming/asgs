@@ -38,13 +38,21 @@ source $SCRIPTDIR/properties.sh
 # load run.properties file into associative array
 loadProperties $RUNPROPERTIES
 THIS="output/opendap_post.sh"
-echo "Finished loading properties."   
+echo "Finished loading properties."
 CONFIG=${properties['config.file']}
+COLDSTARTDATE=${properties["adcirc.time.coldstartdate"]} # used for the hindcast path
 CYCLEDIR=${properties['path.advisdir']}
 CYCLE=${properties['advisory']}
+# if this is an initialization, there is no advisory number
+# to use in the opendap path
+if [[ ${properties['advisory']} = "0" ]]; then
+   CYCLE=$COLDSTARTDATE
+else
+   # this does not actually seem to be used in this script
+   HSTIME=${properties['InitialHotStartTime']}
+fi
 HPCENV=${properties['hpc.hpcenv']}
 SCENARIO=${properties['scenario']}
-HSTIME=${properties['InitialHotStartTime']}
 SYSLOG=${properties['monitoring.logging.file.syslog']}
 CYCLELOG=${properties['monitoring.logging.file.cyclelog']}
 SCENARIOLOG=${properties['monitoring.logging.file.scenariolog']}
@@ -77,7 +85,17 @@ HPCENVSHORT=${properties["hpc.hpcenvshort"]}
 TROPICALCYCLONE=${properties["forcing.tropicalcyclone"]}
 BACKGROUNDMET=${properties["forcing.backgroundmet"]}
 # get the scenario number from Operator config
-SCENARIONUMBER=${properties["forecast.scenario.number"]}
+case $SCENARIO in
+"hindcast")
+   SCENARIONUMBER=-2
+   ;;
+"nowcast")
+   SCENARIONUMBER=-1
+   ;;
+*)
+   SCENARIONUMBER=${properties["forecast.scenario.number"]} # this is used in the subject line of the email
+   ;;
+esac
 env_dispatch $HPCENVSHORT # set up JOBENV with perlbrew for asgs-sendmail.pl etc
 THIS="output/opendap_post.sh"
 OPENDAPMAILSERVER=${properties["notification.opendap.email.opendapmailserver"]}
@@ -87,13 +105,13 @@ timeoutRetryLimit=${timeoutRetryLimit:-5} # FIXME: hardcoded to 5; make this mor
 serverAliveInterval=${serverAliveInterval:-10}
 #
 for server in ${SERVERS[*]}; do
-   if [[ $server = "(" || $server = ")" ]]; then 
+   if [[ $server = "(" || $server = ")" ]]; then
       continue
    fi
    allMessage "cycle $CYCLE: $SCENARIO: $THIS: Posting to opendap server ${server}."
    # pick up config of the thredds data server where the files are to be posted
    scenarioMessage "Setting opendap server parameters with writeTDSProperties ${server}."
-   # write platform-dependent properties related to posting to thredds server for 
+   # write platform-dependent properties related to posting to thredds server for
    # opendap service  (from platforms.sh)
    writeTDSProperties $server
    # FIXME: enable Operator to override TDS parameter settings from platforms.sh
@@ -103,7 +121,7 @@ for server in ${SERVERS[*]}; do
    COPYABLEHOSTS=${properties["post.opendap.${server}.copyablehosts"]}
    OPENDAPHOST=${properties["post.opendap.${server}.opendaphost"]}
    DOWNLOADPREFIX=${properties["post.opendap.${server}.downloadprefix"]}
-   CATALOGPREFIX=${properties["post.opendap.${server}.catalogprefix"]} 
+   CATALOGPREFIX=${properties["post.opendap.${server}.catalogprefix"]}
    OPENDAPBASEDIR=${properties["post.opendap.${server}.opendapbasedir"]}
    #
    #--------------------------------------------------------------------
@@ -113,7 +131,7 @@ for server in ${SERVERS[*]}; do
    #
    # form path to results on tds based on type of forcing or name of storm
    if [[ $BACKGROUNDMET != off ]]; then
-      # for NAM, the "advisory number" is actually the cycle time 
+      # for NAM, the "advisory number" is actually the cycle time
       YEAR=${properties["forcing.nwp.year"]}
       NWPMODEL=${properties["forcing.nwp.model"]}
       STORMNAMEPATH=$YEAR/$NWPMODEL
@@ -127,14 +145,18 @@ for server in ${SERVERS[*]}; do
       STORMNAMEPATH=$YEAR/$basin$STORMNUMBER
       ALTSTORMNAMEPATH=$YEAR/$STORMNAMELC  # symbolic link with name
    fi
+   if [[ $SCENARIO = "hindcast" ]]; then
+      YEAR=${COLDSTARTDATE:0:4}
+      STORMNAMEPATH=$YEAR/initialize
+   fi
    OPENDAPSUFFIX=$CYCLE/$GRIDNAME/$HPCENV/$INSTANCENAME/$SCENARIO
    echo "post.opendap.${server}.opendapsuffix : $OPENDAPSUFFIX" >> run.properties 2>> $SYSLOG
    #
-   # Create full path to results for server file sytem. 
+   # Create full path to results for server file sytem.
    # OPENDAPBASEDIR is specified in platforms.sh.
    OPENDAPDIR=$OPENDAPBASEDIR/$STORMNAMEPATH/$OPENDAPSUFFIX
    echo "post.opendap.${server}.opendapdir : $OPENDAPDIR" >> run.properties 2>> $SYSLOG
-   # create the opendap download url for the run.properties file 
+   # create the opendap download url for the run.properties file
    downloadURL=$DOWNLOADPREFIX/$STORMNAMEPATH/$OPENDAPSUFFIX
    # add downloadurl or downloadurl_backup property to run.properties file
    if [[ ! `grep downloadurl run.properties` =~ downloadurl ]]; then
@@ -142,7 +164,7 @@ for server in ${SERVERS[*]}; do
    else
       backupNum=`grep downloadurl run.properties | wc -l`
       echo "downloadurl_backup$backupNum : $downloadURL" >> run.properties 2>> ${SYSLOG}
-   fi      
+   fi
    #-----------------------------------------------------------------------
    #           D E T E R M I N E   M E T H O D
    #-----------------------------------------------------------------------
@@ -156,27 +178,27 @@ for server in ${SERVERS[*]}; do
    fi
    #
    # Determine whether to copy files instead of using scp by looking at the
-   # list of HPC machines that share a common filesystem with this TDS. 
-   for hpc in ${COPYABLEHOSTS[*]}; do 
+   # list of HPC machines that share a common filesystem with this TDS.
+   for hpc in ${COPYABLEHOSTS[*]}; do
       if [[ $hpc = $HPCENVSHORT ]]; then
          OPENDAPPOSTMETHOD=copy
       fi
    done
    #
    # Determine whether to create symbolic links by looking at the
-   # list of HPC machines that share a common filesystem with this TDS. 
+   # list of HPC machines that share a common filesystem with this TDS.
    # This comes last, so it takes precedence above the others if multiple
-   # file delivery mechanisms are possible. 
-   for hpc in ${LINKABLEHOSTS[*]}; do 
+   # file delivery mechanisms are possible.
+   for hpc in ${LINKABLEHOSTS[*]}; do
       if [[ $hpc = $HPCENVSHORT ]]; then
          OPENDAPPOSTMETHOD=link
       fi
    done
    #
-   # If the HPC and TDS do not share a common filesystem, use scp with 
+   # If the HPC and TDS do not share a common filesystem, use scp with
    # public key authentication to copy the files to the server hosting THREDDS.
    #
-   # jgf20160317: Added status check for posting to opendap so that if 
+   # jgf20160317: Added status check for posting to opendap so that if
    # there is a failure, the Operator is notified rather than downstream
    # data consumers.
    threddsPostStatus=ok
@@ -185,8 +207,8 @@ for server in ${SERVERS[*]}; do
    #-------------------------------------------------------------------
    #     C R E A T E    N O T I F I C A T I O N   E M A I L
    #-------------------------------------------------------------------
-   # @jasonfleming: Hack in the ability to send the notification email 
-   # before all the files have been posted. 
+   # @jasonfleming: Hack in the ability to send the notification email
+   # before all the files have been posted.
    opendapEmailSent=no
    #
    runStartTime=${properties["RunStartTime"]}
@@ -194,17 +216,17 @@ for server in ${SERVERS[*]}; do
    if [[ $TROPICALCYCLONE = on ]]; then
       subject=${subject}" (TC)"
    fi
-   #Click on the link: 
+   #Click on the link:
    #
    #$CATALOGPREFIX/$STORMNAMEPATH/${OPENDAPSUFFIX}/catalog.html
    subject="${subject} $SCENARIONUMBER $HPCENV.$INSTANCENAME $ASGSADMIN"
    echo "post.opendap.${server}.subject : $subject" >> run.properties 2>> $SYSLOG
-cat <<END > ${SCENARIODIR}/opendap_results_notify_${server}.txt 
+cat <<END > ${SCENARIODIR}/opendap_results_notify_${server}.txt
 
 The results for cycle $CYCLE have been posted to $CATALOGPREFIX/$STORMNAMEPATH/$OPENDAPSUFFIX/catalog.html
 
 The run.properties file is : $DOWNLOADPREFIX/$STORMNAMEPATH/$OPENDAPSUFFIX/run.properties
-   
+
 or wget the file with the following command
 
 wget $DOWNLOADPREFIX/$STORMNAMEPATH/$OPENDAPSUFFIX/run.properties
@@ -220,8 +242,8 @@ END
    "scp")
       scenarioMessage "$SCENARIO: $THIS: Transferring files to $OPENDAPDIR on $OPENDAPHOST."
       retry=0
-      mkdirRetryLimit=10 # FIXME: hardcoded for now 
-      while [[ $retry -lt $mkdirRetryLimit ]]; do 
+      mkdirRetryLimit=10 # FIXME: hardcoded for now
+      while [[ $retry -lt $mkdirRetryLimit ]]; do
          ssh $OPENDAPHOST "mkdir -p $OPENDAPDIR" >> $SCENARIOLOG 2>&1
          if [[ $? != 0 ]]; then
             warn "$SCENARIO: $THIS: Failed to create the directory $OPENDAPDIR on the remote machine ${OPENDAPHOST}."
@@ -237,13 +259,13 @@ END
             scenarioMessage "$SCENARIO: $THIS: Maximum number of retries has been reached. Moving on to the next operation."
          fi
       done
-      # add code to create write permissions on directories so that other 
+      # add code to create write permissions on directories so that other
       # Operators can post results to the same directories
       #OPENDAPSUFFIX=$CYCLE/$GRIDNAME/$HPCENV/$INSTANCENAME/$SCENARIO
       partialPath=$OPENDAPDIR
-      while [[ $partialPath != $OPENDAPBASEDIR  ]]; do 
+      while [[ $partialPath != $OPENDAPBASEDIR  ]]; do
          retry=0
-         while [[ $retry -lt $timeoutRetryLimit ]]; do 
+         while [[ $retry -lt $timeoutRetryLimit ]]; do
             ssh $OPENDAPHOST "chmod a+wx $partialPath" 2>> $SYSLOG
             if [[ $? != 0 ]]; then
                warn "$SCENARIO: $THIS: Failed to change permissions on the directory $partialPath on the remote machine ${OPENDAPHOST}."
@@ -261,13 +283,13 @@ END
          done
          # cut off the end of the partial path and keep going until we get down
          # to OPENDAPBASEDIR
-         partialPath=`dirname $partialPath` 
+         partialPath=`dirname $partialPath`
       done
       #
       # add a symbolic link for the storm name if this is tropicalcyclone forcing
-      if [[ $TROPICALCYCLONE != off ]]; then 
+      if [[ $TROPICALCYCLONE != off ]]; then
          retry=0
-         while [[ $retry -lt $timeoutRetryLimit ]]; do 
+         while [[ $retry -lt $timeoutRetryLimit ]]; do
             ssh $OPENDAPHOST "ln -s $OPENDAPBASEDIR/$STORMNAMEPATH $OPENDAPBASEDIR/$ALTSTORMNAMEPATH" 2>> $SYSLOG
             if [[ $? != 0 ]]; then
                warn "$SCENARIO: $THIS: Failed to create symbolic link for the storm name."
@@ -287,14 +309,14 @@ END
       fileIndex=1 # skip the opening "("
       while [[ $fileIndex -lt `expr ${#FILES[@]} - 1` ]] ; do  # skip the closing "("
          file=${FILES[$fileIndex]}
-         if [[ $file = '(' || $file = ')' ]]; then 
+         if [[ $file = '(' || $file = ')' ]]; then
             fileIndex=`expr $fileIndex + 1` 2>> $SCENARIOLOG
             continue
          fi
          # send opendap posting notification email early if directed
          if [[ $file = "sendNotification" ]]; then
             scenarioMessage "$SCENARIO: $THIS: Sending 'results available' email to the following addresses before the full set of results has been posted: $OPENDAPNOTIFY."
-            # use asgs sendmail if Operator has set it up 
+            # use asgs sendmail if Operator has set it up
             if [[ $OPENDAPMAILSERVER = "aws" ]]; then
                scenarioMessage "perl $SCRIPTDIR/asgs-sendmail.pl --config ${HOME}/asgs-global.conf --subject '$subject' --to $OPENDAPNOTIFY < ${SCENARIODIR}/opendap_results_notify_${server}.txt 2>> ${SYSLOG} 2>&1"
                perl $SCRIPTDIR/asgs-sendmail.pl --config ${HOME}/asgs-global.conf --subject "$subject" --to $OPENDAPNOTIFY < ${SCENARIODIR}/opendap_results_notify_${server}.txt >> ${SCENARIOLOG} 2>&1
@@ -303,12 +325,12 @@ END
             fi
             opendapEmailSent=yes
             fileIndex=`expr $fileIndex + 1` 2>> $SCENARIOLOG
-            continue        
+            continue
          fi
          chmod +r $file 2>> $SCENARIOLOG
          scenarioMessage "$SCENARIO: $THIS: Transferring $file to ${OPENDAPHOST}:${OPENDAPDIR}."
          retry=0
-         while [[ $retry -lt $timeoutRetryLimit ]]; do 
+         while [[ $retry -lt $timeoutRetryLimit ]]; do
             scp $file ${OPENDAPHOST}:${OPENDAPDIR} >> $SCENARIOLOG 2>&1
             if [[ $? != 0 ]]; then
                threddsPostStatus=fail
@@ -325,9 +347,9 @@ END
             fi
          done
          # give the file read permissions on the remote filesystem
-         fname=`basename $file` 
+         fname=`basename $file`
          retry=0
-         while [[ $retry -lt $timeoutRetryLimit ]]; do 
+         while [[ $retry -lt $timeoutRetryLimit ]]; do
             ssh $OPENDAPHOST "chmod +r $OPENDAPDIR/$fname"
             if [[ $? != 0 ]]; then
                threddsPostStatus=fail
@@ -360,12 +382,12 @@ END
          warn "$SCENARIO: $THIS: Failed to create the directory $OPENDAPDIR on the remote machine ${OPENDAPHOST}."
          threddsPostStatus=fail
       fi
-      # add code to create write permissions on directories so that other 
+      # add code to create write permissions on directories so that other
       # Operators can post results to the same directories
       partialPath=$OPENDAPDIR
-      while [[ $partialPath != $OPENDAPBASEDIR  ]]; do 
+      while [[ $partialPath != $OPENDAPBASEDIR  ]]; do
          retry=0
-         while [[ $retry -lt $timeoutRetryLimit ]]; do 
+         while [[ $retry -lt $timeoutRetryLimit ]]; do
             ssh $OPENDAPHOST "chmod a+wx $partialPath" 2>> $SYSLOG
             if [[ $? != 0 ]]; then
                warn "$SCENARIO: $THIS: Failed to change permissions on the directory $partialPath on the remote machine ${OPENDAPHOST}."
@@ -383,23 +405,23 @@ END
          done
          # cut off the end of the partial path and keep going until we get down
          # to OPENDAPBASEDIR
-         partialPath=`dirname $partialPath` 
+         partialPath=`dirname $partialPath`
       done
-      for file in ${FILES[*]}; do 
-         if [[ $file = "(" || $file = ")" ]]; then 
+      for file in ${FILES[*]}; do
+         if [[ $file = "(" || $file = ")" ]]; then
             continue
          fi
          # send opendap posting notification email early if directed
          if [[ $file = "sendNotification" ]]; then
             scenarioMessage "$SCENARIO: $THIS: Sending 'results available' email to the following addresses before the full set of results has been posted: $OPENDAPNOTIFY."
-            # use asgs sendmail if Operator has set it up 
+            # use asgs sendmail if Operator has set it up
             if [[ $OPENDAPMAILSERVER = "aws" ]]; then
                $SCRIPTDIR/asgs-sendmail.pl --subject "$subject" --to "$OPENDAPNOTIFY" < ${SCENARIODIR}/opendap_results_notify_${server}.txt 2>> ${SYSLOG} 2>&1
             else
                cat ${SCENARIODIR}/opendap_results_notify_${server}.txt | mail  -S "replyto=$ASGSADMIN" -s "$subject" $OPENDAPNOTIFY 2>> ${SYSLOG} 2>&1
             fi
             opendapEmailSent=yes
-            continue        
+            continue
          fi
          chmod +r $file 2>> $SYSLOG
          scenarioMessage "$SCENARIO: $THIS: Transferring $file to ${OPENDAPHOST}:${OPENDAPDIR}."
@@ -411,7 +433,7 @@ END
       done
       ;;
    #-------------------------------------------------------------------
-   #        P O S T   V I A   S Y M B O L I C   L I N K 
+   #        P O S T   V I A   S Y M B O L I C   L I N K
    #           O R   F I L E S Y S T E M   C O P Y
    #-------------------------------------------------------------------
    "link"|"copy")
@@ -428,12 +450,12 @@ END
       # if the HPC and TDS do share a common filesystem, create symbolic links
       # to the actual results files in a place where TDS can find them
       mkdir -p $OPENDAPDIR 2>> $SYSLOG
-      # add code to create write permissions on directories so that other 
+      # add code to create write permissions on directories so that other
       # Operators can post results to the same directories
       partialPath=$OPENDAPDIR
-      while [[ $partialPath != $OPENDAPBASEDIR  ]]; do 
+      while [[ $partialPath != $OPENDAPBASEDIR  ]]; do
          retry=0
-         while [[ $retry -lt $timeoutRetryLimit ]]; do 
+         while [[ $retry -lt $timeoutRetryLimit ]]; do
             chmod a+wx $partialPath 2>> $SYSLOG
             if [[ $? != 0 ]]; then
                warn "$SCENARIO: $THIS: Failed to change permissions on the directory ${partialPath}."
@@ -451,28 +473,28 @@ END
          done
          # cut off the end of the partial path and keep going until we get down
          # to OPENDAPBASEDIR
-         partialPath=`dirname $partialPath` 
+         partialPath=`dirname $partialPath`
       done
       #
       # create link with storm name instead of storm number
       if [[ $TROPICALCYCLONE != off ]]; then
          ln -s $OPENDAPBASEDIR/$STORMNAMEPATH $OPENDAPBASEDIR/$ALTSTORMNAMEPATH 2>> $SYSLOG
       fi
-      for file in ${FILES[*]}; do 
-         if [[ $file = "(" || $file = ")" ]]; then 
+      for file in ${FILES[*]}; do
+         if [[ $file = "(" || $file = ")" ]]; then
             continue
          fi
          # send opendap posting notification email early if directed
          if [[ $file = "sendNotification" ]]; then
             scenarioMessage "$SCENARIO: $THIS: Sending 'results available' email to the following addresses before the full set of results has been posted: $OPENDAPNOTIFY."
-            # use asgs sendmail if Operator has set it up 
+            # use asgs sendmail if Operator has set it up
             if [[ $OPENDAPMAILSERVER = "aws" ]]; then
                $SCRIPTDIR/asgs-sendmail.pl --subject "$subject" --to "$OPENDAPNOTIFY" < ${SCENARIODIR}/opendap_results_notify_${server}.txt 2>> ${SYSLOG} 2>&1
             else
                cat ${SCENARIODIR}/opendap_results_notify_${server}.txt | mail  -S "replyto=$ASGSADMIN" -s "$subject" $OPENDAPNOTIFY 2>> ${SYSLOG} 2>&1
             fi
             opendapEmailSent=yes
-            continue        
+            continue
          fi
          chmod +r $file 2>> $SYSLOG
          logMessage "$SCENARIO: $THIS: $postDesc $file."
@@ -492,16 +514,16 @@ END
    #-------------------------------------------------------------------
    #      S E N D   N O T I F I C A T I O N   E M A I L
    #-------------------------------------------------------------------
-   # jgf20160322: FIXME: post to opendap even if there was an error so we can 
+   # jgf20160322: FIXME: post to opendap even if there was an error so we can
    # see what the error is
    #
    #if [[ threddsPostStatus != ok ]]; then
    #   error "opendap_post.sh: A failure occurred when the ASGS instance $INSTANCENAME attempted to post data to the THREDDS Data Server ${server}. Downstream data consumers will not receive an email for these results. However, the opendap results notification will be sent to ${ASGSADMIN}."
    #   cat ${SCENARIODIR}/opendap_results_notify.txt | mail  -S "replyto=$ASGSADMIN" -s "$subject" $ASGSADMIN 2>> ${SYSLOG} 2>&1
    #else
-   if [[ $opendapEmailSent = "no" ]]; then 
+   if [[ $opendapEmailSent = "no" ]]; then
       scenarioMessage "$SCENARIO: $THIS: Sending 'results available' email to the following addresses: $OPENDAPNOTIFY."
-      # use asgs sendmail if Operator has set it up 
+      # use asgs sendmail if Operator has set it up
       if [[ $OPENDAPMAILSERVER = "aws" ]]; then
          $SCRIPTDIR/asgs-sendmail.pl --subject "$subject" --to "$OPENDAPNOTIFY" < ${SCENARIODIR}/opendap_results_notify_${server}.txt 2>> ${SYSLOG} 2>&1
       else

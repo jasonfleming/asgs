@@ -1,0 +1,70 @@
+FROM debian:stretch-slim
+
+# Dockerfile for Debian - useful for building an image or
+# as reference for installing directly on a Debian host
+
+RUN apt-get update
+RUN apt-get install -y apt-utils build-essential checkinstall
+RUN apt-get install -y zlib1g-dev libssl-dev libexpat1-dev
+RUN apt-get install -y gfortran wget curl vim screen htop tmux git sudo bc
+RUN apt-get install -y zip flex gawk procps
+RUN apt-get install -y libopenmpi-dev openmpi-common openmpi-bin
+
+# symlink for /bin/env
+RUN ln -s /usr/bin/env /bin/env > /dev/null 2>&1 || echo /usr/bin/env already links to /bin/env
+
+# asgsuser
+RUN useradd -ms /bin/bash asgsuser
+RUN echo "asgsuser ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# get git repo
+#RUN su -c 'cd /home/asgsuser && git clone git@github.com:StormSurgeLive/asgs.git && cd ./asgs && git checkout master' - asgsuser
+RUN su -c 'cd /home/asgsuser && git clone https://github.com/StormSurgeLive/asgs.git && cd ./asgs && git checkout master' - asgsuser
+RUN su -c 'cd /home/asgsuser/asgs && git config --global user.email "asgsuser@noemail" && git config --global user.name "asgsuser"'
+
+# persist env in .bash_profile
+RUN su -c 'echo "export _ASGS_CONTAINER=docker" >> /home/asgsuser/.bash_profile' - asgsuser
+RUN su -c 'echo "export PATH=${PATH}:/home/asgsuser/bin" >> /home/asgsuser/.bashrc' - asgsuser
+
+WORKDIR /home/asgsuser
+
+RUN mkdir /home/asgsuser/bin
+RUN chown asgsuser:asgsuser /home/asgsuser/bin
+
+# move over docker-entrypoint.sh that's executed when the container is started
+COPY docker-entrypoint.sh bin/docker-entrypoint.sh
+RUN chown asgsuser:asgsuser bin/docker-entrypoint.sh
+RUN chmod 700 bin/docker-entrypoint.sh
+
+
+# NOTE: stuff related to $WORK and $SCRATCH happens in the docker-compose.yml file
+#  and is treated as a runtime environmental variable and mounted volumes
+# ensure directories are set up and essential default files are in place;
+COPY asgs-global.conf.sample /home/asgsuser/asgs-global.conf
+RUN mkdir /home/asgsuser/.ssh
+RUN chmod 700 /home/asgsuser/.ssh
+COPY ssh.config /home/asgsuser/.ssh/config
+RUN chmod 600 /home/asgsuser/.ssh/config
+RUN chown -R asgsuser:asgsuser /home/asgsuser/asgs-global.conf /home/asgsuser/.ssh
+
+#VOLUME ${HOME}/work /work
+#VOLUME ${HOME}/scratch /scratch
+RUN mkdir /work
+RUN mkdir /scratch
+RUN chmod 777 /work /scratch
+
+USER asgsuser
+
+# set env - required for asgs/init-asgs.sh to know it's in a docker environment
+ENV _ASGS_CONTAINER="docker"
+ENV WORK=/work/asgsuser
+ENV SCRATCH=/scratch/asgsuser
+ENV USER=asgsuser
+
+# actually build all of ASGS
+RUN export _ASGS_CONTAINER=docker && \
+      cd /home/asgsuser/asgs      && \
+      ./init-asgs.sh doit         || \
+      echo something went wonky but preserving docker image
+
+ENTRYPOINT ["/home/asgsuser/bin/docker-entrypoint.sh"]

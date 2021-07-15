@@ -41,6 +41,7 @@ sigterm() {
    trap - SIGTERM && kill -- -$$ # "untrap" SIGTERM and send SIGTERM to all processes in this process group 
    exit 0
 }
+
 #
 # send message when shutting down on EXIT and clear all processes
 sigexit() {
@@ -103,17 +104,18 @@ finalizeCentralizedScenarioLogging() {
    done
    unset subshellPIDs  
 }
-#
-# Find and clear stray orphan tail -f processes that have not been cleaned
-# up. Normally there should not be any stray orphan processes, but there
-# could be, and we want to avoid a proliferation of orphan processes. 
+
+# send SIGTERM to tail processes owned by this Operator that are children
+# of init (i.e., process)
+# NOTE: this `ps` command is required because it outputs the parent process id, which is
+# "1" if an orphan - which is what we are looking to kill here UNLESS we're in a docker
+# environment. This is filtered with the "grep -v '/dev/null'" and is needed due to the fact
+# that the "official" docker container used for ASGS stays alive via a 'tail -f /dev/null'
+# call that can be seen in the /docker-entrypoint.sh script.
 findAndClearOrphans() {
-   #
-   # send SIGTERM to tail processes owned by this Operator that are children
-   # of init (i.e., process)
-   for pid in `ps -eo pid,ppid,user,comm | awk -v user=$USER '$3==user && $2==1 && $4~/tail/ { print $1 } '`; do
+   for pid in $(ps -eo pid,ppid,user,command | grep [t]ail | grep -v '/dev/null' | awk -v user=$USER '$3==user && $2==1 { print $1 } '); do
       logMessage "Found orphan 'tail -f' process ID $pid and now clearing it." 
-      kill $pid 
+      kill $pid
    done
 }
 

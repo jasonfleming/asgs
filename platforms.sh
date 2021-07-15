@@ -270,8 +270,8 @@ init_frontera()
   HPCENV=frontera.tacc.utexas.edu
   QUEUESYS=SLURM
   QUEUENAME=normal
-  SERQUEUE=normal
-  PPN=56
+  SERQUEUE=small
+  PPN=56    # if this changes, also need to change the "small" queue defn in asgs_main.sh
   CONSTRAINT=null
   RESERVATION=null
   QOS=null
@@ -383,11 +383,11 @@ init_docker()
 {
   THIS="platforms.sh>env_dispatch()>init_docker()"
   scenarioMessage "$THIS: Setting platforms-specific parameters."
-  HPCENV=docker.stormsurge.live
+  HPCENV=docker.local
   QUEUESYS=mpiexec
   QCHECKCMD="ps -aux | grep mpiexec "
   SUBMITSTRING="mpiexec "
-  SCRATCH=/scratch
+  SCRATCH=${SCRATCH:-/scratch/$USER}
   SSHKEY=id_rsa_docker
   ARCHIVE=enstorm_pedir_removal.sh
   ARCHIVEBASE=$SCRATCH
@@ -623,6 +623,10 @@ set_hpc() {
       HPCENV=desktop.seahorsecoastal.com
       HPCENVSHORT=desktop
    fi
+   if [[ "${ASGS_MACHINE_NAME}" = "docker" ]]; then
+      HPCENV=docker.local
+      HPCENVSHORT=docker
+   fi
    # this whole function will be replaced with guess, but for now ...
    if [[ $HPCENVSHORT = "null" ]]; then
       plat=`$WORK/asgs/bin/guess platform`
@@ -673,6 +677,9 @@ env_dispatch() {
   "desktop-serial") consoleMessage "$THIS: desktop-serial configuration found."
           init_desktop-serial
            ;;
+  "docker") allMessage "$THIS: docker configuration found."
+          init_docker
+           ;;
   "poseidon") allMessage "$THIS: Poseidon configuration found."
           init_Poseidon
            ;;
@@ -691,7 +698,7 @@ env_dispatch() {
   "test") allMessage "$THIS: test environment (default) configuration found."
           init_test
            ;;
-  *) fatal "$THIS: '$HPCENVSHORT' is not a supported environment; currently supported options: stampede2, lonestar5, supermike, queenbee, supermic, hatteras, desktop, desktop-serial, su_tds, lsu_ccr_tds, renci_tds, tacc_tds, tacc_tds2"
+  *) fatal "$THIS: '$HPCENVSHORT' is not a supported environment; currently supported options: stampede2, lonestar5, supermike, queenbee, supermic, hatteras, desktop, desktop-serial, docker, su_tds, lsu_ccr_tds, renci_tds, tacc_tds, tacc_tds2"
      ;;
   esac
 

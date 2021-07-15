@@ -55,8 +55,8 @@ else
 %     FIRST in the array
 %     The nhcConsensus for the current advsiory should be LAST in the array
     numEns = 2;
-    ensFileNames = {'AL28_16_nhcConsensus.fort.61.nc', 'AL28_17_nhcConsensus.fort.61.nc'};
-    propFile = {'AL28_16_nhcConsensus.run.properties', 'AL28_17_nhcConsensus.run.properties'};
+    ensFileNames = {'2021060406_namforecast.fort.61.nc', '2021060506_namforecast.fort.61.nc'};
+    propFile = {'2021060406_namforecast.run.properties', '2021060506_namforecast.run.properties'};
     plotPrevious = true;
 end
 %
@@ -558,10 +558,10 @@ for f = 1:adcData(1).NumStations
             end
             
             if strcmp(gageID,'76030')
-                tempOffset = 0.5;
+                tempOffset = 0.001;
             end 
             if strcmp(gageID,'073802516')
-                tempOffset = 2.0;
+                tempOffset = 0.0;
             end 
 
                         

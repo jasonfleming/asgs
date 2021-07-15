@@ -68,13 +68,13 @@ endif
 select case(trim(lvl))
 case('DEBUG','Debug','DeBug','debug')
    logLevel = DEBUG
-case('ECHO','Echo','echo') 
+case('ECHO','Echo','echo')
    logLevel = ECHO
-case('INFO','Info','info') 
+case('INFO','Info','info')
    logLevel = INFO
-case('WARNING','Warning','warning') 
-   logLevel = WARNING   
-case('ERROR','Error','error') 
+case('WARNING','Warning','warning')
+   logLevel = WARNING
+case('ERROR','Error','error')
    logLevel = ERROR
 case default
    write(scratchMessage,'("Could not set logging level to ",a,".")') trim(lvl)
@@ -93,7 +93,7 @@ end subroutine setLoggingLevel
 !--------------------------------------------------------------------
 subroutine initLogging(lun, progname,logname)
 implicit none
-character(*), intent(in) :: progname ! name of program writing log messages 
+character(*), intent(in) :: progname ! name of program writing log messages
 character(*), intent(in), optional :: logname ! to override default log name
 integer :: lun ! i/o unit for log file, calling routine should use function availableUnitNumber to set this
 integer :: errorIO ! positive if there was an i/o error; zero otherwise
@@ -121,9 +121,9 @@ end subroutine initLogging
 !--------------------------------------------------------------------
 
 !--------------------------------------------------------------------
-!     S U B R O U T I N E    S T D O U T 
+!     S U B R O U T I N E    S T D O U T
 !--------------------------------------------------------------------
-!  Writes a log message to stdout (i.e., screen or console). 
+!  Writes a log message to stdout (i.e., screen or console).
 !--------------------------------------------------------------------
 subroutine stdout(level, message)
 implicit none
@@ -144,7 +144,7 @@ end subroutine stdout
 !--------------------------------------------------------------------
 !     S U B R O U T I N E    L O G   M E S S A G E
 !--------------------------------------------------------------------
-!  Writes a log message to log file. 
+!  Writes a log message to log file.
 !--------------------------------------------------------------------
 subroutine logMessage(level, message)
 implicit none
@@ -166,7 +166,7 @@ end subroutine logMessage
 !--------------------------------------------------------------------
 !     S U B R O U T I N E   A L L    M E S S A G E
 !--------------------------------------------------------------------
-!   Writes a message to log file and to the screen. 
+!   Writes a message to log file and to the screen.
 !--------------------------------------------------------------------
 subroutine allMessage(level, message)
 implicit none
@@ -195,8 +195,8 @@ end module logging
 !                 M O D U L E   I O U T I L
 !--------------------------------------------------------------------
 !--------------------------------------------------------------------
-! A module that provides sundry helper subroutines and functions for 
-! files. for opening and reading 
+! A module that provides sundry helper subroutines and functions for
+! files. for opening and reading
 !--------------------------------------------------------------------
 ! Copyright(C) 2017 Jason Fleming
 !
@@ -300,9 +300,9 @@ return
 !-----------------------------------------------------------------------
 
 !----------------------------------------------------------------------
-!           S U B R O U T I N E    D O W N C A S E  
+!           S U B R O U T I N E    D O W N C A S E
 !----------------------------------------------------------------------
-! @jasonfleming: return a downcased version of the input string 
+! @jasonfleming: return a downcased version of the input string
 !----------------------------------------------------------------------
 subroutine downcase(string)
 implicit none
@@ -311,8 +311,8 @@ integer :: asciiCode ! decimal ascii code for a particular character
 integer :: i ! character counter
 !
 ! go through the character array looking for ascii codes between
-! 65 (uppercase A) and 90 (uppercase Z); replace these characters 
-! with lowercase 
+! 65 (uppercase A) and 90 (uppercase Z); replace these characters
+! with lowercase
 do i=1,len_trim(string)
    asciiCode = ichar(string(i:i))
    ! modify uppercase alphabetic characters only
@@ -328,7 +328,7 @@ end subroutine downcase
 !-----------------------------------------------------------------------
 ! S U B R O U T I N E   F I N D   U N U S E D   U N I T   N U M B E R
 !-----------------------------------------------------------------------
-! Dynamic unit numbers prevent collisions. 
+! Dynamic unit numbers prevent collisions.
 !-----------------------------------------------------------------------
 integer function availableUnitNumber()
 implicit none
@@ -350,7 +350,7 @@ do availableUnitNumber = minUnitNumber,maxUnitNumber
       write(6,'("ERROR: Could not determine which i/o unit numbers are unused. The Fortran i/o error code was ",i0,".")') errorIO
       stop
    endif
-end do 
+end do
 if (unusedUnitNumberFound.eqv..false.) then
    write(6,'("ERROR: Could not find an unused unit number.")')
    stop
@@ -362,15 +362,15 @@ end function availableUnitNumber
 !-----------------------------------------------------------------------
 !     S U B R O U T I N E   C H E C K   F I L E   E X I S T E N C E
 !-----------------------------------------------------------------------
-!     jgf: Just check for the existence of a file. I separated this 
-!     from openFileForRead so that I could use it on NetCDF files 
-!     as well.  
+!     jgf: Just check for the existence of a file. I separated this
+!     from openFileForRead so that I could use it on NetCDF files
+!     as well.
 !-----------------------------------------------------------------------
 subroutine checkFileExistence(filename, errorIO)
 use logging
 implicit none
 character(*), intent(in) :: filename ! full pathname of file
-integer, intent(out) :: errorIO 
+integer, intent(out) :: errorIO
 logical :: fileFound    ! .true. if the file is present
 
 !
@@ -390,7 +390,7 @@ endif
 !-----------------------------------------------------------------------
 
 !----------------------------------------------------------------------
-!                  F U N C T I O N     I N D 
+!                  F U N C T I O N     I N D
 !----------------------------------------------------------------------
 ! returns a format string containing the right number of spaces for the
 ! specified indentation level
@@ -406,10 +406,14 @@ case('+') ! increase indentation level
    currentIndent = currentIndent + 3
 case('-') ! decrease indentation level
    currentIndent = currentIndent - 3
-case default 
+case default
    ! keep indentation level the same
 end select
-write(ind,'(i3,"x")') currentIndent 
+if ( currentIndent.eq.0 ) then
+   ind="1p"  ! gfortran does not like "0x" and claims it needs a p descriptor
+else
+   write(ind,'(i3,"x")') currentIndent
+endif
 !----------------------------------------------------------------------
 end function ind
 !----------------------------------------------------------------------
@@ -429,12 +433,12 @@ real(8), allocatable :: intentionalSegFault(:)
 real(8) :: triggerSegFaultIntentionallyForStackTrace
 if(ncstatus.ne.nf90_noerr)then
    write(*,'(a,a)') "ERROR: ",trim(nf90_strerror(ncstatus))
-#ifdef INTEL 
+#ifdef INTEL
     ! See ASGS Issue-393
     ! https://stackoverflow.com/questions/65157007/tracebackqq-with-ifort-leads-to-segmentation-fault
     ! Note: "user_exit_code = -1" is required to match default behavior of the
     ! original "backtrace" call that is now used for all non-INTEL compilers
-    call tracebackqq( user_exit_code = -1 ) 
+    call tracebackqq( user_exit_code = -1 )
 #endif
 #ifndef INTEL
     ! See ASGS Issue-393
@@ -446,7 +450,7 @@ if(ncstatus.ne.nf90_noerr)then
    triggerSegFaultIntentionallyForStackTrace = intentionalSegFault(1)
    stop 1
 endif
-!---------------------------------------------------------------------      
+!---------------------------------------------------------------------
 end subroutine check
 !---------------------------------------------------------------------
 

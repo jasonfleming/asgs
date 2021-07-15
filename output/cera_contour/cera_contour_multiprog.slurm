@@ -48,12 +48,12 @@ DATETIME=`date +'%Y-%h-%d-T%H:%M:%S'`
 CMD="srun -n 84 -l --multi-prog elev_shape.conf"
 echo "[${DATETIME}] INFO: Executing cera_contour with the command $CMD" 
 $CMD
+ERROVALUE=$?  # capture exit status
 # 
 #----------------------------------------------------------------------------
 #           C H E C K   S T A T U S   O F   R E S U L T S
 #----------------------------------------------------------------------------
 ERROMSG=""
-ERROVALUE=$?  # capture exit status
 #
 if [ $ERROVALUE == 0 ] ; then
    RUNSUFFIX="finish"

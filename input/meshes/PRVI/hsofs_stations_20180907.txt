@@ -1,0 +1,835 @@
+-91.6644440000 30.9608330000 ! 01120 ! USACE ! Mississippi River at Red River Landing
+-91.2069440000 30.4291670000 ! 01160 ! USACE ! Mississippi River at Baton Rouge
+-90.9875000000 30.1088880000 ! 01220 ! USACE ! Mississippi River at Donaldsonville
+-90.5687250000 30.0544170000 ! 01260 ! USACE ! Mississippi River at Reserve
+-90.4248190000 29.9973890000 ! 01280 ! USACE ! Mississippi River at Bonnet Carre
+-90.1361110000 29.9347220000 ! 01300 ! USACE ! Mississippi River at New Orleans (Carrollton)
+-90.0840640000 29.9100440000 ! 01320 ! USACE ! Mississippi River at Harvey Lock
+-90.0274330000 29.9644140000 ! 01340 ! USACE ! Mississippi River at IHNC Lock
+-89.9710780000 29.9159920000 ! 01380 ! USACE ! Mississippi River at Algiers Lock
+-89.9699000000 29.6845440000 ! 01390 ! USACE ! Mississippi River at Alliance
+-89.7969000000 29.5711000000 ! 01400 ! USACE ! Mississippi River at West Point A La Hache
+-89.5964640000 29.3893720000 ! 01440 ! USACE ! Mississippi River at Empire
+-89.3527780000 29.2758330000 ! 01480 ! USACE ! Mississippi River at Venice
+-75.4078888900 37.9023888900 ! 01484746 ! USGS ! Chincoteague Bay Inlet at Chincoteague
+-75.9352222000 37.4763333000 ! 01484812 ! USGS ! Nassawadox Creek AB Church Creek nr Silver Beach
+-75.7275388900 37.9188277800 ! 01484938 ! USGS ! Starling Creek at Port of Saxis at Saxis
+-89.2465000000 29.1338000000 ! 01545 ! USACE ! Mississippi River at Head of Passes
+-89.4071110000 28.9323050000 ! 01670 ! USACE ! Mississippi River Southwest Pass at East Jetty
+-76.4274444000 37.3237500000 ! 01670080 ! USGS ! Severn River below Whittaker Creek near Severn
+-76.3854167000 37.1049722000 ! 0167862550 ! USGS ! Brick Kiln Creek below Route 172 near Poquoson
+-76.3677777800 37.0449722000 ! 0167892964 ! USGS ! Newmarket Creek at Mercury Blvd at Hampton
+-76.3367500000 37.0323888900 ! 0204289985 ! USGS ! Hampton River at Route 351 at Hampton
+-76.3148888900 37.0021388900 ! 0204289994 ! USGS ! James River at Fort Monroe
+-75.9844722000 36.8592777800 ! 0204295505 ! USGS ! Little Neck Creek at Pinewood
+-75.9852500000 36.8247777800 ! 0204297575 ! USGS ! Lake Rudee near Bells Road at Virginia Beach
+-75.9840000000 36.6798055600 ! 0204300267 ! USGS ! Beggars Bridge Creek near Dawley Corners
+-76.0463333000 36.6181666700 ! 02043269 ! USGS ! North Landing River at Marina near Creeds
+-75.83721  36.3744444400 ! 02043433 ! USGS ! Currituck Sound on East Bank at Corolla
+-76.3425000000 36.4213888900 ! 0204382800 ! USGS ! Pasquotank River near South Mills
+-77.0255555600 36.3708333300 ! 02053200 ! USGS ! Potecasi Creek near Union
+-76.9994444400 36.2802777800 ! 02053500 ! USGS ! Ahoskie Creek at Ahoskie
+-77.2152777800 36.0136111100 ! 02081022 ! USGS ! Roanoke River near Scotland Oak City
+-77.2025000000 35.9475000000 ! 02081028 ! USGS ! Roanoke River at Hamilton
+-77.0402777800 35.8597222200 ! 02081054 ! USGS ! Roanoke River at Williamston
+-76.8927777800 35.8130555600 ! 02081094 ! USGS ! Roanaoke River at Jamesville
+-76.9841666700 36.0477777800 ! 0208111310 ! USGS ! Cashie River at SR1257 near Windsor
+-76.7227777800 35.9150000000 ! 0208114150 ! USGS ! Roanoke River at NC 45 near Westover
+-77.5330556000 35.8944444400 ! 02083500 ! USGS ! Tar River at Tarboro
+-77.3727777800 35.6166666700 ! 02084000 ! USGS ! Tar River at Greenville
+-77.2308333300 35.5616666700 ! 02084160 ! USGS ! Chicod Cr @ SR1760 nr Simpson
+-77.0619444400 35.5433333300 ! 02084472 ! USGS ! Pamlico River at Washington
+-76.7461111100 35.7308333300 ! 02084557 ! USGS ! Van Swamp near Hoke
+-76.2538888900 35.5058333300 ! 0208458892 ! USGS ! Lake Mattamuskeet W of NC Hwy 94 Nr Fairfield
+-76.1838888900 35.5063888900 ! 0208458893 ! USGS ! Lake Mattamuskeet E of NC Hwy 94 Nr Fairfield
+-77.5855555600 35.2577777800 ! 02089500 ! USGS ! Neuse River at Kinston
+-77.5825000000 35.4288888900 ! 02091500 ! USGS ! Contentnea Creek at Hookerton
+-77.3027777800 35.3138888900 ! 02091814 ! USGS ! Neuse River near Fort Barnwell
+-77.1138888900 35.2308333300 ! 0209205053 ! USGS ! Swift Creek at Hwy 43 near Streets Ferry
+-77.4613888900 35.0641666700 ! 02092500 ! USGS ! Trent River near Trenton
+-77.2188888900 35.0100000000 ! 02092554 ! USGS ! Trent River at Pollocksville
+-77.5194444400 34.8491666700 ! 02093000 ! USGS ! New River near Gum Branch
+-78.2936111100 34.4044444400 ! 02105769 ! USGS ! Cape Fear River @ Lock #1 near Kelly
+-77.8322222200 34.8288888900 ! 02108000 ! USGS ! NE Cape Fear River near Chinquapin
+-77.8752777800 34.5983333300 ! 02108566 ! USGS ! Northeast Cape Fear River near Burgaw
+-78.7197398800 33.9535050000 ! 02110400 ! USGS ! Buck Creek near Longs
+-78.7150175000 33.9126719000 ! 02110500 ! USGS ! Waccamaw River near Longs
+-78.8972222000 33.8508333000 ! 02110550 ! USGS ! Waccamaw River above Conway
+-79.0436473000 33.8329481000 ! 02110704 ! USGS ! Waccamaw River at Conway Marina at Conway
+-79.0047569000 33.6871151000 ! 02110725 ! USGS ! AIW at HWY 544 at Socastee
+-78.6558483000 33.8515612000 ! 02110777 ! USGS ! AIW At HWY 9 at Nixons Crossroads
+-79.0942063900 33.6490583700 ! 02110802 ! USGS ! Waccamaw River at Bucksport
+-79.1269867000 33.5065572400 ! 021108125 ! USGS ! Waccamaw River Pawleys Island
+-79.1739341000 33.4446124500 ! 02110815 ! USGS ! Waccamaw River near Hagley Landing near Pawleys Island
+-79.1544874000 33.6610024000 ! 02135200 ! USGS ! Pee Dee River At HWY 701 Near Bucksport
+-79.3381102000 33.3285003700 ! 02136361 ! USGS ! Turkey Creek near Maryville
+-79.9150000000 33.4275000000 ! 02171645 ! USGS ! Rediv Canal at Santee River near St. Stephen
+-79.6781263000 33.3048893000 ! 02171700 ! USGS ! Santee River near Jamestown
+-79.3825580000 33.2085005600 ! 02171800 ! USGS ! North Santee River near North Santee
+-79.4058929000 33.1840565000 ! 02171850 ! USGS ! South Santee River near McClellanville
+-79.3542237000 33.1543343500 ! 02171905 ! USGS ! South Santee River @ State Pier near McClellanville
+-79.9914690000 33.2446133700 ! 02172001 ! USGS ! Lake Moultrie near Pinopolis
+-79.9745248000 33.2151692500 ! 02172002 ! USGS ! Lake Moultrie Tailrace Canal at Moncks Corner
+-79.9489708000 33.0935042000 ! 02172020 ! USGS ! W Branch Cooper River @ Pimlico near Moncks Corner
+-79.7836887000 33.1315584000 ! 02172035 ! USGS ! Turkey Creek above Huger
+-79.9570270000 33.0637824500 ! 02172040 ! USGS ! Back River at Dupont Intake near Kittredge
+-79.9361933800 33.0576713400 ! 02172050 ! USGS ! Cooper River near Goose Creek
+-79.9067500000 33.0157777800 ! 021720508 ! USGS ! Cooper River above Goose Creek
+-79.9228612000 32.9835058000 ! 02172053 ! USGS ! Cooper River at Mobay near Charleston
+-79.9628645000 32.8904522800 ! 021720677 ! USGS ! Cooper River @ Filbin Creek @ North Charleston
+-79.9526667000 32.8556944400 ! 0217206935 ! USGS ! Cooper River @ Ports Authority Pier K Charleston
+-79.8326944000 32.9242777800 ! 0217206962 ! USGS ! Wando River at Cainhoy below Wando
+-79.9100869000 32.8023983500 ! 021720709 ! USGS ! Cooper River at U.S. Highway 17 at Charleston
+-79.9236990000 32.7804544000 ! 021720710 ! USGS ! Cooper River @ Customs House (AUX) @ Charleston
+-80.0237014000 32.8346201000 ! 021720869 ! USGS ! Ashley River near North Charleston
+-80.3914876000 33.0279464500 ! 02175000 ! USGS ! Edisto River near Givhans
+-81.1472056000 32.3454305600 ! 02198759 ! USGS ! Bear Creek aT Hickory Bend near Rincon
+-81.1284437900 32.3393604900 ! 02198760 ! USGS ! Savannah River above Hardeeville
+-81.1781687000 32.2557537000 ! 02198810 ! USGS ! Abercorn Creek near Savannah
+-81.1536111000 32.2491666700 ! 02198820 ! USGS ! Abercorn Creek at Mouth near Savannah
+-81.1512239000 32.2357548000 ! 02198840 ! USGS ! Savannah River (I-95) near Port Wentworth
+-81.1537237000 32.1660358000 ! 02198920 ! USGS ! Savannah River at GA 25 at Port Wentworth
+-81.1383333000 32.1655555600 ! 02198950 ! USGS ! Middle River at GA 25 at Port Wentworth
+-81.1352778000 32.1427777800 ! 02198955 ! USGS ! Middle River at Fish Hole at Port Wentworth
+-81.1292789000 32.1157607500 ! 021989715 ! USGS ! Savannah River at Garden City
+-81.0812230000 32.0810411900 ! 021989773 ! USGS ! Savannah River at USACE Dock at Savannah
+-81.1178900000 32.1857574700 ! 021989784 ! USGS ! L Back River above Lucknow Canal near Limehouse
+-81.1181677000 32.1707582000 ! 021989791 ! USGS ! Little Back River at F&amp;W Dock near Limehouse
+-81.1300000000 32.1658333300 ! 021989792 ! USGS ! Little Back River at GA 25 at Port Wentworth
+-81.0069444000 32.1030555600 ! 0219897993 ! USGS ! Savannah River at Elba Island near Savannah
+-80.9031665000 32.0341019000 ! 02198980 ! USGS ! Savannah River at Fort Pulaski
+-81.0023338000 32.0827093500 ! 02199000 ! USGS ! South Channel Savannah River near Savannah
+-81.3853901000 32.0802044000 ! 02202680 ! USGS ! Ogeechee River at GA 204 near Ellabell
+-81.4586111000 31.9694444400 ! 02203518 ! USGS ! Canoochee River at Bridge 38 at Fort Stewart
+-81.2895556000 31.9779858500 ! 02203536 ! USGS ! Ogeechee River at US 17 near Richmond Hill
+-81.5395554800 31.8204894900 ! 02203557 ! USGS ! Peacock Creek at Atlantic RR Line near Mcintosh
+-81.3627778000 31.4533333300 ! 022035975 ! USGS ! Hudson Creek at  Meridian Landing near Meridian
+-81.8278920000 31.6546586000 ! 02226000 ! USGS ! Altmaha River at Doctortown
+-81.6053858000 31.4271671700 ! 02226160 ! USGS ! Altamaha River near Everett City
+-81.4828774800 31.1218978800 ! 022261794 ! USGS ! Brunswick River at Brunswick
+-81.3964856000 31.1335652300 ! 02226180 ! USGS ! Brunswick River at St. Simons Island
+-81.8656651000 31.2206414400 ! 02228000 ! USGS ! Satilla River at Atkinson
+-81.7256620000 30.9746760700 ! 02228070 ! USGS ! Satilla River at US 17 at Woodbine
+-81.4713611000 30.7643333300 ! 02228295 ! USGS ! Cumberland Sound at Sea Camp Dock near St. Marys
+-82.0241667000 30.7830555600 ! 02231175 ! USGS ! St Marys River at Ferry Landing near Folkston
+-81.6542683000 30.7441240000 ! 02231254 ! USGS ! St Marys River at I-95 near Kingsland
+-81.5898179000 30.5507931000 ! 02231291 ! USGS ! Nassau River near Tisonia
+-80.6787111000 27.5910500000 ! 02231322 ! USGS ! S-253 Weir near Fort Drum
+-80.8050594900 27.7280853300 ! 02231396 ! USGS ! Blue Cypress Creek near Fellsmere
+-80.8050000000 27.8666666700 ! 02231454 ! USGS ! Sixmile Creek near Kenansvill
+-80.8881155000 28.0744620000 ! 02231600 ! USGS ! Jane Creek near Deer Park
+-80.7520010000 28.0847387900 ! 02232000 ! USGS ! St. Johns River near Melbourne
+-80.8953373000 28.1819580800 ! 02232155 ! USGS ! Pennywash Creek near Deer Park
+-80.8725578000 28.3697283700 ! 02232400 ! USGS ! St Johns River near Cocoa
+-80.9433920000 28.5430552900 ! 02232500 ! USGS ! St. Johns River near Christmas
+-81.2078429900 28.6199987000 ! 02233475 ! USGS ! LT Econlockhtchee River at State HWY 434 nr Oviedo
+-81.1697860000 28.6555528500 ! 02233484 ! USGS ! Econlockhatchee River near Oviedo
+-81.1141667000 28.6777777800 ! 02233500 ! USGS ! Econlockhatchee River near Chuluota
+-81.0353374000 28.7141611000 ! 02234000 ! USGS ! St. Johns River above Lake Harney near Geneva
+-81.2645109000 28.6477758700 ! 02234324 ! USGS ! Howell Creek near Slavia
+-81.2475656000 28.6899966400 ! 02234344 ! USGS ! Howell Creek at State HWY 434 near Oviedo
+-81.3086780000 28.7188846600 ! 02234384 ! USGS ! Soldier Creeknear Longwood
+-81.2906221000 28.7041629000 ! 02234400 ! USGS ! Gee Creek near Longwood
+-81.1811737900 28.7841596900 ! 02234435 ! USGS ! Lake Jesup Outlet near Sanford
+-81.3242323000 28.8380469400 ! 02234500 ! USGS ! St. Johns River near Sanford
+-81.4192353900 28.8152700900 ! 02235000 ! USGS ! Wekiva River near Sanford
+-81.3397866000 28.9441540000 ! 02235500 ! USGS ! Blue Springs near Orange City
+-81.0464455000 29.0508184500 ! 02236000 ! USGS ! St. Johns River near De Land
+-81.5220157000 29.1669244500 ! 02236125 ! USGS ! St. Johns River at Aston
+-81.6425767000 29.2446986300 ! 02236160 ! USGS ! Silver Glen Springs near Astor
+-81.9019444000 29.3716666700 ! 02240500 ! USGS ! Ocklawaha River at Eureka
+-81.8041667000 29.5083333300 ! 02243960 ! USGS ! Ocklawaha River at Rodman Dam near Orange Springs
+-81.6831380000 29.5963582000 ! 02244040 ! USGS ! St Johns River at Buffalo Bluff near Satsuma
+-81.3711787000 29.3946979800 ! 02244333 ! USGS ! Haw Creek AB Russells Landing near St John Park
+-81.6261910000 29.5777478300 ! 02244440 ! USGS ! Duns Creek near Satsuma
+-81.4867442000 29.7296914700 ! 02245260 ! USGS ! Deep Creek at Spuds
+-81.9064915000 30.1132953000 ! 02246000 ! USGS ! North Fork Black Creek near Middleburg
+-81.8637113900 30.0760734300 ! 02246010 ! USGS ! North Fork Black Creek at Middleburg
+-81.5559000000 30.1433305600 ! 02246160 ! USGS ! Julington Creek at Old August Road near Bayard
+-81.7684315000 30.1963508700 ! 02246318 ! USGS ! Ortega River at Kirwin Road near Jacksonville
+-81.7403761000 30.2821837500 ! 02246459 ! USGS ! Cedar River at San Juan Avenue at Jacksonville
+-81.6653735000 30.3224616000 ! 02246500 ! USGS ! St Johns River at Jacksonville
+-81.6964875800 30.4174605800 ! 02246621 ! USGS ! Trout River near Jacksonville
+-81.6682000000 30.4433388900 ! 02246751 ! USGS ! Broward River bl Biscayne Blvd near Jacksonville
+-81.5968888900 30.4549416700 ! 02246804 ! USGS ! Dunn Creek Road near Eastport
+-81.5182611000 30.4483805600 ! 02246825 ! USGS ! Clapboard Creek near Jacksonville
+-81.1086687000 29.2174809900 ! 02247510 ! USGS ! Tomoka River near Holly Hill
+-81.0464455000 29.0508184500 ! 02248000 ! USGS ! Spruce Creek near Samsula
+-80.8597897000 28.8210681600 ! 02248350 ! USGS ! Turnbull Creek near Oak Hill
+-80.7547730000 28.7363807900 ! 02248380 ! USGS ! Haulover Canal near Mims
+-80.7066927000 28.3064107000 ! 02248650 ! USGS ! Ditch 19 N of Gus Hipp Blvd at Rockledge
+-80.6467205000 28.1269588800 ! 02249007 ! USGS ! Eau Gallie River at HEather Glen Cir at Melbourne
+-80.6294983000 28.0794605700 ! 02249500 ! USGS ! Crane Creek at Melbourne
+-80.5958871900 28.0172405400 ! 02250030 ! USGS ! Turkey Creek at Palm Bay
+-80.5058868000 27.7694725800 ! 02251000 ! USGS ! South prong St Sebastian River near Sebastian
+-80.5242200000 27.8561356900 ! 02251500 ! USGS ! North Prong Saint Sebastian River near Micco
+-80.5342203000 27.8305811900 ! 02251767 ! USGS ! Fellsmere Canal near Micco
+-80.4275516000 27.7544729700 ! 02251800 ! USGS ! Indian River at Wabasso
+-80.4292185800 27.6933639000 ! 02252500 ! USGS ! North Canal near Vero Beach
+-80.4056070000 27.6478098300 ! 02253000 ! USGS ! Main Canal at Vero
+-80.3865790000 27.6044779000 ! 02253500 ! USGS ! South Canal near Vero Beach
+-80.2586592000 27.2022700000 ! 02277100 ! USGS ! St Lucie River at Speedy Point
+-80.2067130000 27.1997703600 ! 02277110 ! USGS ! St Lucie Estuary At A1A Stuart
+-80.1748888900 26.9392777800 ! 02277602 ! USGS ! Loxahatchee River DWS Lainhart Dam nr Jupiter
+-80.1949720000 25.9002220000 ! 02286328 ! USGS ! C-8 Canal at NE 135 St at North Miami
+-80.4200537900 25.8914843000 ! 02287497 ! USGS ! N.W. Wellfield Canal nr Dade Broward Levee nr Penn
+-81.2616343000 25.8877208800 ! 02288800 ! USGS ! Tamiami Canal Outlets Monroe to Carnestown
+-80.3281073900 25.7623221300 ! 02289500 ! USGS ! Tamiami Canal near Coral Gables
+-80.3787500000 25.5709166700 ! 022907085 ! USGS ! Black Creek Canal West of US 1 near Goulds
+-80.3595556000 25.5598611000 ! 02290709 ! USGS ! Black Creek Canal at Old Cutler Road near Gou
+-80.4976388900 25.7463333300 ! 022907647 ! USGS ! Levee 31 North Extension at 1 Mile near West Miami
+-80.4959722000 25.7021666700 ! 02290766 ! USGS ! Levee 31 North Extension at 4 Mile near West Miami
+-80.4981667000 25.6633888900 ! 02290768 ! USGS ! Levee 31 North Extension at 7 Mile near West Miami
+-80.5250590000 25.3306720400 ! 02290769 ! USGS ! Canal 111 at S-18-C near Florida City
+-80.9131256000 25.3390067700 ! 022908205 ! USGS ! North River Upstream of Cutoff near Flamingo
+-81.0769444000 25.5013888900 ! 02290878 ! USGS ! Broad River near the Cutoff
+-81.2497222000 25.7091666700 ! 02290888 ! USGS ! Chatham River near the Watson Place
+-81.1647222000 25.5555555600 ! 02290918 ! USGS ! Lostman&#39;s River below Second Bay
+-81.3825000000 25.8697222000 ! 02290928 ! USGS ! Barron River at Everglades City
+-81.7493888900 26.3358333300 ! 02291500 ! USGS ! Imperial River near Bonita Springs
+-81.7903611000 26.3623333300 ! 02291524 ! USGS ! Spring Creek Headwater near Bonita Springs
+-81.7959722000 26.4429444400 ! 02291580 ! USGS ! North Branch Estero River at Estero
+-81.7934444000 26.4287500000 ! 02291597 ! USGS ! South Branch Estero River at Estero
+-81.8544167000 26.5220277800 ! 02291669 ! USGS ! Sixmile Cypress Creek North near Fort Myers
+-81.8544167000 26.5068888900 ! 02291673 ! USGS ! Tenmile Canal at Control near Estero
+-81.6984149000 26.7239570000 ! 02292900 ! USGS ! Caloosahatchee River at S-79 near Olga
+-81.8918888900 26.5748888900 ! 02293230 ! USGS ! Whiskey Creek at Ft. Myers
+-81.9209444000 26.7420277800 ! 02293262 ! USGS ! Gator Slough West of US-41 near Ft. Myers
+-81.8761946000 27.2208824500 ! 02296750 ! USGS ! Peace River at Arcadia
+-81.9019444000 27.1625000000 ! 02297105 ! USGS ! Peace River at Nocatee
+-81.9994440000 27.0866670000 ! 02297345 ! USGS ! Peace River at Platt
+-82.0073091900 27.0775552900 ! 02297350 ! USGS ! Peace River near Peace River Heights nr Ft. Ogden
+-81.8266360000 26.9673440000 ! 02297600 ! USGS ! Shell Creek at Circle K Groves near Ft Ogden
+-81.8875000000 26.9750000000 ! 02297635 ! USGS ! Shell Creek on CR 764 near Punta Gorda
+-81.8947220000 26.9902780000 ! 02298170 ! USGS ! Prairie Creek on CR 764 near Punta Gorda
+-81.9356414000 26.9847809400 ! 02298202 ! USGS ! Shell Creek Near Punta Gorda
+-82.3400930000 27.2883810000 ! 02298760 ! USGS ! Howard Creek near Sarasota
+-82.3137035000 27.2406050000 ! 02298830 ! USGS ! Myakka River near Sarrasota
+-82.3556490000 27.1856070000 ! 02298880 ! USGS ! Myakka River at Control near Laurel
+-82.2930650000 27.0451960000 ! 02299230 ! USGS ! Myakka River at North Port Charlotte
+-82.1934240000 27.1211650000 ! 02299450 ! USGS ! Big Slough at Tropicaire Blvd near North Port
+-82.2203330000 27.0693330000 ! 02299472 ! USGS ! Big Slough at West Price Blvd near North Port
+-82.2353330000 27.0456110000 ! 02299482 ! USGS ! Cocopolum Waterway at North Port
+-82.4300958000 27.1439424600 ! 02299727 ! USGS ! Shakett Creek near Nokomis
+-82.4564855000 27.1136659000 ! 02299733 ! USGS ! Donna Bay at Nokomis
+-82.4474110000 27.1127190000 ! 02299734 ! USGS ! Curry Creek at HWY 41 at Nokomis
+-82.4655560000 27.1122220000 ! 02299735 ! USGS ! Venice Inlet at Crow&#39;s Nest Marina at Venice
+-82.5442639000 27.3678222000 ! 02299861 ! USGS ! Walker Creek near Sarasota
+-82.3670375000 27.5136499900 ! 023000095 ! USGS ! Manatee River at Rye
+-82.3973888900 27.5757777800 ! 02300017 ! USGS ! Gamble Creek at County Road 675 near Parrish
+-82.3895379000 27.5533705400 ! 02300018 ! USGS ! Gamble Creek near Parrish
+-82.4281500000 27.5183720000 ! 02300021 ! USGS ! Manatee River at Fort Hamer
+-82.4261110000 27.4205560000 ! 02300033 ! USGS ! Braden River at Lakewood Ranch nr Lorraine
+-82.4875958000 27.4414307400 ! 02300042 ! USGS ! Ward Lake near Bradenton
+-82.5133888900 27.5799166700 ! 02300075 ! USGS ! Frog Creek at Buffalo Road near Rubonia
+-82.5397222000 27.5880555600 ! 02300082 ! USGS ! Frog Creek near Rubonia
+-82.3525925000 27.6711434400 ! 02300500 ! USGS ! Little Manatee River near Wimauma
+-82.3462040000 27.8350260000 ! 02300703 ! USGS ! Bullfrog Creek near Riverview
+-82.2737021000 27.8589147700 ! 02301638 ! USGS ! Alafia River at Bell Shoals near Riverview
+-82.3198141000 27.8678030800 ! 02301718 ! USGS ! Alafia River ar Riverview
+-82.3842600000 27.8597470000 ! 02301721 ! USGS ! Alafia River at Gibsonton
+-82.3706484000 27.8800245700 ! 02301738 ! USGS ! Archie Creek at 78th Street near Tampa
+-82.3498147000 27.8966908000 ! 02301740 ! USGS ! North Archie Creek at Progress Blvd near Tampa
+-82.3770375000 27.9022460000 ! 02301745 ! USGS ! Delaney Creek Popoff Canal near Tampa
+-82.3642600000 27.9258560000 ! 02301750 ! USGS ! Delaney Creek near Tampa
+-82.3717596900 27.9850210000 ! 02301793 ! USGS ! East LAke Outfall at East Chelsea Street near Tampa
+-82.3113888900 28.0986111000 ! 02303330 ! USGS ! Hillsborough River at Morris Bridge near Thonotosassa
+-82.4091667000 28.0888888900 ! 02303800 ! USGS ! Cypress Creek near Sulphur Springs
+-82.3637032000 28.0544622400 ! 02304000 ! USGS ! Hillsborough River at Fowler Ave near Temple Terrace
+-82.4275939000 28.0239078400 ! 02304500 ! USGS ! Hillsborough River near Tampa
+-82.4612055000 28.0586283600 ! 02305851 ! USGS ! Curiosity Creek at 122 Ave near Sulphur Springs
+-82.4517610000 28.0211300000 ! 02306000 ! USGS ! Sulphur Springs at Sulphur Springs
+-82.4523170000 28.0211300000 ! 023060003 ! USGS ! Sulphur Springs Run at Sulphur Springs
+-82.4548170000 28.0202970000 ! 023060013 ! USGS ! Hillsborough River at I-275 Bridge at Sulphur Springs
+-82.4587057000 27.9419662700 ! 02306028 ! USGS ! Hillsborough River at Platt Street at Tampa
+-82.5117623000 28.0430732800 ! 02306500 ! USGS ! Sweetwater Creek near Sulphur Springs
+-82.5450960000 28.0139080000 ! 02306647 ! USGS ! Sweetwater Creek near Tampa
+-82.5658333000 28.0658333300 ! 02306774 ! USGS ! Rocky Creek at State HWY 587 at Citrus Park
+-82.5250000000 28.0838611000 ! 02306904 ! USGS ! Brushy Creek near Sulphur Springs
+-82.5553744000 28.0650168400 ! 02306950 ! USGS ! Brushy Creek near Citrus Park
+-82.5759304000 28.0369623700 ! 02307000 ! USGS ! Rocky Creek near Sulphur Springs
+-82.6267649000 28.0508507000 ! 02307032 ! USGS ! Double Branch at Country Way Blvd near Oldsmar
+-82.6398209000 28.1408472600 ! 02307323 ! USGS ! Brooker Creek near Lake Fern
+-82.6398209000 28.0964322900 ! 02307359 ! USGS ! Brooker Creek near Tarpon Springs
+-82.6937554000 28.0868298700 ! 02307362 ! USGS ! Brooker Creek at Tarpon Woods Blvd near Oldsmar
+-82.6977778000 28.0770555600 ! 02307445 ! USGS ! South Branch Brooker Creek near Oldsmar
+-82.7109336000 28.0536283300 ! 02307498 ! USGS ! Lake Tarpon Canal at S-551 near Oldsmar
+-82.7423232000 27.9797421000 ! 02307668 ! USGS ! Alligator Creek below Belcher Road at Clearwater
+-82.7294440000 27.9731940000 ! 02307669 ! USGS ! Alligator Creek at HWY 19 at Clearwater
+-82.7131558000 27.9755061800 ! 02307674 ! USGS ! Alligator Creek at Kapok Park at Clearwater
+-82.7248228000 27.9158554500 ! 02307780 ! USGS ! Long Branch near Pinellas Park
+-82.7267672000 27.8733569000 ! 02308861 ! USGS ! Cross Bayou Canal at Cedar BRK Dr at Pinellas Park
+-82.6756550000 27.9075220000 ! 02308865 ! USGS ! Rooseelt Canal at Str 23-8 near Pinellas Park
+-82.6756550000 27.9075220000 ! 02308866 ! USGS ! Rooseelt Canal below Str 23-8 near Pinellas Park
+-82.7803798000 27.8391911700 ! 02308889 ! USGS ! Seminole Lake Outlet near Largo
+-82.6956554000 27.8141923500 ! 02308935 ! USGS ! Saint Joe Creek at Pinellas Park
+-82.8167700000 27.9075220000 ! 02309110 ! USGS ! McKay Creek near Largo
+-82.7406570000 28.0233520000 ! 02309415 ! USGS ! Curlew Creek at Evans Road near Dunedin
+-82.7475000000 28.0400000000 ! 02309421 ! USGS ! Curlew Creek at Belcher Road near Ozona
+-82.7587130000 28.0469620000 ! 02309425 ! USGS ! Curlew Creek at County Road 1 near Ozona
+-82.6664882000 28.2141778400 ! 02310000 ! USGS ! Anclote River near Elfers
+-82.7193060000 28.1744720000 ! 02310075 ! USGS ! Anclote River ner Holiday
+-82.6429040000 28.2573150000 ! 02310300 ! USGS ! Pithlachascotee River near New Port Richey
+-82.7226010000 28.2502880000 ! 02310308 ! USGS ! Pithlachascotee River at main street at New Port Richey
+-82.6677780000 28.2805560000 ! 02310322 ! USGS ! Lake Worrell Outfall near ew Port Richey East
+-82.6987780000 28.3387780000 ! 02310368 ! USGS ! Bear Creek near Bayonet Point
+-82.5767656000 28.7152641900 ! 02310650 ! USGS ! Chassahowitzka River near Homosassa
+-82.6062110000 28.7152640000 ! 02310663 ! USGS ! Chassahowitzka River near Chassahowitzka
+-82.6247220000 28.7026390000 ! 02310673 ! USGS ! Chassahowitzka River at Dog Island near Chassahowitzka
+-82.6389890000 28.6947090000 ! 02310674 ! USGS ! Chassahowitzka River at mouth near Chassahowitzka
+-82.5887110000 28.7997050000 ! 02310678 ! USGS ! Homosassa Springs Homosassa Springs
+-82.5898220000 28.7974830000 ! 02310688 ! USGS ! SE Fork Homosassa Spring at Homosassa Springs
+-82.6056390000 28.8131110000 ! 02310689 ! USGS ! Halls River at Homosassa Springs
+-82.6026000000 28.8013720000 ! 02310690 ! USGS ! Halls River near Homosassa
+-82.6178779000 28.7852609600 ! 02310700 ! USGS ! homosassa River at Homosassa
+-82.6956570000 28.7716500000 ! 02310712 ! USGS ! Homosassa River at Shell Island near Homosassa
+-82.6238890000 28.9063890000 ! 02310747 ! USGS ! Crystal River at Bagley Cove near Crystal River
+-82.6458060000 28.9015560000 ! 02310752 ! USGS ! Salt River near Crystal River
+-82.4266111000 29.0713055600 ! 02313098 ! USGS ! Rainbow River near Dunnellon
+-82.4475994800 29.0494205600 ! 02313100 ! USGS ! Rainbow River at Dunnellon
+-82.4645443000 29.0460871000 ! 02313200 ! USGS ! Withlacoochee River at Dunnellon
+-82.6167699000 29.0099748500 ! 02313231 ! USGS ! Withlacoochee River BL Inglis Dam near Dunnellon
+-82.6378818000 29.0210853800 ! 02313250 ! USGS ! Withlacoochee River Bypass Channel near Inglis
+-82.7657880000 29.0011090000 ! 02313272 ! USGS ! Withlacoochee River at Chambers near Yankeetown
+-82.7690010000 29.2041337800 ! 02313700 ! USGS ! Waccasassa River near Gulf Hammock
+-82.9276278000 29.9557850000 ! 02320500 ! USGS ! Suwannee River at Branford
+-82.7151204000 29.8488476900 ! 02322500 ! USGS ! Santa Fe River near Fort White
+-82.7859573000 29.9527328800 ! 02322700 ! USGS ! Ichetucknee River at HWY 27 near Hildreth
+-82.7991667000 29.9325000000 ! 02322703 ! USGS ! Santa Fe River AB Ichetucknee River near Hildreth
+-82.8604033000 29.9116207600 ! 02322800 ! USGS ! Santa Fe River near Hildreth
+-82.9242930000 29.7913435900 ! 02323000 ! USGS ! Sopchoppy River near Bell
+-82.9365131000 29.5896801700 ! 02323500 ! USGS ! Suwannee River near Wilcox
+-82.9767910000 29.4896808000 ! 02323566 ! USGS ! Manatee Spring near Chiefland
+-83.0276250000 29.3966266700 ! 02323590 ! USGS ! Suwannee River at Fowlers Bluff
+-83.0865150000 29.3394055400 ! 02323592 ! USGS ! Suwannee River AB Gopher River near Suwannee
+-83.3215262000 29.7866129400 ! 02324000 ! USGS ! Steinhatchee River near Cross City
+-83.6623725000 30.0713236000 ! 02325000 ! USGS ! Fenholloway River near Perry
+-83.8237679000 30.1707644800 ! 02326000 ! USGS ! Econfina Creek near Perry
+-83.9796085000 30.3013159000 ! 02326526 ! USGS ! Wacissa River near Wacissa
+-83.9797728000 30.1123469400 ! 02326550 ! USGS ! Aucilla River near Mouth near Nutall Rise
+-84.1511944000 30.2852222000 ! 02326885 ! USGS ! St. MArks River Swallet near Woodville
+-84.1482508000 30.2714311000 ! 02326900 ! USGS ! St. Marks River near Newport
+-84.2615630000 30.2138141000 ! 02327022 ! USGS ! Wakulla River near Crawfordville
+-84.3273972000 30.0727048500 ! 02327031 ! USGS ! Spring Creek near Spring Creek
+-84.4082346900 30.1882575300 ! 02327033 ! USGS ! Lost Creek at Arran
+-84.3814440000 30.1609170000 ! 02327038 ! USGS ! Lost Creek near Crawfordville
+-84.4943482000 30.1293685600 ! 02327100 ! USGS ! Sopchoppy River near Sopchoppy
+-84.6679637000 30.1765893400 ! 02330150 ! USGS ! Ochlockonee River near Smith Creek
+-84.8437990000 30.0388135600 ! 02330400 ! USGS ! New River near Sumatra
+-85.1440822000 30.1340887700 ! 02358754 ! USGS ! Apalachicola R.AB Chipola Conr Wewahitchka
+-85.0154686000 29.9493709400 ! 02359170 ! USGS ! Apalachicola River near Sumatra
+-85.5565932000 30.3846406000 ! 02359500 ! USGS ! Econfina Creek near Bennett
+-85.8982681900 30.4510296000 ! 02366500 ! USGS ! Choctawhatchee River near Bruce
+-85.8716009000 30.4190858700 ! 02366650 ! USGS ! Pine Log Creek near Ebro
+-86.5193954000 30.5574179000 ! 02367310 ! USGS ! Juniper Creek at State HWY 85 near Niceville
+-86.9235732000 30.5696390000 ! 02369600 ! USGS ! Yellow River near Milton
+-87.2669179000 30.6701917000 ! 02376033 ! USGS ! Escambia River near Molino
+-87.4627577000 30.5182508900 ! 02376100 ! USGS ! Bayou Marcus Creek near Pensacoula
+-87.3358086000 30.4982515900 ! 02376115 ! USGS ! Elevenmile Creek near Pensacola
+-87.4627577000 30.5182508900 ! 02377750 ! USGS ! Styx River at Seminole
+-87.7369323000 30.4065866900 ! 02378300 ! USGS ! Magnolia River at US98 nr Foley
+-87.7986010000 30.5454710000 ! 02378500 ! USGS ! Fish River near Silver Hill
+-87.8917920000 30.6427860000 ! 02378790 ! USGS ! Tiawasee Creek near Bridgehead
+-88.0208320000 31.0157360000 ! 02470629 ! USGS ! Mobile River at River Mile 31.0 at Bucks
+-88.0111090000 31.0029580000 ! 02470630 ! USGS ! Mobile River at Barry Steamplant nr Bucks
+-88.1433350000 30.8029650000 ! 02471001 ! USGS ! Chickasaw Creek near Kushla
+-88.1813910000 30.5007510000 ! 02471078 ! USGS ! Fowl River at Half-Mile Rd near Laurendine
+-88.7269444000 30.9780555600 ! 02479000 ! USGS ! Pascagoula River at Merrill
+-88.7811111000 30.7361111000 ! 02479300 ! USGS ! Red Creek at Vestry
+-88.6413888900 30.6105555600 ! 02479310 ! USGS ! Pascagoula River at Graham Ferry
+-88.4586274000 30.8118552000 ! 02479560 ! USGS ! Escatawpa River near Agricola
+-88.4513888900 30.4586111000 ! 0248018020 ! USGS ! Escatawpa River at 1-10 nr Orange Grove
+-88.5630560000 30.3677780000 ! 02480212 ! USGS ! Pascagoula River at MI 1 at Pascagoula
+-88.6084440000 30.3826940000 ! 02480285 ! USGS ! West Pascagoula River at Hwy 90 at Gautier
+-88.6947220000 30.3628890000 ! 02480287 ! USGS ! Graveline Bayou near Gautier
+-89.1219440000 30.5586110000 ! 02481000 ! USGS ! Biloxi River at Wortham
+-89.0358333000 30.4883333300 ! 02481130 ! USGS ! Biloxi River near Lyman
+-88.9758670000 30.4157530000 ! 02481270 ! USGS ! Back Bay of Biloxi near Biloxi
+-88.8280560000 30.4191670000 ! 02481299 ! USGS ! Old Fort Bayou at Ocean Springs
+-89.2744440000 30.4836110000 ! 02481510 ! USGS ! Wolf River near Landon
+-89.2063889000 30.3933611000 ! 02481521 ! USGS ! Wolf River at Belle Ferry Road near Long Beach
+-89.4413890000 30.3872220000 ! 02481660 ! USGS ! Jourdan River nr Bay St Louis
+-89.8061110000 30.5716670000 ! 02492110 ! USGS ! East Pearl River AB Wilson SL at Walkaih Bluff
+-89.5947220000 30.5741670000 ! 02492343 ! USGS ! East Hobolochitto Creek near Caesar
+-89.6950000000 30.4625000000 ! 02492511 ! USGS ! East Pearl River at I-59 near Nicholson
+-89.7797220000 30.4563890000 ! 02492519 ! USGS ! Pearl River Navigation Canal Lock and Dam No. 1
+-89.7367304000 30.3851930000 ! 02492600 ! USGS ! Pearl River at Pearl River
+-91.7983330000 30.9825000000 ! 03045 ! USACE ! Atchafalaya River at Simmesport
+-91.7361110000 30.6905560000 ! 03060 ! USACE ! Atchafalaya River at Melville
+-91.7615000000 30.5688330000 ! 03075 ! USACE ! Atchafalaya River at Krotz Springs
+-91.6866670000 30.2813890000 ! 03120 ! USACE ! Atchafalaya River at Butte La Rose
+-91.5896670000 30.2331900000 ! 03210 ! USACE ! Bayou La Rompe at Lake Long
+-91.6893050000 30.3852500000 ! 03240 ! USACE ! Whiskey Bay Pilot Channel Below Head
+-91.4558330000 30.0384530000 ! 03615 ! USACE ! Keelboat Pass below Lake Chicot
+-91.3896660000 29.7659170000 ! 03645 ! USACE ! Six Mile Lake NE of Verdunville
+-91.3728000000 29.6977000000 ! 03720 ! USACE ! Wax Lake Outlet at Calumet
+-91.2108330000 29.6963890000 ! 03780 ! USACE ! Lower Atchafalaya River at Morgan City
+-91.2494440000 29.5333330000 ! 03820 ! USACE ! Avoca Island Cutoff south of Morgan City
+-91.1915560000 30.4456670000 ! 07374000 ! USGS ! Mississippi River at Baton Rouge
+-89.9778470000 29.8571510000 ! 07374525 ! USGS ! Mississippi River at Belle Chasse
+-89.9375000000 29.7841670000 ! 073745253 ! USGS ! Reggio Canal nr Wills Point
+-89.7195060000 29.7082660000 ! 073745257 ! USGS ! Crooked B. NW of L. Cuatro Caballo nr Delacroix
+-89.7039520000 29.5707770000 ! 073745258 ! USGS ! Cow Bayou at American Bay nr Pointe-A-La-Hache
+-89.5636690000 29.6335440000 ! 07374526 ! USGS ! Black Bay nr Snake Island nr Pointe-A-La-Hache
+-89.6060320000 29.5859630000 ! 07374527 ! USGS ! Northeast Bay Gardene nr Point-A-LA-Hache
+-89.8306214900 30.3013057800 ! 07374581 ! USGS ! Bayou Liberty nr Slidell
+-90.2486950000 30.6160220000 ! 07375000 ! USGS ! Tchefuncte River near Folsom
+-90.1695244000 30.4946364000 ! 07375050 ! USGS ! Tchefuncte River near Covington
+-90.1461111000 30.5563888900 ! 07375105 ! USGS ! Bogue Falaya River near Camp Covington
+-90.0845220000 30.4996360000 ! 07375170 ! USGS ! Bogue Falaya at Covington
+-90.0894440000 30.4763890000 ! 07375175 ! USGS ! Bogue Falaya River at Boston St. at Covington
+-90.3617520000 30.5065800000 ! 07375500 ! USGS ! Tangipahoa River at Robert
+-90.3345830000 30.4436940000 ! 07375650 ! USGS ! Tangipahoa River near Ponchatoula
+-90.6773160000 30.5038020000 ! 07376000 ! USGS ! Tickfaw River at Holden
+-90.5459240000 30.5043580000 ! 07376500 ! USGS ! Natalbany River at Baptist
+-91.0737160000 30.5126890000 ! 07378000 ! USGS ! Comite River near Comite
+-91.0401040000 30.5057450000 ! 07378050 ! USGS ! Comite R. at Greenwell Spg Rd near Baton Rouge
+-90.9903800000 30.4640790000 ! 07378500 ! USGS ! Amite River near Denham Springs
+-91.0073240000 30.3868590000 ! 07378722 ! USGS ! Claycut Bayou at Antioch Rd near Baton Rouge
+-91.0207220000 30.3212500000 ! 07378745 ! USGS ! Alligator Bayou near Kleinpeter
+-91.0209440000 30.3213890000 ! 07378746 ! USGS ! Bayou Manchac at Alligator B. near Kleinpeter
+-91.0181580000 30.3235270000 ! 07378748 ! USGS ! Bluff Swamp near Kleinpeter
+-91.1081600000 30.3585260000 ! 07378810 ! USGS ! Bayou Fountain at Bluebonnet Blvd near B.R.
+-91.1034380000 30.4444680000 ! 07379000 ! USGS ! Ward Creek at Government St at Baton Rouge
+-91.1034380000 30.4049140000 ! 07379050 ! USGS ! Ward Creek at Essen Lane near Baton Rouge
+-91.0914935000 30.4179691400 ! 07379100 ! USGS ! North Branch Ward Creek at Baton Rouge
+-91.0942710000 30.3824140000 ! 07379960 ! USGS ! Dawson Cr. at Bluebonnet Blvd near Baton Rouge
+-90.9173216000 30.3404712900 ! 07380101 ! USGS ! Bayou Manchac nr Little Prairie
+-90.9689900000 30.3368600000 ! 07380102 ! USGS ! Welsh Gully at J. Broussard Rd nr Prairieville
+-90.9464890000 30.3285270000 ! 07380107 ! USGS ! Muddy Creek at Manchac Acres Rd near Oak Grove
+-90.8520419000 30.3326939000 ! 07380120 ! USGS ! Amite River at Port Vincent
+-90.8837090000 30.2974170000 ! 07380126 ! USGS ! Henderson Bayou near Port Vincent
+-90.7792616000 30.2754733000 ! 07380200 ! USGS ! Amite River near French Settlement
+-90.6103684000 30.3093619000 ! 07380215 ! USGS ! Amite River at Hwy 22 nr Maurepas
+-90.9187090000 30.1707530000 ! 073802220 ! USGS ! Panama Canal at Hwy 44 nr Gonzales
+-90.8612080000 30.1732530000 ! 073802225 ! USGS ! Bayou Conway near Sorrento
+-90.9634330000 30.2621400000 ! 0738022295 ! USGS ! Grand Goudine at Babin Rd Near Duplessis
+-90.9169440000 30.2694440000 ! 0738022395 ! USGS ! Black Bayou at Hwy 621 near Prairieville
+-90.8773200000 30.2404740000 ! 073802245 ! USGS ! Black Bayou E of Gonzales
+-90.8995420000 30.2274190000 ! 073802273 ! USGS ! Bayou Francois at Hwy 61 near Gonzales
+-90.7862050000 30.1893640000 ! 073802282 ! USGS ! New River Canal nr Sorrento
+-89.9888610000 29.6991110000 ! 07380238 ! USGS ! Naomi Diversion Canal near Naomi
+-89.9506270000 29.4227200000 ! 07380251 ! USGS ! Barataria Bay N of Grand Isle
+-90.0411840000 29.3985550000 ! 073802512 ! USGS ! Hackberry Bay NW of Grand Isle
+-89.9468060000 29.2728330000 ! 073802516 ! USGS ! Barataria Pass at Grand Isle
+-90.1655560000 29.5657780000 ! 07380330 ! USGS ! Bayou Perot at Point Legard near Cutoff
+-90.1814650000 29.5177170000 ! 07380335 ! USGS ! Little Lake nr Cutoff
+-90.9934720000 30.1008890000 ! 07380400 ! USGS ! Bayou Lafourche at Donaldsonville
+-91.0059330000 30.0965880000 ! 07380401 ! USGS ! Bayou Lafourche SW of Donaldsonville
+-91.0232220000 29.9915000000 ! 07380500 ! USGS ! Bayou Lafourche at Napoleonville
+-90.8225930000 29.7979850000 ! 07381000 ! USGS ! Bayou Lafourche at Thibodaux
+-90.5367780000 29.6470560000 ! 07381150 ! USGS ! Bayou Lafourche at Lockport
+-90.3808330000 29.5772220000 ! 07381235 ! USGS ! GIWW West of Bayou Lafourche at Larose
+-90.7153670000 29.3829990000 ! 07381324 ! USGS ! Bayou Grand Caillou at Dulac
+-90.7298120000 29.3852210000 ! 07381328 ! USGS ! Houma Navigation Canal
+-90.7100000000 29.5980560000 ! 07381331 ! USGS ! GIWW at Houma
+-90.5877780000 29.3888890000 ! 073813375 ! USGS ! Bayou Terrebonne at Ctrl Str near Lapeyrouse
+-90.6180280000 29.3869720000 ! 07381343 ! USGS ! B. Petit Caillou at Ctrl Str near Lapeyrouse
+-90.9211110000 29.2491670000 ! 07381349 ! USGS ! Caillou Lake (Sister Lake) SW of Dulac
+-90.5448080000 29.6452130000 ! 07381350 ! USGS ! Company Canal at Hwy 1 at Lockport
+-90.5576670000 29.6273330000 ! 07381355 ! USGS ! Company Canal at Salt Barrier nr Lockport
+-91.2158330000 29.9091110000 ! 07381454 ! USGS ! Belle River at Hwy 70 nr Pierre Part
+-91.0997220000 29.6683330000 ! 073814675 ! USGS ! Bayou Boeuf at Railroad Bridge at Amelia
+-91.7983333000 30.9825000000 ! 07381490 ! USGS ! Atchafalaya River at Simmesport
+-91.6867797000 30.2815863800 ! 07381515 ! USGS ! Atchafalaya River at Butte La Rose
+-91.4456662000 29.8927040600 ! 073815450 ! USGS ! Chicot Pass near Myette Point near Charenton
+-91.3728850000 29.6979860000 ! 07381590 ! USGS ! Wax Lake Outlet at Calumet
+-91.3739970000 29.7043750000 ! 073815945 ! USGS ! Bayou Teche E of Calumet Flood Gate at Calumet
+-91.2119370000 29.6928190000 ! 07381600 ! USGS ! Lower Atchafalaya River at Morgan City
+-91.3041670000 29.6494440000 ! 073816202 ! USGS ! GIWW at mile 103 S of Morgan City
+-91.2458330000 29.5386110000 ! 073816501 ! USGS ! Avoca Island Cutoff south of Morgan City
+-91.1552780000 29.5855560000 ! 073816503 ! USGS ! Bayou Penchant S of Morgan City
+-91.4705560000 29.6808330000 ! 07381670 ! USGS ! GIWW at Bayou Sale Ridge nr Franklin
+-92.0556741000 30.6182517500 ! 07382500 ! USGS ! Bayou Courtableau at Washington
+-91.8315050000 30.5660260000 ! 07384400 ! USGS ! State Canal near Krotz Springs
+-91.5862250000 29.8793720000 ! 07385765 ! USGS ! Bayou Teche at Adeline Bridge nr Jeanerette
+-91.5416670000 29.8230560000 ! 07385790 ! USGS ! Charenton Drainage Canal at Baldwin
+-91.3728850000 29.7040970000 ! 07385820 ! USGS ! Bayou Teche W of Calumet Flood Gate at Calumet
+-91.9876184000 30.3682538700 ! 07386600 ! USGS ! Vermilion River (B. Vermilion) near Carencro
+-91.9390070000 30.2190890000 ! 07386850 ! USGS ! Vermilion River nr Lafayette
+-91.9928975000 30.2174229000 ! 07386880 ! USGS ! Vermilion River at Surrey St. at Lafayette
+-92.0756780000 30.1418690000 ! 07386940 ! USGS ! Vermilion River at Hwy 733 nr Lafayette
+-92.1563610000 29.9511110000 ! 07386980 ! USGS ! Vermilion River at Perry
+-91.8803980000 29.7132660000 ! 07387040 ! USGS ! Vermilion Bay nr Cypremort Point
+-92.1355560000 29.6744440000 ! 07387050 ! USGS ! Vermilion Bay(B. Fearman) near Intracoastal City
+-92.4906944000 30.4828888900 ! 08010000 ! USGS ! Bayou Des Cannes near Eunice
+-92.6317500000 30.4807777800 ! 08012000 ! USGS ! Bayou Nezpique near Basile
+-92.5905556000 30.1900000000 ! 08012150 ! USGS ! Mermentau River At Mermentau
+-92.8140370000 30.6404760000 ! 08013500 ! USGS ! Calcasieu River near Oberlin
+-92.8931940000 30.6987500000 ! 08014500 ! USGS ! Ouiska Chitto Creek Near Oberlin
+-92.9154170000 30.5025560000 ! 08015500 ! USGS ! Calcasieu River near Kinder
+-93.2473760000 30.2371500000 ! 08017044 ! USGS ! Calcasieu River at I-10 at Lake Charles
+-93.2995990000 30.0318790000 ! 08017095 ! USGS ! North Calcasieu Lake near Hackberry
+-93.3490430000 29.8157760000 ! 08017118 ! USGS ! Calcasieu River at Cameron
+-93.7437780000 30.3038170000 ! 08030500 ! USGS ! Sabine Rv near Ruliff
+-93.7215544000 30.0979877400 ! 08030540 ! USGS ! Sabine Rv (at Navy Pier) at Orange
+-93.9085058000 30.1863204500 ! 08031000 ! USGS ! Cow Bayou nr Mauriceville
+-94.3346324000 30.1060464000 ! 08041700 ! USGS ! Pine Island Bayou nr Sour Lake
+-94.1887943000 30.1788225300 ! 08041749 ! USGS ! Pine Island Bayou abv BI Pump Plant
+-94.6661140000 29.6755560000 ! 08042558 ! USGS ! W Fk Double Bayou at Eagle Ferry Rd nr Anahuac
+-94.8102003000 29.9613289800 ! 08067070 ! USGS ! CWA Canal near Dayton
+-94.7743660000 29.9418850000 ! 08067100 ! USGS ! Trinity Rv nr Moss Bluff
+-94.7149197000 29.8674419300 ! 08067118 ! USGS ! Lake Charlotte near Anahuac
+-94.9996503000 29.7707819700 ! 08067525 ! USGS ! Goose Creek at Baytown
+-95.1413200000 29.9163330000 ! 08072000 ! USGS ! Lk Houston nr Sheldon
+-95.0938189000 29.8763342600 ! 08072050 ! USGS ! San Jacinto Rv nr Sheldon
+-95.4085505000 29.7602282900 ! 08074000 ! USGS ! Buffalo Bayou at Houston
+-95.3971612000 29.7752277700 ! 08074500 ! USGS ! Whiteoak Bayou at Houston
+-95.3680556000 29.7927777800 ! 08074540 ! USGS ! Little Whiteoak Bayou at Trimble St Houston
+-95.3585490000 29.7666170000 ! 08074598 ! USGS ! Whiteoak Bayou at Main St Houston
+-95.4121620000 29.6971750000 ! 08075000 ! USGS ! Brays Bayou at Houston
+-95.3388890000 29.7141670000 ! 08075110 ! USGS ! Brays Bayou at MLK Jr Blvd Houston
+-95.2893807000 29.6743968700 ! 08075500 ! USGS ! Sims Bayou at Houston
+-95.2291010000 29.6566190000 ! 08075605 ! USGS ! Berry Bayou at Nevada St Houston
+-95.2163230000 29.6946736300 ! 08075730 ! USGS ! Vince Bayou at Pasadena
+-95.3132700000 29.8088370000 ! 08075763 ! USGS ! Hunting Bayou at Hoffman St Houston
+-95.2679910000 29.7932820000 ! 08075770 ! USGS ! Hunting Bayou at IH 610 Houston
+-95.2332671000 29.8371695000 ! 08076700 ! USGS ! Greens Bayou at Ley Rd Houston
+-95.1785440000 29.5174550000 ! 08077600 ! USGS ! Clear Ck nr Friendswood
+-95.3230476000 29.3715434900 ! 08078000 ! USGS ! Chocolate Bayou near Alvin
+-95.3388276000 28.9510811500 ! 08079120 ! USGS ! Old Brazos River near Freeport
+-95.5824448000 29.3496858000 ! 08116650 ! USGS ! Brazos River near Rosharon
+-95.6058330000 29.1441670000 ! 08116850 ! USGS ! Brazos River near West Columbia
+-96.0124588000 28.9741462000 ! 08162500 ! USGS ! Colorado River near Bay City
+-95.9975000000 28.7741666700 ! 08162501 ! USGS ! Colorado River near Wadsworth
+-96.6863668000 28.9599844900 ! 08164000 ! USGS ! Lavaca River near Edna
+-96.7688702000 28.7252713700 ! 08164800 ! USGS ! Placedo Creekk near Placedo
+-96.9652778000 28.6619444400 ! 08177520 ! USGS ! Guadalupe River nr Bloomington
+-97.0426944000 28.5312500000 ! 08188570 ! USGS ! San Antonio River near McFaddin
+-96.8847084000 28.5058337000 ! 08188800 ! USGS ! Guadalupe River near Tivoli
+-96.8627640000 28.4783340000 ! 08188810 ! USGS ! Guadalupe River at SH 35 near Tivoli
+-97.1124913000 28.3036169300 ! 08189200 ! USGS ! Copano Creek near Refugio
+-97.2791593000 28.2919508800 ! 08189500 ! USGS ! Mission River at Refugio
+-97.6255510000 27.8969650000 ! 08211503 ! USGS ! Rincon Bayou Channel nr Calallen
+-97.5019377000 27.7114187900 ! 08211520 ! USGS ! Oso Creek at Corpus Christi
+-97.5847220000 26.2352780000 ! 08470500 ! USGS ! Arroyo Colorado at FM 106 Rio Hondo
+-81.0643806000 25.1369694400 ! 250802081035500 ! USGS ! East Side Creek near Lake Ingraham
+-80.7333764000 25.1685954700 ! 251003080435500 ! USGS ! McCormick Creek at Mouth near Key Largo
+-80.7927778000 25.1755555600 ! 251032080473400 ! USGS ! Alligator Creek near Garfield Bight
+-81.1327778000 25.1876527800 ! 251115081075800 ! USGS ! Raulerson Brothers Canal at Cape Sable
+-80.6388378000 25.1909944000 ! 251127080382100 ! USGS ! Taylor River at Mouth near Homestead
+-80.5838946000 25.2037021000 ! 251209080350100 ! USGS ! Mud Creek at mouth near Homestead
+-80.6476667000 25.2102972000 ! 251241080385300 ! USGS ! Upstream Taylor River near Homestead
+-80.5332849000 25.2153042600 ! 251253080320100 ! USGS ! Trout Creek at Mouth near Key Largo
+-80.4857280000 25.2286979700 ! 251341080291200 ! USGS ! Stillwater Creek near Homestead
+-80.5248667000 25.2326250000 ! 251355080312800 ! USGS ! Joe Bay 2E near Key Largo
+-80.4475722000 25.2421083300 ! 251433080265000 ! USGS ! West HWY Creek near Homestead
+-80.4201833000 25.2642111000 ! 251549080251200 ! USGS ! Manatee Bay Creek near Homestead
+-80.5725528000 25.2861083300 ! 251716080342100 ! USGS ! Everglades 5A IN C-111 Basin near Homestead
+-80.4351667000 25.3303333300 ! 251946080254800 ! USGS ! everglades 1 IN C-111 Basin near Homestead
+-80.5466638900 25.3387694400 ! 252036080324300 ! USGS ! Everglades 4 IN C-111 Basin near Homestead
+-81.0364930000 25.3753255000 ! 252230081021300 ! USGS ! Shark River below Gunboat Island near Flamingo
+-81.0859583000 25.4305555600 ! 252551081050900 ! USGS ! Harney River near Flamingo
+-80.3606111000 25.6990555600 ! 254157080213800 ! USGS ! Snapper Creek No.5 above Water Pipe near S. Miami
+-80.3867198000 25.8409305500 ! 255026080231300 ! USGS ! Snapper Creek Canal Extension at NW 74th St nr Hialea
+-80.3670833000 26.1364444400 ! 260810080222001 ! USGS ! Site 99 Nr L-35A in Conservation Area 2B nr Sunrise
+-80.3713888900 26.1763888900 ! 261035080221701 ! USGS ! Eden 13 in Water Conservation Area 2-B
+-80.3066388900 26.2814722000 ! 261710080190001 ! USGS ! Site 19 in Conservation Area 2A near Coral Springs
+-80.3125000000 26.3600000000 ! 262100080190001 ! USGS ! Hillsboro CA at S-10-A Nr Deerfield Beach
+-80.2909167000 26.4596083300 ! 262750080175001 ! USGS ! Site 9 in Conservation Area No 1 Nr Boynton Beach
+-80.2221111000 26.4992777800 ! 263000080120001 ! USGS ! Site 8C near L-40 in Conservation Area No 1 nr Boynton Beach
+-80.2344278000 26.4996694400 ! 263050080145001 ! USGS ! Site 8T in Conservation Area No 1 nr Boynton Beach
+-80.0817083800 26.9478354000 ! 265651080045500 ! USGS ! Lox River at Coast Guard Dock near Jupiter
+-80.1600439000 26.9853337700 ! 265906080093500 ! USGS ! Loxahatchee River at Mile 9.1 near Jupiter
+-64.7033055600 32.3733888900 ! 2695540 ! NOAA NOS ! Bermuda Esso Pier
+-82.4740110000 28.0531750000 ! 280311082282601 ! USGS ! Lake Eckles near Carrollwood
+-82.6906388900 28.9252777800 ! 285531082412600 ! USGS ! Crystal River at Mouth near Shell Island nr Crystal
+-95.5561110000 29.0538890000 ! 290350095334300 ! USGS ! Brazos River near Hwy 332 near Brazoria
+-89.9405000000 29.3247220000 ! 291929089562600 ! USGS ! Barataria Bay near Grand Terre Island
+-90.1000000000 29.4666670000 ! 292800090060000 ! USGS ! Little Lake nr Bay Dosgris E of Galliano
+-90.0111110000 29.4830560000 ! 292859090004000 ! USGS ! Barataria Waterway S of Lafitte
+-89.7605560000 29.4977780000 ! 292952089453800 ! USGS ! CRMS0282-H01-RT
+-90.9480560000 29.4977780000 ! 292952090565300 ! USGS ! CRMS0411-H01-RT
+-91.3855560000 29.5413890000 ! 293229091230800 ! USGS ! CRMS0465-H01-RT
+-92.6041670000 29.6358330000 ! 293809092361500 ! USGS ! CRMS0609-H01-RT
+-92.8230560000 29.6791670000 ! 294045092492300 ! USGS ! CRMS0615-H01-RT
+-92.4166670000 29.7880560000 ! 294717092250000 ! USGS ! CRMS0568-H01-RT
+-90.2047220000 29.8552780000 ! 2951190901217 ! USGS ! L. Cataouatche at Whiskey Canal S of Waggaman
+-89.9076940000 29.8535560000 ! 295124089542100 ! USGS ! Caernarvon Outfall Channel at Caernarvon
+-93.1669440000 29.8752780000 ! 295231093100100 ! USGS ! CRMS2418-H01-RT
+-90.3177780000 29.9169440000 ! 295501090190400 ! USGS ! Davis Pond Freshwater Diversion near Boutte
+-93.5105560000 29.9622220000 ! 295744093303800 ! USGS ! CRMS0651-H01-RT
+-91.5333330000 30.0533330000 ! 300312091320000 ! USGS ! Arm of Grand Lake near Crook Chene Cove
+-90.6308330000 30.1005560000 ! 300602090375100 ! USGS ! CRMS5373-H01-RT
+-89.2502780000 30.1227780000 ! 300722089150100 ! USGS ! Mississippi Sound near Grand Pass
+-89.7405560000 30.1669440000 ! 301001089442600 ! USGS ! Rigolets at Hwy 90 near Slidell
+-89.5341670000 30.1947220000 ! 301141089320300 ! USGS ! E Pearl River at CSX Railroad nr Clairborne
+-90.1227500000 30.1996390000 ! 301200090072400 ! USGS ! Lake Pontchartrain at Crossover 4 near Mandeville
+-90.6400000000 30.2233330000 ! 301324090382400 ! USGS ! CRMS0061-H01-RT
+-91.7355560000 30.2819440000 ! 301655091440800 ! USGS ! Pontoon Bridge Canal near Butte Larose
+-91.7325000000 30.3388890000 ! 302020091435700 ! USGS ! Lake Pelba at I-10 near Henderson
+-91.7830560000 30.3888890000 ! 302320091465900 ! USGS ! Bayou Fusilier of the Swamps near Henderson
+-76.4363056000 36.5617777800 ! 363342076261100 ! USGS ! Sycamore Ditch near Cypress Chapel
+-76.0868527800 36.9063361000 ! 365423076051300 ! USGS ! Lynnhaven River off Vista Cir nr Virginia Beach
+-91.2102140000 30.4320170000 ! 52415 ! USACE ! Port Allen Lock - Intracoastal Waterway
+-93.3479170000 29.7758060000 ! 73650 ! USACE ! Calcasieu River &amp; Pass nr Cameron
+-89.8365972000 29.9351805000 ! 76010 ! USACE ! Bayou Dupre Sector Gate East/Flood Side
+-89.9153416000 29.9987138000 ! 76025 ! USACE ! Bayou Bienvenue Floodgate East Flood Side
+-89.9005277000 30.0123888000 ! 76030 ! USACE ! IHNC Surge Barrier East Flood Side
+-89.9373611000 30.0067055000 ! 76040 ! USACE ! GIWW near Paris Road Bridge
+-90.0346666600 30.0304166000 ! 76065 ! USACE ! Seabrook Floodgate Closure Structure Lake Side
+-90.0267500000 29.9664800000 ! 76160 ! USACE ! Inner Harbor Navigation Canal New Orleans
+-90.0834110000 29.9085000000 ! 76200 ! USACE ! Harvey Lock at GIWW
+-90.0693250000 29.8705640000 ! 76220 ! USACE ! Harvey Canal Sector Gates nr Lapalco Blvd
+-90.0598690000 29.8483580000 ! 76230 ! USACE ! Harvey Canal at Boomtown Casino
+-89.9733610000 29.9142970000 ! 76240 ! USACE ! Algiers Lock - GIWW
+-91.1710940000 29.6830390000 ! 76360 ! USACE ! Bayou Boeuf Lock - East
+-91.1805640000 29.6827310000 ! 76400 ! USACE ! Bayou Boeuf Lock - West
+-90.2730560000 29.9125000000 ! 82720 ! USACE ! Sellers Canal at Hwy 90
+-90.1580560000 29.8938890000 ! 82740 ! USACE ! Bayou Segnette at Lapalco Blvd
+-90.1105560000 29.6694440000 ! 82875 ! USACE ! Barataria Waterway at Lafitte
+-66.9829000000 44.9046000000 ! 8410140 ! NOAA NOS ! Eastport Passamaquoddy Bay
+-67.18179 44.6567000000 ! 8411060 ! NOAA NOS ! Cutler Farris Wharf
+-68.2050000000 44.3917000000 ! 8413320 ! NOAA NOS ! Bar Harbor
+-70.2467000000 43.6567000000 ! 8418150 ! NOAA NOS ! Portland
+-70.5633000000 43.3200000000 ! 8419317 ! NOAA NOS ! Wells
+-70.7117000000 43.0717000000 ! 8423898 ! NOAA NOS ! Fort Point
+-71.03998 42.3548000000 ! 8443970 ! NOAA NOS ! Boston
+-71.1641000000 41.7043000000 ! 8447386 ! NOAA NOS ! Fall River
+-69.9511000000 41.6885000000 ! 8447435 ! NOAA NOS ! Chatham
+-70.6717000000 41.5233000000 ! 8447930 ! NOAA NOS ! Woods Hole
+-70.0967000000 41.29335 ! 8449130 ! NOAA NOS ! Nantucket Island
+-71.3267000000 41.5050000000 ! 8452660 ! NOAA NOS ! Newport
+-71.3433000000 41.7167000000 ! 8452944 ! NOAA NOS ! Conimicut Light
+-71.39867 41.8071000000 ! 8454000 ! NOAA NOS ! Providence
+-71.4110000000 41.5868000000 ! 8454049 ! NOAA NOS ! Quonset Point
+-72.0900000000 41.3614000000 ! 8461490 ! NOAA NOS ! New London
+-72.9083000000 41.2833000000 ! 8465705 ! NOAA NOS ! New Heaven
+-73.1817000000 41.1733000000 ! 8467150 ! NOAA NOS ! Bridegport
+-71.9600000000 41.0483000000 ! 8510560 ! NOAA NOS ! Montauk
+-73.7649000000 40.8103000000 ! 8516945 ! NOAA NOS ! Kings Point
+-74.0142000000 40.7006000000 ! 8518750 ! NOAA NOS ! The Battery
+-74.1417000000 40.6367000000 ! 8519483 ! NOAA NOS ! Bergen Point West Reach
+-90.5508610000 30.3758610000 ! 85300 ! USACE ! Tickfaw River near Springfield
+-74.0094000000 40.4669000000 ! 8531680 ! NOAA NOS ! Sandy Hook
+-74.4183000000 39.3550000000 ! 8534720 ! NOAA NOS ! Atlantic City
+-74.96954 38.9683 ! 8536110 ! NOAA NOS ! Cape May Ferry Terminal
+-75.3750000000 39.3050000000 ! 8537121 ! NOAA NOS ! Ship John Shoal
+-74.8733000000 40.0800000000 ! 8539094 ! NOAA NOS ! Burlington Delaware River
+-90.4002780000 30.2813890000 ! 85420 ! USACE ! Pass Manchac near Pontchoula
+-75.1417000000 39.9333000000 ! 8545240 ! NOAA NOS ! Philadelphia
+-75.1417000000 39.9333000000 ! 8546252 ! NOAA NOS ! Bridesburg
+-74.7517000000 40.1367000000 ! 8548989 ! NOAA NOS ! Newbold
+-75.5883000000 39.5817000000 ! 8551762 ! NOAA NOS ! Delaware City
+-75.5733000000 39.5583000000 ! 8551910 ! NOAA NOS ! Reedy Point
+-75.1200000000 38.7817000000 ! 8557380 ! NOAA NOS ! Lewes
+-90.0922890000 30.3657970000 ! 85575 ! USACE ! Lake Pontchartrain at Mandeville
+-90.1156440000 30.0221640000 ! 85625 ! USACE ! Lake Pontchartrain at West End
+-90.0720280000 30.0260550000 ! 85626 ! USACE ! London Ave Canal 1 - ICS Lake-side
+-90.3490330000 29.9858860000 ! 85660 ! USACE ! Cross Bayou Canal nr Hwy 61 (South)
+-90.3490170000 29.9862220000 ! 85661 ! USACE ! Cross Bayou Canal nr Hwy 61 (North)
+-90.0188138000 30.0399444000 ! 85670 ! USACE ! Lake Pontchartrain at Lakefront Airport
+-89.7379050000 30.1633860000 ! 85700 ! USACE ! Rigolets nr Lake Pontchartrain
+-75.0917000000 38.3283000000 ! 8570283 ! NOAA NOS ! Ocean City Inlet
+-76.0383000000 38.2200000000 ! 8571421 ! NOAA NOS ! Bishops Head
+-76.0683000000 38.5733000000 ! 8571892 ! NOAA NOS ! Cambridge
+-76.2450000000 39.2133000000 ! 8573364 ! NOAA NOS ! Tolchester Beach
+-75.8100000000 39.5283000000 ! 8573927 ! NOAA NOS ! Chesapeake City
+-76.5783000000 39.2667000000 ! 8574680 ! NOAA NOS ! Baltimore
+-76.4816000000 38.9833000000 ! 8575512 ! NOAA NOS ! Annapolis
+-76.4517000000 38.3167000000 ! 8577330 ! NOAA NOS ! Solomons Island
+-77.0217000000 38.8733000000 ! 8594900 ! NOAA NOS ! Washington
+-75.6858000000 37.6078000000 ! 8631044 ! NOAA NOS ! Wachapreague
+-75.9884000000 37.1652000000 ! 8632200 ! NOAA NOS ! Kiptopeke
+-77.0366670000 38.3200000000 ! 8635027 ! NOAA NOS ! Dahlgren
+-76.4650000000 37.9950000000 ! 8635750 ! NOAA NOS ! Lewisetta
+-76.2918000000 37.6173600000 ! 8636580 ! NOAA NOS ! Windmill Point
+-76.4783000000 37.2267000000 ! 8637689 ! NOAA NOS ! Yorktown USGS Training Center
+-76.3300000000 36.9467000000 ! 8638610 ! NOAA NOS ! Sewells Point
+-76.1133000000 36.9667000000 ! 8638863 ! NOAA NOS ! Chesapeake Bay Bridge Tunnel
+-76.3017000000 36.7783000000 ! 8639348 ! NOAA NOS ! Money Point
+-75.7455555600 36.1836111100 ! 8651370 ! NOAA NOS ! Duck Pier
+-75.5481805600 35.7957166700 ! 8652587 ! NOAA NOS ! Oregon Inlet Marina
+-75.7059900000 35.2137200000 ! 8654467 ! NOAA NOS ! USCG Hatteras
+-76.6705556000 34.7172222000 ! 8656483 ! NOAA NOS ! Beaufort
+-77.9532694400 34.2278250000 ! 8658120 ! NOAA NOS ! Wilmington
+-77.7863888900 34.2133333300 ! 8658163 ! NOAA NOS ! Wrightsville Beach
+-78.9183000000 33.6550000000 ! 8661070 ! NOAA NOS ! Springmaid Pier
+-79.1867000000 33.3517000000 ! 8662245 ! NOAA NOS ! Oyster Landing (N. Inlet Estuary)
+-79.9233000000 32.7800000000 ! 8665530 ! NOAA NOS ! Charleston Harbor
+-80.9017000000 32.0333000000 ! 8670870 ! NOAA NOS ! Fort Pulaski
+-81.4650000000 30.6717000000 ! 8720030 ! NOAA NOS ! Fernandina Beach
+-81.4300000000 30.3967000000 ! 8720218 ! NOAA NOS ! Mayport (Bar Pilots Dock)
+-81.5583000000 30.3867000000 ! 8720219 ! NOAA NOS ! Dames Point
+-81.6583000000 30.3200000000 ! 8720226 ! NOAA NOS ! Southbank Riverwalk St Johns River
+-81.6917000000 30.1917000000 ! 8720357 ! NOAA NOS ! I-295 Bridge St Johns River
+-81.5483330000 29.8016670000 ! 8720625 ! NOAA NOS ! Racy Point St Johns River
+-80.5931000000 28.4158000000 ! 8721604 ! NOAA NOS ! Trident Pier
+-80.0333000000 26.6117000000 ! 8722670 ! NOAA NOS ! Lake Worth Pier
+-80.1618000000 25.7314000000 ! 8723214 ! NOAA NOS ! Virginia Key
+-81.1050000000 24.7117000000 ! 8723970 ! NOAA NOS ! Vaca Key
+-81.8079000000 24.5557000000 ! 8724580 ! NOAA NOS ! Key West
+-81.8075000000 26.1317000000 ! 8725110 ! NOAA NOS ! Naples
+-81.8712000000 26.6477000000 ! 8725520 ! NOAA NOS ! Fort Myers
+-82.5621000000 27.6387000000 ! 8726384 ! NOAA NOS ! Port Manatee
+-82.6269000000 27.7606000000 ! 8726520 ! NOAA NOS ! St. Petersburg Tampa Bay
+-82.5527000000 27.8578000000 ! 8726607 ! NOAA NOS ! Old Port Tampa
+-82.4250000000 27.9133000000 ! 8726667 ! NOAA NOS ! Mckay Bay Entrance
+-82.8317000000 27.9783000000 ! 8726724 ! NOAA NOS ! Clearwater Beach
+-83.0317000000 29.1350000000 ! 8727520 ! NOAA NOS ! Cedar Key
+-84.9817000000 29.7267000000 ! 8728690 ! NOAA NOS ! Apalachicola
+-85.6669000000 30.1523000000 ! 8729108 ! NOAA NOS ! Panama City
+-85.8783330000 30.2133330000 ! 8729210 ! NOAA NOS ! Panama City Beach
+-87.2111000000 30.4044000000 ! 8729840 ! NOAA NOS ! Pensacola
+-87.8250000000 30.4166670000 ! 8732828 ! NOAA NOS ! Weeks Bay Mobile Bay
+-88.0750000000 30.2500000000 ! 8735180 ! NOAA NOS ! Dauphin Island
+-88.0880000000 30.5652000000 ! 8735391 ! NOAA NOS ! Dog River Bridge
+-88.1139000000 30.4437000000 ! 8735523 ! NOAA NOS ! East Fowl River Bridge
+-88.0583000000 30.6483000000 ! 8736897 ! NOAA NOS ! Coast Guard Sector Mobile
+-88.0433000000 30.7083000000 ! 8737048 ! NOAA NOS ! Mobile State Docks
+-88.0736000000 30.7819000000 ! 8737138 ! NOAA NOS ! Chickasaw Creek
+-88.1586000000 30.3766000000 ! 8738043 ! NOAA NOS ! West Fowl River Bridge
+-88.2477000000 30.4057000000 ! 8739803 ! NOAA NOS ! Bayou La Batre Bridge
+-88.4027000000 30.4133000000 ! 8740166 ! NOAA NOS ! Grand Bay NERR Mississippi Sound
+-88.5054000000 30.3477000000 ! 8741041 ! NOAA NOS ! Dock E Port of Pascagoula
+-88.5633330000 30.3683330000 ! 8741533 ! NOAA NOS ! Pascagoula NOAA Lab
+-89.3258000000 30.3264000000 ! 8747437 ! NOAA NOS ! Bay Waveland Yacht Club
+-89.2583000000 29.1783000000 ! 8760721 ! NOAA NOS ! Pilottown
+-89.4066670000 28.9316670000 ! 8760922 ! NOAA NOS ! Pilots Station East SW Pass
+-89.6732000000 29.8681000000 ! 8761305 ! NOAA NOS ! Shell Beach
+-89.9567000000 29.2633000000 ! 8761724 ! NOAA NOS ! Grand Isle
+-90.1134000000 30.0272000000 ! 8761927 ! NOAA NOS ! New Canal Station
+-90.1350000000 29.9333330000 ! 8761955 ! NOAA NOS ! Carrollton
+-90.1993000000 29.1142000000 ! 8762075 ! NOAA NOS ! Port Fourchon Belle Pass
+-90.4183330000 29.7766670000 ! 8762482 ! NOAA NOS ! West Bank 1 Bayou Gauche
+-90.3900000000 30.0683330000 ! 8762483 ! NOAA NOS ! I-10 Bonnet Carre Floodway
+-91.2366670000 29.6683330000 ! 8764044 ! NOAA NOS ! Berwick Atchafalaya River
+-91.3383330000 29.4483330000 ! 8764227 ! NOAA NOS ! LAWMA Amerada Pass
+-91.3839000000 29.3675000000 ! 8764314 ! NOAA NOS ! Eugene Island North
+-92.3052000000 29.5517000000 ! 8766072 ! NOAA NOS ! Freshwater Canal Locks
+-93.2216670000 30.2236110000 ! 8767816 ! NOAA NOS ! Lake Charles
+-93.3007000000 30.1903000000 ! 8767961 ! NOAA NOS ! Bulk Terminal
+-93.3427780000 29.7680560000 ! 8768094 ! NOAA NOS ! Calcasieu Pass
+-93.9300000000 29.8667000000 ! 8770475 ! TCOON ! Port Arthur
+-93.8817000000 29.9800000000 ! 8770520 ! TCOON ! Rainbow Bridge
+-93.8701000000 29.7284000000 ! 8770570 ! NOAA NOS ! Sabine Pass North
+-94.9850000000 29.6817000000 ! 8770613 ! NOAA NOS ! Morgans Point
+-95.0783000000 29.7650000000 ! 8770733 ! TCOON ! Lynchburg Landing
+-95.2658000000 29.7263000000 ! 8770777 ! TCOON ! Manchester Houston
+-94.3903000000 29.5947000000 ! 8770808 ! TCOON ! High Island
+-94.5133000000 29.5150000000 ! 8770971 ! TCOON ! Rollover Pass
+-94.8833000000 29.3833000000 ! 8771013 ! NOAA NOS ! Eagle Point
+-94.7250000000 29.3566670000 ! 8771341 ! TCOON ! Galveston Bay Entrance North Jetty
+-94.7933000000 29.3100000000 ! 8771450 ! NOAA NOS ! Galveston Pier 21
+-94.8966670000 29.3016670000 ! 8771486 ! TCOON ! Galveston Railroad Bridge
+-95.1133000000 29.0950000000 ! 8771972 ! TCOON ! San Luis Pass
+-95.3025000000 28.9427640000 ! 8772447 ! NOAA NOS ! Freeport
+-95.6168000000 28.7716000000 ! 8772985 ! TCOON ! Sargent
+-96.7116670000 28.4083330000 ! 8773037 ! TCOON ! Seadrift
+-95.9139000000 28.7100000000 ! 8773146 ! TCOON ! Matagorda City
+-96.6097000000 28.6404000000 ! 8773259 ! TCOON ! Port Lavaca
+-96.3883000000 28.4517000000 ! 8773701 ! TCOON ! Port O&#39;Connor
+-96.3283330000 28.4266670000 ! 8773767 ! NOAA NOS ! Matagorda Bay Entrance Channel
+-96.7950000000 28.2283000000 ! 8774230 ! TCOON ! Aransas Wildlife Refuge
+-97.0243890000 28.1144360000 ! 8774513 ! TCOON ! Copano Bay
+-97.0466670000 28.0216670000 ! 8774770 ! NOAA NOS ! Rockport
+-97.0727400000 27.8404000000 ! 8775237 ! TCOON ! Port Aransas
+-97.3984000000 27.8143000000 ! 8775296 ! TCOON ! USS Lexington
+-97.2367000000 27.6333000000 ! 8775792 ! TCOON ! Packery Channel
+-97.2167000000 27.5800000000 ! 8775870 ! NOAA NOS ! Bob Hall Pier Corpus Christi
+-97.3181000000 27.4847000000 ! 8776139 ! TCOON ! South Bird Island
+-97.4050000000 27.2950000000 ! 8776604 ! TCOON ! Baffin Bay
+-97.4916670000 26.8250000000 ! 8777812 ! TCOON ! Rincon del San Jose
+-97.4216670000 26.5550000000 ! 8778490 ! TCOON ! Port Mansfield
+-97.1766670000 26.0766670000 ! 8779748 ! TCOON ! South Padre Island USCG Station
+-97.2150000000 26.0600000000 ! 8779770 ! NOAA NOS ! Port Isabel
+-64.7050000000 17.7500000000 ! 9751364 ! NOAA NOS ! Christiansted Harbor St Croix
+-64.7242000000 18.3182000000 ! 9751381 ! NOAA NOS ! Lameshur Bay St. John
+-64.7538000000 17.6947000000 ! 9751401 ! NOAA NOS ! Lime Tree Bay
+-64.9200000000 18.3358000000 ! 9751639 ! NOAA NOS ! Charlotte Amalie
+-65.3025000000 18.3009000000 ! 9752235 ! NOAA NOS ! Culebra
+-65.4438000000 18.1525000000 ! 9752619 ! PRSN ! Isabel Segunda Vieques Island
+-65.4714000000 18.0939000000 ! 9752695 ! NOAA NOS ! Esperanza Vieques Island
+-65.6311000000 18.3352000000 ! 9753216 ! PRSN ! Fajardo
+-65.8330000000 18.0551000000 ! 9754228 ! PRSN ! Yabucoa Harbor
+-66.1164000000 18.4589000000 ! 9755371 ! NOAA NOS ! San Juan
+-66.7024000000 18.4805000000 ! 9757809 ! PRSN ! Arecibo
+-67.0464000000 17.9701000000 ! 9759110 ! NOAA NOS ! Magueyes Island
+-67.1588000000 18.2176000000 ! 9759394 ! NOAA NOS ! Mayaguez
+-67.9385000000 18.0899166700 ! 9759938 ! NOAA NOS ! Mona Island
+-61.8206000000 17.5907000000 ! 9761115 ! NOAA NOS ! Barbuda
+-91.3380560000 29.4494440000 ! AMRL1 ! NOAA RFC ! Amerada Pass
+-84.9816670000 29.7266670000 ! APCF1 ! NOAA RFC ! Apalachicola
+-84.4082346900 30.1882575300 ! ARNF1 ! NOAA RFC ! Lost Creek at Arran
+-95.4085505000 29.7602282900 ! BBST2 ! NOAA RFC ! Buffalo Bayou at Shepherd Drive Houston
+-94.0963890000 30.1330560000 ! BEAT2 ! NOAA RFC ! Neches River at Beaumont
+-94.1887943000 30.1788225300 ! BIPT2 ! NOAA RFC ! Pine Island Bayou at B.I. Pump Plant
+-91.6867797000 30.2815863800 ! BLRL1 ! NOAA RFC ! Atchafalaya River above Butte La Rose
+-91.3225000000 30.1300000000 ! BSRL1 ! NOAA RFC ! Atchafalaya River at Bayou Sorrel Lock
+-91.2069440000 30.4291670000 ! BTRL1 ! NOAA RFC ! Mississippi River at Baton Rouge
+-90.8969440000 30.3477780000 ! BYML1 ! NOAA RFC ! Amite River at Bayou Manchac Point
+-93.3427780000 29.7680560000 ! CAPL1 ! NOAA RFC ! Tide Station at Calcasieu Pass
+-76.2543590000 35.9175040000 ! COLN7 ! NOAA RFC ! Scuppernong River at Columbia
+-84.5025000000 29.9883330000 ! CTMF1 ! NOAA RFC ! Ochlockonee River at Curtis Mill (US-319)
+-90.1695244000 30.4946364000 ! CUSL1 ! NOAA RFC ! Tchefuncte River nr Covington
+-90.9903800000 30.4640790000 ! DENL1 ! NOAA RFC ! Amite River at Denham Springs
+-88.8933643000 30.4760307000 ! DIBM6 ! NOAA RFC ! Tchoutacabouffa River nr D&#39;Iberville
+-90.9591670000 30.1027780000 ! DONL1 ! NOAA RFC ! Mississippi River at Donaldsonville
+-96.9652778000 28.6619444400 ! DUPT2 ! NOAA RFC ! Guadalupe River near Bloomington
+-92.3047220000 29.5550000000 ! FRWL1 ! NOAA RFC ! Tide Station at Fresh Water Canal Locks
+-83.0222220000 29.3983330000 ! FWBF1 ! NOAA RFC ! Suwannee River at Fowlers Bluff
+-95.3068796000 29.9182784000 ! GBHT2 ! NOAA RFC ! Greens Bayou at Houston
+-89.2063889000 30.3933611000 ! GLFM6 ! NOAA RFC ! Wolf River above Gulfport
+-91.4456662000 29.8927040600 ! GNDL1 ! NOAA RFC ! Atchafalaya River at Myette Point/Grand Lake
+-77.1758330000 35.5738890000 ! GRMN7 ! NOAA RFC ! Tar River at Grimesland
+-95.3971612000 29.7752277700 ! HGTT2 ! NOAA RFC ! White Oak Bayou Houston
+-94.2788890000 30.1352780000 ! JYNT2 ! NOAA RFC ! Pine Island Bayou near Bevil Oaks
+-91.7613890000 30.5688890000 ! KRZL1 ! NOAA RFC ! Atchafalaya River at Krotz Springs
+-93.2180560000 30.2536110000 ! LCHL1 ! NOAA RFC ! Calcasieu River at Saltwater Barrier
+-93.2216670000 30.2236110000 ! LCLL1 ! NOAA RFC ! Tide Station at Lake Charles
+-93.2627780000 30.2941670000 ! LCRL1 ! NOAA RFC ! Calcasieu River at Sam Houston Jones State Park
+-89.0358333000 30.4883333300 ! LYMM6 ! NOAA RFC ! Biloxi River nr Lyman
+-91.2108330000 29.6963890000 ! MCGL1 ! NOAA RFC ! Atchafalaya River at Morgan City
+-91.7361110000 30.6905560000 ! MLVL1 ! NOAA RFC ! Atchafalaya River at Melville
+-95.9750000000 28.6991670000 ! MRCT2 ! NOAA RFC ! Colorado River at Matagorda
+-84.2105560000 30.1505560000 ! MRKF1 ! NOAA RFC ! St. Marks River at St. Marks
+-92.5905556000 30.1900000000 ! MRML1 ! NOAA RFC ! Mermentau River at Mermentau
+-82.9767910000 29.4896808000 ! MSPF1 ! NOAA RFC ! Suwannee River at Manatee Springs
+-93.6805560000 30.1983330000 ! NBFL1 ! NOAA RFC ! Sabine River at Nibletts Bluff Park
+-84.1482508000 30.2714311000 ! NEPF1 ! NOAA RFC ! St. Marks River near Newport on Old Magnolia Rd
+-90.1361110000 29.9347220000 ! NORL1 ! NOAA RFC ! Mississippi River at New Orleans
+-83.9797728000 30.1123469400 ! NUTF1 ! NOAA RFC ! Aucilla River near Nutall Rise
+-75.9872220000 35.1152780000 ! OCAN7 ! NOAA RFC ! Pamlico Sound at Ocracoke
+-88.4513888900 30.4586111000 ! ORAM6 ! NOAA RFC ! Escatawpa River at I-10 nr Orange Grove
+-76.69166  35.02062 ! ORLN7 ! NOAA RFC ! Neuse River at Oriental
+-93.7215544000 30.0979877400 ! ORNT2 ! NOAA RFC ! Sabine River at Orange
+-93.1447220000 30.2902780000 ! OTBL1 ! NOAA RFC ! Calcasieu River nr Old Town Bay
+-85.6669440000 30.1519440000 ! PACF1 ! NOAA RFC ! Panama City
+-85.8780560000 30.2147220000 ! PCBF1 ! NOAA RFC ! Panama City Beach
+-89.7367304000 30.3851930000 ! PERL1 ! NOAA RFC ! Pearl River at Pearl River
+-88.6414000000 30.6106000000 ! PGFM6 ! NOAA RFC ! Pascagoula River at Graham Ferry
+-95.5235538000 29.7468959000 ! PPTT2 ! NOAA RFC ! Buffalo Bayou at Piney Point Village Houston
+-76.3425000000 36.4213888900 ! PSQN7 ! NOAA RFC ! Pasquotank River near South Mills
+-90.8520419000 30.3326939000 ! PVLL1 ! NOAA RFC ! Amite River at Port Vincent
+-91.6644440000 30.9608330000 ! RRLL1 ! NOAA RFC ! Mississippi River at Red River Landing
+-90.5686110000 30.0555560000 ! RRVL1 ! NOAA RFC ! Mississippi River at Reserve
+-84.3273972000 30.0727048500 ! SBIF1 ! NOAA RFC ! Tide Gauge near Spring Creek Boat Ramp
+-93.8701000000 29.7284000000 ! SBPT2 ! NOAA RFC ! Tide Station near Sabine Pass
+-95.0938189000 29.8763342600 ! SHLT2 ! NOAA RFC ! San Jacinto River near Sheldon
+-91.7983333000 30.9825000000 ! SMML1 ! NOAA RFC ! Atchafalaya River at Simmesport
+-94.3346324000 30.1060464000 ! SOLT2 ! NOAA RFC ! Pine Island Bayou near Sour Lake
+-83.3215262000 29.7866129400 ! STEF1 ! NOAA RFC ! Steinhatchee River near Cross City
+-83.0865150000 29.3394055400 ! SUWF1 ! NOAA RFC ! Suwannee River above Gopher River Confluence
+-77.3511111000 35.0652778000 ! TRTN7 ! NOAA RFC ! Trent River near Trenton
+-97.0130429000 28.7930456000 ! VICT2 ! NOAA RFC ! Guadalupe River at Victoria
+-91.9928975000 30.2174229000 ! VLSL1 ! NOAA RFC ! Vermilion River at Surrey St. at Lafayette
+-92.1563610000 29.9511110000 ! VRPL1 ! NOAA RFC ! Vermilion River at Perry
+-76.9841666700 36.0477777800 ! WNDN7 ! NOAA RFC ! Cashie River near Windsor
+-76.62281  35.53729 ! BLHN7 ! NCEM ! Pungo River at Belhaven - Vidant Health (Hospital)
+-76.25436  35.91750 ! COLN7 ! NCEM ! Scuppernong R. at Columbia Town Hall
+-76.31448  35.01831 ! CTIN7 ! NCEM ! Pamlico Sound at Cedar Island Ferry Terminal
+-76.21856  36.29852 ! EMWN7 ! NCEM ! Pasquotank R. at Elizabeth City Mariners Wharf Park
+-76.61057  36.05635 ! EWPN7 ! NCEM ! Chowan R. at Edenton Waterfront Park
+-75.98735  35.11537 ! OCAN7 ! NCEM ! Pamlico Sound at Ocracoke - NCCAT Campus
+-90.12359 30.02416 ! 17StCanal ! CPRA ! Outfall 17th St London Ave Orleans Ave Outfall Canals (cf USACE 85625)
+-90.03579 30.03415 ! IHNC01   ! CPRA ! Seabrook Complex - Flood Side (cf USACE 76065)  
+-89.90000 29.99000 ! IHNC02   ! CPRA ! IHNC Surge Barrier East - Flood Side (cf USACE 76030)
+-90.07232 29.81197 ! WBV90    ! CPRA ! GIWW at West Closure Complex - Flood Side (cf USACE 76265)
+-90.03692 29.79062 ! WBV09b   ! CPRA ! Hero Canal Stop-Log Gate - Flood Side/West (cf USACE 82762) 
+-90.03417 29.78305 ! WBV09a   ! CPRA ! Oakville Sluice Gate - Flood Side/South (cf USACE 82770) 
+-90.15714 29.88288 ! WBV162   ! CPRA ! Bayou Segnette Closure - Flood Side (cf USACE 82742) 
+-89.90434 29.85293 ! LPV149   ! CPRA ! Caernarvon Canal Sector Gate - South/Flood Side (cf USACE 85760) 
+-89.83563 29.93600 ! LPV144   ! CPRA ! Bayou Dupre Sector Gate - East/Flood Side (cf USACE 76010)
+-90.27097 29.90839 ! WBV7274  ! CPRA ! Bayou Verret / Western Tie-In Sector Gate - Flood Side (cf USACE 82715)
+-89.60107 29.37341 ! NOV13    ! CPRA ! Mississippi River at Empire Floodgate (cf USACE 01440) 
+-89.59600 29.38935 ! NOV14    ! CPRA ! Mississippi River at Empire Lock (cf USACE 01440)

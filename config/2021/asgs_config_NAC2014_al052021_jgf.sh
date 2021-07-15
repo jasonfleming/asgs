@@ -36,24 +36,23 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_nam_akheir  # "name" of this ASGS process
+INSTANCENAME=NAC2014_al052021_jgf  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=HSOFS
+GRIDNAME=NAC2014
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
 
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=on      # NAM download/forcing
+BACKGROUNDMET=off     # NAM download/forcing
 FORECASTCYCLE="06"
-   forecastSelection="strict"
-TROPICALCYCLONE=off   # tropical cyclone forcing
-#STORM=07             # storm number, e.g. 05=ernesto in 2006
-#YEAR=2018            # year of the storm
-WAVES=off             # wave forcing
+TROPICALCYCLONE=on    # tropical cyclone forcing
+STORM=05              # storm number, e.g. 05=ernesto in 2006
+YEAR=2021             # year of the storm
+WAVES=on              # wave forcing
 #STATICOFFSET=0.1524
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
@@ -61,27 +60,26 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=959                     # number of compute CPUs for all simulations
+NCPU=959               # number of compute CPUs for all simulations
 NUMWRITERS=1
-NCPUCAPACITY=9999
-
+NCPUCAPACITY=9999 
+#
 # Post processing and publication
 
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
-POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
-OPENDAPNOTIFY="asgs.cera.lsu@gmail.com,jason.g.fleming@gmail.com,cera.asgs.tk@gmail.com,asgsnotes4ian@gmail.com,asgsnotifications@opayq.com,kheirkhahan@gmail.com,janelle.fleming@seahorsecoastal.com"
-TDS=( lsu_tds )
+#POSTPROCESS=( createMaxCSV.sh cpra_slide_deck_post.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
+OPENDAPNOTIFY="asgs.cera.lsu@gmail.com,jason.g.fleming@gmail.com"
 
-#RMQMessaging_Enable=off
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=auto
-HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2021/nam/2021062118/HSOFS/supermic.hpc.lsu.edu/HSOFS_nam_bde/namforecast/
+COLDSTARTDATE=2021053106
+HOTORCOLD=coldstart      # "hotstart" or "coldstart"
+LASTSUBDIR=null
 
 # Scenario package 
 
-#PERCENT=default
+PERCENT=default
 SCENARIOPACKAGESIZE=2 # number of storms in the ensemble
 case $si in
  -2)
@@ -91,12 +89,12 @@ case $si in
    # do nothing ... this is not a forecast
    ENSTORM=nowcast
    ;;
- 0)
-   ENSTORM=namforecastWind10m
+0)
+   ENSTORM=nhcConsensusWind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=namforecast
+   ENSTORM=nhcConsensus
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."

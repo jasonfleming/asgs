@@ -1,0 +1,16 @@
+---
+version: '3.7'
+
+services:
+  asgs-debian:
+    image: asgs:debian
+    container_name: asgs-debian
+#    environment:
+#      - WORK=/work/asgsuser
+#      - SCRATCH=/scratch/asgsuser
+#    volumes:
+#      - "${HOME}/work:/work/asgsuser"
+#      - "${HOME}/scratch:/scratch/asgsuser"
+# may come in handy dandy later
+#    env_file:
+#      - "asgs.env"`

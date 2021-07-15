@@ -79,13 +79,13 @@ echo "hpc.job.%jobtype%.joblog : %advisdir%/%scenario%/%jobtype%.out" >> run.pro
 CMD="%cmd%"
 echo "cycle $CYCLE: $SCENARIO: $THIS: %jobtype%.%scenario% job ${%JOBID%} starting in $SCENARIODIR with the following command: $CMD" 2>&1 | awk -v level=INFO -v this=$THIS -f $SCRIPTDIR/monitoring/timestamp.awk | tee --append $SCENARIOLOG | tee --append $CYCLELOG | tee --append $SYSLOG | tee --append %jobtype%.%scenario%.run.start
 $CMD
+ERROVALUE=$?  # capture exit status
 #
 #----------------------------------------------------------------------------
 #           C H E C K   S T A T U S   O F   R E S U L T S
 #----------------------------------------------------------------------------
 ERROMSG=""
 RUNSUFFIX="finish"
-ERROVALUE=$?  # capture exit status
 if [ $ERROVALUE == 0 ] ; then
    if [[ $JOBTYPE = adcirc || $JOBTYPE = adcswan || $JOBTYPE = padcirc || $JOBTYPE = padcswan ]]; then
       # look for numerical instability errors in the stdout/stderr files

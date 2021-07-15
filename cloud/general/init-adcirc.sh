@@ -403,8 +403,8 @@ cd $ADCIRCDIR        && \
 $ADCIRC_MAKE_CMD     && \
 $ADCSWAN_MAKE_CMD
 
-# catch failed exit status, for both interactive and initial asgs-brew.pl build
 EXIT=$?
+
 if [ $EXIT -gt 0 ]; then
   echo "build failed ($EXIT)"
   exit $EXIT

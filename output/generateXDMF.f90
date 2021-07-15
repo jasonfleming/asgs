@@ -49,7 +49,7 @@ logical :: fileFound = .false.
 integer :: iSnap    ! snapshot counter
 integer :: numFiles ! number of data files to refer to from the xml file
 integer :: fi       ! file counter
-integer :: olun     ! i/o unit number where xdmf xml will be written 
+integer :: olun     ! i/o unit number where xdmf xml will be written
 !
 ! NetCDF related variables
 integer :: ncStatus
@@ -69,7 +69,7 @@ integer :: ele ! element number where a particle is found (temp variable)
 integer :: particleCount = 0
 integer :: numParticlesSpecified = 0   ! operator-specified max number of particles
 integer :: numParticleDatasetsSpecified = 0 ! operator specified number of particle snaps
-real(8) :: particleTimeSec = 0 ! time (sec) associated with a particular particle dataset 
+real(8) :: particleTimeSec = 0 ! time (sec) associated with a particular particle dataset
 real(8) :: particleStartTimeSec = 0  ! time (sec) of the first particle dataset
 real(8) :: particleDatasetTimeIncrement = 0 ! time (sec) between particle datasets
 integer :: lineNum = 1 ! line about to be read from Maureparticle file
@@ -77,7 +77,7 @@ integer :: numLines ! total number of lines in the Maureparticle file
 integer :: maureIndex ! index of the maureparticle file
 logical :: writeParticleFile = .false. ! true if the xdmf file is for particles
 type(station_t), allocatable :: particles(:)
-integer, parameter :: MAX_DATASETS = 1e8 
+integer, parameter :: MAX_DATASETS = 1e8
 integer, allocatable :: numParticles(:) ! temporarily hold number of particles per dataset
 integer, allocatable :: pTimesec(:) ! temporarily hold time stamp of particle datasets in seconds
 logical :: meshInitialized = .false. ! true if the associated mesh has been read in
@@ -112,7 +112,7 @@ if (argcount.gt.0) then
          case("--loglevel")
             i = i + 1
             call getarg(i, loglevelopt)
-            write(scratchMessage,'(a,a,a,a,a)') 'Processing "',trim(cmdlineopt),' ',trim(cmdlinearg),'".'                        
+            write(scratchMessage,'(a,a,a,a,a)') 'Processing "',trim(cmdlineopt),' ',trim(cmdlinearg),'".'
             call allMessage(INFO,scratchMessage)
             setLogLevel = .true.
          case("--datafile","--maureparticle")
@@ -185,7 +185,7 @@ if (argcount.gt.0) then
             call getarg(i, cmdlinearg)
             write(scratchMessage,'(a,a,a,a,a)') 'Processing "',trim(cmdlineopt),' ',trim(cmdlinearg),'".'
             call allMessage(INFO,scratchMessage)
-            read(cmdlinearg,*) particleDatasetTimeIncrement            
+            read(cmdlinearg,*) particleDatasetTimeIncrement
          case("--xdmffile")
             i = i + 1
             call getarg(i, cmdlinearg)
@@ -207,9 +207,9 @@ if (argcount.gt.0) then
          case("--getElementIndices")
             getElementIndices = .true.
             write(scratchMessage,'(a,a,a)') 'Processing ',trim(cmdlineopt),'.'
-            call allMessage(INFO,scratchMessage)                        
+            call allMessage(INFO,scratchMessage)
          case default
-            write(scratchMessage,'(a,a,a)') 'Command line option ',trim(cmdlineopt),' was not recognized.'  
+            write(scratchMessage,'(a,a,a)') 'Command line option ',trim(cmdlineopt),' was not recognized.'
             call allMessage(WARNING,scratchMessage)
       end select
    end do
@@ -237,7 +237,7 @@ do fi=1,numFiles
          call allMessage(ERROR,'The file '//trim(fileMetaData(fi)%dataFileName)//' is netcdf3 format; XDMF requires netcdf4 formatted files.')
          call check(nf90_close(fileMetaData(fi)%nc_id))
          stop
-      else    
+      else
          fileMetaData(fi)%dataFileFormat = NETCDF4
       endif
       !
@@ -249,14 +249,18 @@ do fi=1,numFiles
       m%agrid = "mesh"
       call allMessage(INFO,'Read mesh dimensions from netCDF successfully.')
       ! Some netcdf files have the comment line at the top of the fort.14 in
-      ! an attribute named "agrid" while in others the attribute is named "grid".  
+      ! an attribute named "agrid" while in others the attribute is named "grid".
       ncStatus = nf90_get_att(fileMetaData(fi)%nc_id, NF90_GLOBAL, 'agrid', m%agrid)
       if ( ncStatus.ne.NF90_NOERR ) then
-         call check(nf90_get_att(fileMetaData(fi)%nc_id, NF90_GLOBAL, 'grid', m%agrid))
+         ncStatus = nf90_get_att(fileMetaData(fi)%nc_id, NF90_GLOBAL, 'grid', m%agrid)
+         if ( ncStatus.ne.NF90_NOERR ) then
+            ! this can happen if a minimal hotstart file was written, e.g., by adcirpolate
+            m%agrid = 'WARNING: Could not find the fort.14 comment line (grid or agrid attribute).'
+         endif
       endif
       call check(nf90_close(fileMetaData(fi)%nc_id))
-      if ( fileMetaData(fi)%dataFileCategory.eq.NODALATTRIBF ) then 
-      
+      if ( fileMetaData(fi)%dataFileCategory.eq.NODALATTRIBF ) then
+
       endif
    endif
    if (fileMetaData(fi)%dataFileCategory.eq.MAUREPT) then
@@ -268,7 +272,7 @@ do fi=1,numFiles
          fileMetaData(fi)%fun = availableUnitNumber()
          call openFileForRead(fileMetaData(fi)%fun,fileMetaData(fi)%dataFileName,errorIO)
          fileMetaData(fi) % nSnaps = 1
-         fileMetaData(fi) % maxParticles = 0 
+         fileMetaData(fi) % maxParticles = 0
          allocate(numParticles(MAX_DATASETS)) ! allocate temporary space for num particles per dataset
          allocate(pTimesec(MAX_DATASETS)) ! allocate temporary space for particle dataset timestamps
          ! read first line of file
@@ -277,7 +281,7 @@ do fi=1,numFiles
          pTimesec(1) = timesec
          oldtimesec = timesec
          particleCount = 1
-         call allMessage(INFO,'Counting total number of datasets and peak number of particles in maureparticle file.') 
+         call allMessage(INFO,'Counting total number of datasets and peak number of particles in maureparticle file.')
          do ! loop until we run out of data
             ! read each line in the file; label 456 is at the end of this program and
             ! provides the line number that we attempted to read in error message prior to exiting
@@ -287,14 +291,14 @@ do fi=1,numFiles
                ! same dataset
                particleCount = particleCount + 1
                fileMetaData(fi) % maxParticles = max(particleCount,fileMetaData(fi) % maxParticles)
-            else 
+            else
                ! reached a new dataset
                write(scratchMessage,'("There are ",i0," particles in dataset ",i0,".")') particleCount, fileMetaData(fi) % nSnaps
                call allMessage(DEBUG,scratchMessage)
                ! increment the number of datasets
                fileMetaData(fi) % nSnaps = fileMetaData(fi) % nSnaps + 1
                ! grab the timestamp
-               pTimesec(fileMetaData(fi) % nSnaps) = timesec            
+               pTimesec(fileMetaData(fi) % nSnaps) = timesec
                ! reset the counter
                particleCount = 1
             endif
@@ -303,13 +307,13 @@ do fi=1,numFiles
             oldtimesec = timesec
          end do
          ! jump to 123 when running out of data
-         123 call allMessage(INFO,'Finished counting number of datasets and peak number of particles in maureparticle file.') 
-         numLines = lineNum - 1  
+         123 call allMessage(INFO,'Finished counting number of datasets and peak number of particles in maureparticle file.')
+         numLines = lineNum - 1
          write(scratchMessage,'("There are ",i0," datasets in the maureparticle file and the peak number of particles is ",i0,".")') fileMetaData(fi)%nSnaps, fileMetaData(fi) % maxParticles
          call allMessage(INFO,scratchMessage)
          ! allocate space for particle data
          allocate(particles(fileMetaData(fi)%maxParticles))
-         allocate(fileMetaData(fi)%numParticlesPerSnap(fileMetaData(fi)%nSnaps))      
+         allocate(fileMetaData(fi)%numParticlesPerSnap(fileMetaData(fi)%nSnaps))
          fileMetaData(fi) % numParticlesPerSnap(1:fileMetaData(fi)%nSnaps) = numParticles(1:fileMetaData(fi)%nSnaps)
          allocate(fileMetaData(fi)%timesec(fileMetaData(fi)%nSnaps))
          fileMetaData(fi) % timesec(1:fileMetaData(fi)%nSnaps) = pTimesec(1:fileMetaData(fi)%nSnaps)
@@ -317,7 +321,7 @@ do fi=1,numFiles
          deallocate(numParticles)
          deallocate(pTimesec)
          ! rewind back to the beginning for one more read to actually process the data
-         rewind(fileMetaData(fi)%fun) 
+         rewind(fileMetaData(fi)%fun)
       else
          ! particle dataset parameters given on the command line
          maureIndex = fi  ! record which of the files is a maureparticle file
@@ -332,10 +336,10 @@ do fi=1,numFiles
          call allMessage(INFO,scratchMessage)
          ! allocate space for particle data
          allocate(particles(fileMetaData(fi)%maxParticles))
-         allocate(fileMetaData(fi)%numParticlesPerSnap(fileMetaData(fi)%nSnaps))      
+         allocate(fileMetaData(fi)%numParticlesPerSnap(fileMetaData(fi)%nSnaps))
          fileMetaData(fi) % numParticlesPerSnap(1:fileMetaData(fi)%nSnaps) = numParticlesSpecified
          allocate(fileMetaData(fi)%timesec(fileMetaData(fi)%nSnaps))
-         ! populate the array of times associated with each particle dataset         
+         ! populate the array of times associated with each particle dataset
          particleTimeSec = particleStartTimeSec
          do ds=1,numParticleDatasetsSpecified
             fileMetaData(fi) % timesec(1:fileMetaData(fi)%nSnaps) = particleTImeSec
@@ -344,7 +348,7 @@ do fi=1,numFiles
       endif
    endif
  246  fileMetaData(fi) % initialized = .true.
-end do 
+end do
 !
 ! Form the file name of XDMF xml file and open it.
 call allMessage(INFO,'Writing XDMF xml header.')
@@ -371,12 +375,12 @@ if (writeParticleFile.eqv..true.) then
 else
    write(olun,'('//ind('+')//',a)') '<Domain Name="'//adjustl(trim(m%agrid))//'">'
 endif
-!    
+!
 ! Bomb out if we did not recognize any of the variable names in the file
-! or if only the mesh should be written. 
+! or if only the mesh should be written.
 do fi=1,numFiles
    if ( (meshonly.eqv..true.).or.(fileMetaData(fi) % dataFileCategory.eq.MESH) ) then
-      call allMessage(INFO,'The '//trim(xdmfFile)//' xml file will only contain mesh-related information.')      
+      call allMessage(INFO,'The '//trim(xdmfFile)//' xml file will only contain mesh-related information.')
       write(olun,'('//ind('+')//',a)') '<Grid Name="'//adjustl(trim(m%agrid))//'" GridType="Uniform">'
       ! Write mesh portion of XDMF xml file.
       call writeMeshTopologyGeometryDepth(fileMetaData(fi), m, olun, .true.)
@@ -392,9 +396,9 @@ do fi=1,numFiles
    endif
 end do
 !
-! If the file list only contains data that are not time varying, 
-! (e.g., hotstart files, min/max files, and nodal attributes files), 
-! then write XDMF Attributes to the same Grid as the mesh itself and 
+! If the file list only contains data that are not time varying,
+! (e.g., hotstart files, min/max files, and nodal attributes files),
+! then write XDMF Attributes to the same Grid as the mesh itself and
 ! be done with it
 do fi=1,numFiles
    allTimeInvariant = .true.
@@ -404,17 +408,18 @@ do fi=1,numFiles
       exit
    endif
 end do
-if ( allTimeInvariant.eqv..true. ) then  
+if ( allTimeInvariant.eqv..true. ) then
    write(olun,'('//ind('+')//',A)') '<Grid GridType="Uniform">'
    call writeMeshTopologyGeometryDepth(fileMetaData(1), m, olun, meshonly)
    do fi=1,numFiles
+      call initNamesXDMF(fileMetaData(fi))
       call writeAttributesXML(fileMetaData(fi), m, 1, 1, olun)
    end do
    write(olun,'('//ind('|')//',A)') '</Grid>'
    call writeFooterXML(olun)
    close(olun)
    do fi=1,numFiles
-      call allMessage(INFO,'Finished writing XDMF xml for '//trim(fileMetaData(fi)%fileTypeDesc)//'.') 
+      call allMessage(INFO,'Finished writing XDMF xml for '//trim(fileMetaData(fi)%fileTypeDesc)//'.')
    end do
    stop
 endif
@@ -422,8 +427,8 @@ endif
 ! Load up the node and element tables if we are writing a maureparticle file
 ! so that we can interpolate the physical quantities to the particle
 ! location. This will allow us to color the particles according to any
-! scalar in the xmf file, as well as warp the particle locations up 
-! or down with the water surface elevation.  
+! scalar in the xmf file, as well as warp the particle locations up
+! or down with the water surface elevation.
 if ((writeParticleFile.eqv..true.).and.(meshInitialized.eqv..false.)) then
    do fi=1,numFiles
       if (fileMetaData(fi)%dataFileFormat.eq.NETCDF4) then
@@ -441,20 +446,20 @@ endif
 ! checks
 nSnaps = -99
 do fi=1,numFiles
-   ! 
+   !
    ! Check to make sure that all the files have the same number of datasets
    if ( fileMetaData(fi)%timeVarying .eqv..true. ) then
       !
       ! Write meta data for time varying data snapshots to XML.
       write(scratchMessage,'(a,i0,a,a,a)') 'There are ',fileMetaData(fi)%nSnaps, &
-      ' time values (snapshots) in the file ',trim(fileMetaData(fi)%dataFileName),'.' 
+      ' time values (snapshots) in the file ',trim(fileMetaData(fi)%dataFileName),'.'
       call allMessage(INFO,scratchMessage)
       if ( (nSnaps.ne.-99).and.(fileMetaData(fi)%nSnaps.ne.nSnaps) ) then
         call allMessage(ERROR,'The time varying files do not all have the same number of datasets.')
         stop
       endif
       nSnaps = fileMetaData(fi)%nSnaps
-   endif   
+   endif
    !
    ! Check to make sure all the datasets have the same time stamp
    !do iSnap=1,fileMetaData(fi)%nSnaps
@@ -465,7 +470,7 @@ do fi=1,numFiles
    !end do
 end do
 !
-! Write the metadata for each snapshot in time. 
+! Write the metadata for each snapshot in time.
 write(olun,'('//ind('+')//',A)') '<Grid Name="TimeSeries" GridType="Collection" CollectionType="Temporal">'
 !
 ! This assumes all files have the same number of datasets and that
@@ -485,13 +490,13 @@ if (writeParticleFile.eqv..true.) then
             call interpolateAndWriteTimeVaryingAttributesXML(fileMetaData(fi), fileMetaData(maureIndex), m, particles, fileMetaData(maureIndex)%maxParticles, iSnap, olun)
          end do
          ! TODO:load bathy depth to interpolate that too
-         !call interpolateAndWriteTimeVaryingAttributesXML(fileMetaData(fi), fileMetaData(maureIndex), m, particles, fileMetaData(maureIndex)%maxParticles, iSnap, olun)         
+         !call interpolateAndWriteTimeVaryingAttributesXML(fileMetaData(fi), fileMetaData(maureIndex), m, particles, fileMetaData(maureIndex)%maxParticles, iSnap, olun)
       endif
       write(olun,'('//ind('-')//',A)') '</Grid>' ! closing element for time varying grid
    end do
 else
    ! writing XDMF xml for ADCIRC meshed data
-   do iSnap=1,nSnaps      
+   do iSnap=1,nSnaps
       call writeTimeVaryingGrid(fileMetaData(1), iSnap, olun)
       if (iSnap.eq.1) then
          call writeMeshTopologyGeometryDepth(fileMetaData(1), m, olun, meshonly)
@@ -499,14 +504,14 @@ else
             if (fileMetaData(fi)%timeVarying.eqv..false.) then
                call writeAttributesXML(fileMetaData(fi), m, 1, 1, olun)
             endif
-         end do         
+         end do
       else
          call writeMeshTopologyGeometryDepthByReference(fileMetaData(1), olun, meshonly)
          do fi=1,numFiles
             if (fileMetaData(fi)%timeVarying.eqv..false.) then
                call writeAttributesXMLByReference(fileMetaData(fi), olun)
             endif
-         end do         
+         end do
       endif
       do fi=1,numFiles
          if (fileMetaData(fi)%timeVarying.eqv..true.) then
@@ -538,46 +543,46 @@ end program generateXDMF
 !  S U B R O U T I N E     I N I T   N A M E S   X D M F
 !----------------------------------------------------------------------
 ! Initialize the names of the variables in the XMDF files to reasonable
-! names (that will be renamed, at least in the case of vector data, 
-! in the calling routine). 
-! Added the initialization of the data type. 
+! names (that will be renamed, at least in the case of vector data,
+! in the calling routine).
+! Added the initialization of the data type.
 !----------------------------------------------------------------------
 subroutine initNamesXDMF(fmd)
 use netcdf
 use asgsio, only : fileMetaData_t
 use logging, only : allMessage, ERROR
-use ioutil, only : check
+use ioutil, only : check, HOTSTART
 implicit none
 type(fileMetaData_t) :: fmd
 integer :: i, j
 !
+! netcdf file exists; open it
+call check(nf90_open(trim(fmd%dataFileName), NF90_NOWRITE, fmd%nc_id))
 ! find the netcdf variable IDs
 do i=1,fmd % numVarNetCDF
    call check(nf90_inq_varid(fmd%nc_id, fmd%ncds(i)%varNameNetCDF, fmd%ncds(i)%nc_varID))
    call check(nf90_inquire_variable(fmd%nc_id, fmd%ncds(i)%nc_varID, fmd%ncds(i)%varNameNetCDF, fmd%ncds(i)%nc_varType))
 end do
-! set the names of the XDMF data 
+! set the names of the XDMF data
 i=1 ! netcdf variable counter
 j=1 ! xdmf variable counter
-do 
+do
    ! for vector data, the name will be replaced in the calling routine anyway
    if (trim(fmd%ncds(i)%varNameNetCDF).ne."noff") then
       !write(6,'(a,a)') 'DEBUG: generateXDMF: seeking NetCDF variable ID for ',trim(fmd%varNameNetCDF(i))
-      ! the standard_name attribute is missing for noff in some netcdf hotstart files   
+      ! the standard_name attribute is missing for noff in some netcdf hotstart files
       call check(nf90_get_att(fmd%nc_id, fmd%ncds(i)%nc_varID, 'standard_name', fmd%xds(j)%varNameXDMF))
    endif
    !
-   ! Apply a fix for old versions of ADCIRC that misnamed nodecode and 
+   ! Apply a fix for old versions of ADCIRC that misnamed nodecode and
    ! noff in the netcdf hotstart files (nodecode was given the standard_name
-   ! of "element_wet_or_dry" while noff was given no standard name at all). 
+   ! of "element_wet_or_dry" while noff was given no standard name at all).
    if (trim(fmd%ncds(i)%varNameNetCDF).eq."nodecode") then
       fmd%xds(j)%varNameXDMF = "node_wet_or_dry"
    endif
    if (trim(fmd%ncds(i)%varNameNetCDF).eq."noff") then
       fmd%xds(j)%varNameXDMF = "element_wet_or_dry"
    endif
-   !write(6,'(a,i0,a)') 'DEBUG: generateXDMF: varNameNetCDF(',i,')=',trim(fmd%varNameNetCDF(i))
-   !write(6,'(a,i0,a)') 'DEBUG: generateXDMF: varNameXDMF(',j,')=',trim(fmd%varNameXDMF(j))
    select case(fmd%ncds(i)%nc_varType)
    case(NF90_INT)
       fmd%xds(j)%numberType = "Int"
@@ -592,19 +597,31 @@ do
       call allMessage(ERROR,'The netCDF variable '//trim(fmd%ncds(i)%varNameNetCDF)//' uses an unknown data type.')
       stop
    end select
-   i = i + fmd % irtype ! multi component (vector) data only need 1 name
+   if ( fmd % ncds(i)%isElemental .eqv. .true. ) then   ! noff<---element/cell centered
+      fmd%xds(j)%dataCenter="Cell"
+   endif
+   write(6,'(a,i0,a)') 'DEBUG: generateXDMF: varNameNetCDF(',i,')='//trim(fmd%ncds(i)%varNameNetCDF)
+   write(6,'(a,i0,a)') 'DEBUG: generateXDMF: varNameXDMF(',j,')='//trim(fmd%xds(j)%varNameXDMF)
+   write(6,'(a,i0,a,i0)') 'DEBUG: generateXDMF: nc_varType(',i,')=',fmd%ncds(i)%nc_varType
+   if ( fmd%dataFileCategory.eq.HOTSTART ) then ! hotstart files don't have irtype
+      i = i + fmd % xds(j) % numComponents
+   else
+      i = i + fmd % irtype ! multi component (vector) data only need 1 name
+   endif
    j = j + 1
    if (j.gt.fmd % numVarXDMF) exit
 end do
+! close netcdf file
+call check(nf90_close(fmd%nc_id))
 !----------------------------------------------------------------------
 end subroutine initNamesXDMF
 !----------------------------------------------------------------------
 
 !----------------------------------------------------------------------
-!                   S U B R O U T I N E     
-! W R I T E   M E S H   T O P O L O G Y   G E O M E T R Y   D E P T H    
+!                   S U B R O U T I N E
+! W R I T E   M E S H   T O P O L O G Y   G E O M E T R Y   D E P T H
 !----------------------------------------------------------------------
-! Writes the mesh portion of the XML. 
+! Writes the mesh portion of the XML.
 !----------------------------------------------------------------------
 subroutine writeMeshTopologyGeometryDepth(fmd, m, olun, meshonly)
 use asgsio, only : fileMetaData_t
@@ -667,13 +684,13 @@ end subroutine writeMeshTopologyGeometryDepth
 
 
 !----------------------------------------------------------------------
-!                   S U B R O U T I N E     
-! W R I T E   M E S H   T O P O L O G Y   G E O M E T R Y   D E P T H    
+!                   S U B R O U T I N E
+! W R I T E   M E S H   T O P O L O G Y   G E O M E T R Y   D E P T H
 !                 B Y   R E F E R E N C E
 !----------------------------------------------------------------------
 ! Writes the mesh portion of the XML in time varying output files where
 ! the mesh is unchanging by referring to the Geometry, Topology, and
-! Depth Attribute elements that defined previously using xinclude. 
+! Depth Attribute elements that defined previously using xinclude.
 !----------------------------------------------------------------------
 subroutine writeMeshTopologyGeometryDepthByReference(fmd, olun, meshonly)
 use asgsio, only : fileMetaData_t
@@ -695,17 +712,17 @@ write(olun,'('//ind(indent)//',a)') '<xi:include xpointer="element(/1/1/1/1/2)"/
 write(olun,'('//ind('|')//',a)') '<xi:include xpointer="element(/1/1/1/1/3)"/>'
 ! Depth Attribute
 write(olun,'('//ind('|')//',a)') '<xi:include xpointer="element(/1/1/1/1/4)"/>'
-      
+
 !----------------------------------------------------------------------
 end subroutine writeMeshTopologyGeometryDepthByReference
 !----------------------------------------------------------------------
 
 
 !----------------------------------------------------------------------
-!  S U B R O U T I NE   W R I T E   T I M E   V A R Y I N G   G R I D 
+!  S U B R O U T I NE   W R I T E   T I M E   V A R Y I N G   G R I D
 !----------------------------------------------------------------------
 ! Creates the Grid metadata inside the Temporal collection to describe
-! each time snap.  
+! each time snap.
 !----------------------------------------------------------------------
 subroutine writeTimeVaryingGrid(fmd, isnap, olun)
 use asgsio, only : fileMetaData_t
@@ -730,7 +747,7 @@ end subroutine writeTimeVaryingGrid
 !----------------------------------------------------------------------
 
 !----------------------------------------------------------------------
-!  S U B R O U T I N E    W R I T E   A T T R I B U T E S   X M L 
+!  S U B R O U T I N E    W R I T E   A T T R I B U T E S   X M L
 !----------------------------------------------------------------------
 ! Writes the Attribute(s) metadata to an XML file.
 !----------------------------------------------------------------------
@@ -754,7 +771,7 @@ i=1 ! netCDF variable counter
 j=1 ! XDMF variable counter
 xmlRef=5 ! xml reference counter; topology=2, geometry=3, depth=4
 p = 0 ! hyperslab component counter
-do 
+do
    dataItemDimensions = m%np
    if (trim(fmd%xds(j)%dataCenter).eq."Cell") then
       dataItemDimensions = m%ne
@@ -773,7 +790,7 @@ do
    write(olun,'('//ind('|')//',A)') '<Attribute Name="'//trim(fmd%xds(j)%varNameXDMF)//'"'
    write(olun,'('//ind('|')//',A)') '  Center="'//trim(fmd%xds(j)%dataCenter)//'"'
 
-   select case(trim(attributeType)) 
+   select case(trim(attributeType))
    !
    ! Scalar attribute
    case("Scalar")
@@ -795,7 +812,7 @@ do
       do k=0,fmd%xds(j)%numComponents-1
          if (k.eq.0) then
             write(olun,'('//ind('+')//',A)')   '<DataItem ItemType="HyperSlab"'
-         else 
+         else
             write(olun,'('//ind('|')//',A)')   '<DataItem ItemType="HyperSlab"'
          endif
          write(olun,'('//ind('|')//',A,i0,A)') '  Dimensions="',dataItemDimensions,'"'
@@ -806,9 +823,9 @@ do
          write(olun,'('//ind('|')//',A)')         '  1 1'
          write(olun,'('//ind('|')//',A,i0)')      '  1 ',dataItemDimensions
          write(olun,'('//ind('|')//',A)')         '</DataItem>' ! end of dimensions
-         ! a steady vector attribute still has to have a first 
+         ! a steady vector attribute still has to have a first
          ! dimension of 1 instead of nSnaps-1
-         write(olun,'('//ind('|')//',A,i0,A)')    '<DataItem Dimensions="1 ',dataItemDimensions,'"' 
+         write(olun,'('//ind('|')//',A,i0,A)')    '<DataItem Dimensions="1 ',dataItemDimensions,'"'
          write(olun,'('//ind('|')//',a,a,a)')     '  NumberType="',trim(fmd%xds(j)%numberType),'"'
          write(olun,'('//ind('|')//',a,i0,a)')    '  Precision="',fmd%xds(j)%numberPrecision,'" Format="HDF">'//trim(fmd%dataFileName)//':/'//trim(fmd%ncds(i+k)%varNameNetCDF)
          write(olun,'('//ind('|')//',A)')         '</DataItem>' ! end of Dimensions
@@ -837,17 +854,17 @@ do
 
       write(olun,'('//ind('|')//',A)')      '  Format="HDF">'//trim(fmd%dataFileName)//':/'//trim(fmd%ncds(i)%varNameNetCDF)
       write(olun,'('//ind('|')//',A)')      '</DataItem>' ! end of overall dimensions
-      write(olun,'('//ind('-')//',A)')      '</DataItem>' ! end of HyperSlab      
+      write(olun,'('//ind('-')//',A)')      '</DataItem>' ! end of HyperSlab
       write(olun,'('//ind('-')//',A)')   '</Attribute>' ! end of Vector Attribute
       p = p - 1
       ! check to see if this is the last section of the hyperslab
       if ( p.eq.fmd%xds(j)%numComponents ) then
-         i = i + 1 ! increment the netcdf variable we are pointing to 
+         i = i + 1 ! increment the netcdf variable we are pointing to
          p = 0     ! reset the hyperslab component counter
       endif
    case default
-      call allMessage(WARNING,'XDMF Attribute type '//trim(attributeType)//' was not recognized.')  
-   end select   
+      call allMessage(WARNING,'XDMF Attribute type '//trim(attributeType)//' was not recognized.')
+   end select
    j = j + 1
    if (j.gt.fmd%numVarXDMF) then
       exit
@@ -858,12 +875,12 @@ end subroutine writeAttributesXML
 !----------------------------------------------------------------------
 
 !----------------------------------------------------------------------
-!                     S U B R O U T I N E    
-!           W R I T E   A T T R I B U T E S   X M L 
+!                     S U B R O U T I N E
+!           W R I T E   A T T R I B U T E S   X M L
 !                  B Y   R E F E R E N C E
 !----------------------------------------------------------------------
 ! Writes the Attribute(s) metadata to an XML file for time invariant
-! data to a time varying XDMF file using references. 
+! data to a time varying XDMF file using references.
 !----------------------------------------------------------------------
 subroutine writeAttributesXMLByReference(fmd, olun)
 use adcmesh
@@ -877,7 +894,7 @@ integer, intent(in) :: olun ! i/o unit number to write XDMF xml to
 integer :: i
 !
 do i=1,fmd%numVarXDMF
-   write(olun,'('//ind('|')//',a,i0,a)') & 
+   write(olun,'('//ind('|')//',a,i0,a)') &
    '<xi:include xpointer="element(/1/1/1/1/',fmd%xds(i)%xmlReference,')"/>'
 end do
 !----------------------------------------------------------------------
@@ -885,14 +902,14 @@ end subroutine writeAttributesXMLByReference
 !----------------------------------------------------------------------
 
 !----------------------------------------------------------------------
-!                     S U B R O U T I N E    
-!   W R I T E   T I M E   V A R Y I N G  A T T R I B U T E S   X M L 
+!                     S U B R O U T I N E
+!   W R I T E   T I M E   V A R Y I N G  A T T R I B U T E S   X M L
 !----------------------------------------------------------------------
-! Writes the Attribute(s) metadata to an XML file for a particular 
+! Writes the Attribute(s) metadata to an XML file for a particular
 ! snapshot in time. This requires the use of a hyperslab for both
 ! Scalar and Vector Attributes, because the ADCIRC time series data
-! in a NetCDF file are held in one large m x t matrix (where t is the 
-! time dimension). 
+! in a NetCDF file are held in one large m x t matrix (where t is the
+! time dimension).
 !----------------------------------------------------------------------
 subroutine writeTimeVaryingAttributesXML(fmd, m, iSnap, nSnaps, olun)
 use adcmesh
@@ -914,7 +931,7 @@ domainExtent = m%np
 !
 i=1 ! netCDF variable counter
 j=1 ! XDMF variable counter
-do 
+do
    if (fmd%xds(j)%numComponents.gt.1) then
       attributeType = "Vector"
    endif
@@ -931,7 +948,7 @@ do
    ! Scalar attribute
    if (trim(attributeType).eq."Scalar") then
       write(olun,'('//ind('+')//',A)')    '<DataItem ItemType="HyperSlab"'
-      write(olun,'('//ind('|')//',A,i0,A)')'  Dimensions="',domainExtent,'"'      
+      write(olun,'('//ind('|')//',A,i0,A)')'  Dimensions="',domainExtent,'"'
       write(olun,'('//ind('|')//',A)')    '   Type="HyperSlab">'
 
       write(olun,'('//ind('+')//',A)')    '<DataItem Dimensions="3  2"'
@@ -940,7 +957,7 @@ do
       write(olun,'('//ind('|')//',A)')    '  1 1'
       write(olun,'('//ind('|')//',A,i0)') '  1 ',domainExtent
       write(olun,'('//ind('|')//',A)')    '</DataItem>'
-            
+
       write(olun,'('//ind('|')//',A,i0,1x,i0,A)') '<DataItem Dimensions="',nSnaps-1,domainExtent,'"'
       write(olun,'('//ind('|')//',a,a,a)')        '  NumberType="',trim(fmd%xds(j)%numberType),'"'
       write(olun,'('//ind('|')//',a,i0,a)')       '  Precision="',fmd%xds(j)%numberPrecision,'"'
@@ -950,14 +967,14 @@ do
       write(olun,'('//ind('-')//',A)')      '</Attribute>' ! end of scalar attribute
    !
    ! Vector attribute
-   else 
+   else
       write(olun,'('//ind('+')//',A)')      '<DataItem ItemType="Function"'
       write(olun,'('//ind('|')//',A,i0,A)') '  Dimensions="',domainExtent,' 3"'
       write(olun,'('//ind('|')//',A)')      '  Function="JOIN($0, $1, 0*$0)">'
       do k=0,fmd%xds(j)%numComponents-1
          if (k.eq.0) then
             write(olun,'('//ind('+')//',A)')   '<DataItem ItemType="HyperSlab"'
-         else      
+         else
             write(olun,'('//ind('|')//',A)')   '<DataItem ItemType="HyperSlab"'
          endif
          write(olun,'('//ind('|')//',A,i0,A)') '  Dimensions="',domainExtent,'"'
@@ -970,7 +987,7 @@ do
          write(olun,'('//ind('|')//',A)')         '</DataItem>' ! end of dimensions
          write(olun,'('//ind('|')//',A,i0,1x,i0,A)') '<DataItem Dimensions="',nSnaps-1,domainExtent,'"'
          write(olun,'('//ind('|')//',a,a,a)')        '  NumberType="',trim(fmd%xds(j)%numberType),'"'
-         write(olun,'('//ind('|')//',a,i0,a)')       '  Precision="',fmd%xds(j)%numberPrecision,'"' 
+         write(olun,'('//ind('|')//',a,i0,a)')       '  Precision="',fmd%xds(j)%numberPrecision,'"'
          write(olun,'('//ind('|')//',A)')            '  Format="HDF">'//trim(fmd%dataFileName)//':/'//trim(fmd%ncds(i+k)%varNameNetCDF)
          write(olun,'('//ind('|')//',A)')            '</DataItem>' ! end of Dimensions
          write(olun,'('//ind('-')//',A)')         '</DataItem>' ! end of HyperSlab
@@ -991,7 +1008,7 @@ end subroutine writeTimeVaryingAttributesXML
 
 
 !----------------------------------------------------------------------
-!  S U B R O U T I N E     W R I T E   F O O T E R   X M L  
+!  S U B R O U T I N E     W R I T E   F O O T E R   X M L
 !----------------------------------------------------------------------
 subroutine writeFooterXML(olun)
 use ioutil, only : ind
@@ -1007,9 +1024,9 @@ end subroutine writeFooterXML
 
 
 !----------------------------------------------------------------------
-!                     S U B R O U T I N E     
+!                     S U B R O U T I N E
 !              R E A D   T I M E   V A R Y I N G
-!             P A R T I C L E   P O S I T I O N S  
+!             P A R T I C L E   P O S I T I O N S
 !----------------------------------------------------------------------
 ! Read one dataset of particle positions from the maureparticle file.
 !----------------------------------------------------------------------
@@ -1020,7 +1037,7 @@ use logging
 implicit none
 type(fileMetaData_t), intent(inout) :: fmd
 integer, intent(in) :: iSnap ! dataset counter
-integer, intent(in) :: mp ! max number of particles 
+integer, intent(in) :: mp ! max number of particles
 type(station_t), intent(inout) :: p(mp) ! particles
 integer :: lineNum ! line number counter
 integer :: ip ! particle counter
@@ -1048,9 +1065,9 @@ end subroutine readTimeVaryingParticlePositions
 
 
 !----------------------------------------------------------------------
-!                     S U B R O U T I N E     
+!                     S U B R O U T I N E
 !             W R I T E   T I M E   V A R Y I N G
-!             P A R T I C L E   P O S I T I O N S  
+!             P A R T I C L E   P O S I T I O N S
 !----------------------------------------------------------------------
 ! Writes one dataset of particle positions to the XDMF xml file.
 !----------------------------------------------------------------------
@@ -1060,10 +1077,10 @@ use ioutil, only : ind
 use adcmesh, only : station_t
 implicit none
 type(fileMetaData_t), intent(inout) :: fmd
-integer, intent(in) :: mp ! max number of particles 
+integer, intent(in) :: mp ! max number of particles
 type(station_t), intent(inout) :: p(mp) ! particles
 integer, intent(in) :: iSnap  ! dataset to work on
-integer, intent(in) :: olun   ! i/o unit number of xdmf xml file 
+integer, intent(in) :: olun   ! i/o unit number of xdmf xml file
 integer :: ip ! particle counter
 
 write(olun,'('//ind('|')//',a,i0,a)') '<Topology TopologyType="POLYVERTEX" NumberOfElements="',fmd%numParticlesPerSnap(iSnap),'" NodesPerElement="1"/>'
@@ -1080,12 +1097,12 @@ end subroutine writeTimeVaryingParticlePositions
 
 
 !----------------------------------------------------------------------
-!                     S U B R O U T I N E     
-!            I N T E R P O L A T E   A N D   W R I T E  
+!                     S U B R O U T I N E
+!            I N T E R P O L A T E   A N D   W R I T E
 !     T I M E   V A R Y I N G   A T T R I B U T E S   X M L
 !----------------------------------------------------------------------
-! Reads data array(s) defined on an adcirc mesh at a particular time, 
-! interpolates them to the current particle positions, and writes the 
+! Reads data array(s) defined on an adcirc mesh at a particular time,
+! interpolates them to the current particle positions, and writes the
 ! interpolated data set(s) to XDMF xml.
 !----------------------------------------------------------------------
 subroutine interpolateAndWriteTimeVaryingAttributesXML(afmd, pfmd, m, p, mp, iSnap, olun)
@@ -1093,20 +1110,20 @@ use asgsio
 use adcmesh
 use ioutil, only : ind, check
 implicit none
-! TODO: this assumes the same number of datasets in each file and that 
+! TODO: this assumes the same number of datasets in each file and that
 ! the datasets correspond to the same times in seconds
 type(fileMetaData_t), intent(inout) :: afmd ! datafile containing attribute values on mesh
 type(fileMetaData_t), intent(inout) :: pfmd ! datafile containing particle positions
 type(mesh_t), intent(inout) :: m
-integer, intent(in) :: mp ! max number of particles 
+integer, intent(in) :: mp ! max number of particles
 type(station_t), intent(inout) :: p(mp) ! particles
 integer, intent(in) :: iSnap  ! dataset to work on
-integer, intent(in) :: olun   ! i/o unit number of xdmf xml file 
+integer, intent(in) :: olun   ! i/o unit number of xdmf xml file
 real(8), allocatable :: adcirc_data(:,:) ! (np,numComponents)
 real(8), allocatable :: interpVals(:,:)  ! interpolated values (numComp,numParticles)
 real(8), allocatable :: sp(:) ! particle speeds for 2D velocity
 integer :: nc_start(2) ! node number and dataset to start the reading
-integer :: nc_count(2) ! number of nodes and datasets to read in 
+integer :: nc_count(2) ! number of nodes and datasets to read in
 character(len=100) :: attributeType
 logical :: dryNode ! true if the node is dry and values there are undefined
 integer :: i ! netcdf variable counter
@@ -1127,14 +1144,14 @@ end do
 call check(nf90_close(afmd%nc_id))
 if (trim(afmd%ncds(1)%varNameNetCDF).eq.'u-vel') then
    allocate(sp(pfmd%numParticlesPerSnap(iSnap))) ! for computing velocity magnitudes
-endif 
+endif
 !
 ! compute the interpolation weights for all particles in this snap
 do k=1,pfmd%numParticlesPerSnap(iSnap)
    call computeStationWeights(p(k), m)
 end do
 !
-! for each component, look up the data values at the three nodes of 
+! for each component, look up the data values at the three nodes of
 ! the resident element and linearly interpolate them at the particle
 ! position
 allocate(interpVals(afmd%numVarNetCDF,pfmd%numParticlesPerSnap(iSnap)))
@@ -1159,7 +1176,7 @@ do v=1,afmd%numVarNetCDF
          interpVals(v,k) = 0.d0
          ! now interpolate this variable using the weights at the three nodes
          do node=1,3
-            interpVals(v,k) = interpVals(v,k) + adcirc_data(p(k)%n(node),v) * p(k)%w(node) 
+            interpVals(v,k) = interpVals(v,k) + adcirc_data(p(k)%n(node),v) * p(k)%w(node)
          enddo
       endif
    end do
@@ -1173,7 +1190,7 @@ endif
 !
 ! TODO: This assumes that if the netcdf contains a multicomponent quantity
 ! (e.g., a 2D vector) that there is only one XDMF variable name to describe
-! this quantity 
+! this quantity
 write(olun,'('//ind('|')//',A)') '<Attribute Name="'//trim(afmd%xds(1)%varNameXDMF)//'" AttributeType="'//trim(attributeType)//'" Center="Node">'
 write(olun,'('//ind('+')//',a,i0,a)')    '<DataItem DataType="Float" Dimensions="',pfmd%numParticlesPerSnap(iSnap),' 3" Format="XML">'
 do k=1,pfmd%numParticlesPerSnap(iSnap)
@@ -1195,7 +1212,7 @@ if (trim(afmd%ncds(1)%varNameNetCDF).eq.'u-vel') then
    write(olun,'('//ind('|')//',a)') '<Attribute AttributeType="Scalar" Center="Node" Name="particle_speed">'
    write(olun,'('//ind('+')//',a,i0,a)')  '<DataItem DataType="Float" Dimensions="',pfmd%numParticlesPerSnap(iSnap),' 1" Format="XML">'
    do k=1,pfmd%numParticlesPerSnap(iSnap)
-      write(olun,'('//ind('|')//',f15.7)') sp(k)   
+      write(olun,'('//ind('|')//',f15.7)') sp(k)
    end do
    write(olun,'('//ind('|')//',a)')    '</DataItem>'
    write(olun,'('//ind('-')//',a)') '</Attribute>'

@@ -22,7 +22,7 @@
 #-----------------------------------------------------------------------
 #
 THIS=output/createOPeNDAPFileList.sh
-# Count command line arguments; use them if provided or use 
+# Count command line arguments; use them if provided or use
 # run.properties if not.
 declare -A properties
 SCENARIODIR=$PWD
@@ -62,7 +62,7 @@ if [[ $TROPICALCYCLONE != "off" ]]; then
 else
    STORM="null"
    YEAR=${CYCLE:0:4}
-fi      
+fi
 #
 SCENARIODIR=${CYCLEDIR}/${SCENARIO}       # shorthand
 CYCLELOG=${properties['monitoring.logging.file.cyclelog']}
@@ -73,7 +73,7 @@ source ${SCRIPTDIR}/platforms.sh
 env_dispatch ${HPCENVSHORT}
 THIS=output/createOPeNDAPFileList.sh
 allMessage "$SCENARIO: $THIS: Starting post processing."
-scenarioMessage "$THIS: SCENARIO=$SCENARIO ; SCENARIODIR=$SCENARIODIR"
+# debug scenarioMessage "$THIS: SCENARIO=$SCENARIO ; SCENARIODIR=$SCENARIODIR"
 cd ${SCENARIODIR} 2>&1 > errmsg || warn "cycle $CYCLE: $SCENARIO: $THIS: Could not change directory to $SCENARIODIR: `cat $errmsg`"
 #---------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ fi
 FILES=( ${ceraPriorityFiles[*]} "sendNotification" ${ceraNonPriorityFiles[*]} )
 #
 FILESSTRING="("
-for string in ${FILES[*]}; do 
+for string in ${FILES[*]}; do
    FILESSTRING="$FILESSTRING $string"
 done
 FILESSTRING="$FILESSTRING )"

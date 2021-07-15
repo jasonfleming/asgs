@@ -51,7 +51,7 @@ type internalFluxBoundary_t
    real(8), allocatable :: barinht(:)
    real(8), allocatable :: barincfsb(:)
    real(8), allocatable :: barincfsp(:)
-   real(8), allocatable :: leveeGeom(:)         
+   real(8), allocatable :: leveeGeom(:)
    integer, allocatable :: ibTypeAttribute(:) ! used for visualization
 end type internalFluxBoundary_t
 !
@@ -71,7 +71,7 @@ type internalFluxBoundaryWithPipes_t
    real(8), allocatable :: pipecoef(:)
    real(8), allocatable :: pipediam(:)
    real(8), allocatable :: leveeGeom(:)
-end type internalFluxBoundaryWithPipes_t      
+end type internalFluxBoundaryWithPipes_t
 !
 !
 type mesh_t
@@ -97,7 +97,7 @@ type mesh_t
    real(8) :: minEdgeLength ! shortest edge length in the whole mesh (m)
    real(8) :: maxEdgeLength ! longest edge length in the whole mesh (m)
    real(8), allocatable :: areas(:) ! (ne) 2x element areas in square meters
-   real(8), allocatable :: eledepths(:) ! (ne) element bathymetric depths (m)   
+   real(8), allocatable :: eledepths(:) ! (ne) element bathymetric depths (m)
    real(8), allocatable :: sfac(:) ! (np)
    real(8), allocatable :: sfacAvg(:) ! (ne)
    real(8), allocatable :: fdx(:,:) ! (3,ne)
@@ -127,9 +127,9 @@ type mesh_t
    integer, allocatable :: ibtype(:) ! boundary type of each flux boundary
    integer, allocatable :: ibtypee(:) ! boundary type of each elevation boundary
    integer, allocatable :: nbvv(:,:) ! node numbers on each flux boundary
-   integer, allocatable :: lbcodei(:) ! bound. type array for flux boundaries 
+   integer, allocatable :: lbcodei(:) ! bound. type array for flux boundaries
    integer :: nvdll_max  ! longest elevation boundary
-   integer :: nvell_max  ! longest flux boundary     
+   integer :: nvell_max  ! longest flux boundary
    integer, allocatable :: nbd(:)
    integer, allocatable :: nbv(:)
    integer, allocatable :: ibconn(:,:)
@@ -145,14 +145,14 @@ type mesh_t
    real(8), allocatable :: barincfsp(:,:)
    real(8), allocatable :: pipediam(:,:)
    real(8), allocatable :: pipecoef(:,:)
-   
+
    logical :: elementAreasComputed = .false.
-   logical :: elementDepthsComputed = .false.   
+   logical :: elementDepthsComputed = .false.
    logical :: weightingCoefficientsComputed = .false.
    logical :: neighborTableComputed = .false.
    logical :: allLeveesOK ! .false. if there are any issues
    integer :: NEIMIN
-   integer :: NEIMAX 
+   integer :: NEIMAX
    integer, allocatable :: NNeigh(:)
    integer, allocatable :: NeiTab(:,:)
    integer, allocatable :: NeiTabGenerated(:,:)
@@ -164,7 +164,7 @@ type mesh_t
    real(8) :: lonmin   ! domain extents (degrees)
    real(8) :: lonmax
    real(8) :: latmin
-   real(8) :: latmax 
+   real(8) :: latmax
    !
    ! elevation boundaries
    type(simpleBoundary_t), allocatable :: elevationBoundaries(:)
@@ -175,15 +175,15 @@ type mesh_t
    integer :: numSimpleFluxBoundaries ! for memory allocation
    ! variable holding flux boundaries with ibtype = 0, 1, 2, 10, 11, 12, 20, 21, 22, 30, 52
    integer :: sfCount   ! index into the simpleFluxBoundaries array
-   ! 
+   !
    ! external overflow boundary and river boundary
    type(externalFluxBoundary_t), allocatable :: externalFluxBoundaries(:)
-   integer :: numExternalFluxBoundaries 
+   integer :: numExternalFluxBoundaries
    integer :: efCount   ! index into the externalFluxBoundaries array
-   ! 
+   !
    ! levee boundaries
    type(internalFluxBoundary_t), allocatable :: internalFluxBoundaries(:)
-   integer :: numInternalFluxBoundaries    
+   integer :: numInternalFluxBoundaries
    integer :: ifCount   ! index into the internalFluxBoundaries array
    !
    ! levees with cross barrier pipes
@@ -195,7 +195,7 @@ type mesh_t
 
 end type mesh_t
 
-type meshNetCDF_t   
+type meshNetCDF_t
    integer :: NC_DimID_node = -99
    integer :: NC_DimID_nfen = -99
    integer :: NC_DimID_nele = -99
@@ -225,17 +225,17 @@ type meshNetCDF_t
    integer :: NC_VarID_nbvv = -99
    integer :: NC_VarID_depth = -99
    integer :: NC_VarID_x_cpp = -99
-   integer :: NC_VarID_y_cpp = -99   
+   integer :: NC_VarID_y_cpp = -99
 end type meshNetCDF_t
 
 integer, parameter :: specifiedFluxBoundaryTypes(5) = (/ 2, 12, 22, 32, 52 /)
-! 
+!
 ! all info needed for self describing dataset in XDMF
 type xdmfMetaData_t
-   logical :: createdIDs        ! .true. if infoIDs have been created 
-   character(80) :: variable_name 
+   logical :: createdIDs        ! .true. if infoIDs have been created
+   character(80) :: variable_name
    integer :: variable_name_id
-   character(80) :: long_name 
+   character(80) :: long_name
    integer :: long_name_id
    character(80) :: standard_name
    integer :: standard_name_id
@@ -250,7 +250,7 @@ end type xdmfMetaData_t
 !
 ! info related to recording stations
 type station_t
-   real(8) :: lon            ! decimal degrees east 
+   real(8) :: lon            ! decimal degrees east
    real(8) :: lat            ! decimal degrees north
    real(8) :: z              ! vertical position (m) relative to mesh zero
    integer :: irtype         ! number of components; 1=scalar, 2=2D vector, 3=3D vector
@@ -262,15 +262,15 @@ type station_t
    real(8) :: w(3)           ! weights used to interpolate station values based on nodal values
    real(8), allocatable :: d(:,:)     ! station data (irtype, ntime)
    integer :: iID            ! simple numerical ID
-   character(len=1024) :: stationID   ! generally a number assigned by govt agency 
-   character(len=1024) :: description ! human readable 
+   character(len=1024) :: stationID   ! generally a number assigned by govt agency
+   character(len=1024) :: description ! human readable
    character(len=1024) :: agency      ! organization responsible for the station
    character(len=1024) :: datum       ! relevant vertical datum (MSL, NAVD88, etc)
 end type station_t
-      
+
 !-----+---------+---------+---------+---------+---------+---------+
 contains
-!-----+---------+---------+---------+---------+---------+---------+  
+!-----+---------+---------+---------+---------+---------+---------+
 
 !-----+---------+---------+---------+---------+---------+---------+
 !  READ14_FindDims
@@ -278,18 +278,18 @@ contains
 subroutine read14_findDims(m)
 use ioutil
 implicit none
-type(mesh_t), intent(inout) :: m ! mesh to operate on  
-integer :: ios ! i/o status 
+type(mesh_t), intent(inout) :: m ! mesh to operate on
+integer :: ios ! i/o status
 integer :: lineNum ! line number currently being read
 integer :: i, j, k
-integer :: iunit 
+integer :: iunit
 integer :: errorIO
 
 ! initializations
 lineNum = 1
 m%numSimpleFluxBoundaries = 0
-m%numExternalFluxBoundaries = 0 
-m%numInternalFluxBoundaries = 0 
+m%numExternalFluxBoundaries = 0
+m%numInternalFluxBoundaries = 0
 m%numInternalFluxBoundariesWithPipes = 0
 m%is3D = .false.
 !
@@ -315,7 +315,7 @@ do k = 1, m%ne
    if (i.ne.k) then
       write(6,'("ERROR: Attempted to read element number ",i0," but found element number ",i0," instead.")') k, i
       stop
-   endif 
+   endif
 enddo
 !
 ! return if not reading boundary table
@@ -334,7 +334,7 @@ write(6,'(a)') 'INFO: Allocating memory for elevation specified boundaries.'
 call allocateElevationBoundaryLengths(m)
 m%neta_count = 0
 m%nvdll_max = 0
-do k = 1, m%nope         
+do k = 1, m%nope
    read(unit=iunit,fmt=*,err=10,end=20,iostat=ios) m%nvdll(k) ! number of nodes on the kth elevation boundary segment
    lineNum = lineNum + 1
    m%nvdll_max = max(m%nvdll_max,m%nvdll(k))
@@ -344,8 +344,8 @@ do k = 1, m%nope
       m%neta_count = m%neta_count + 1
    enddo
 enddo
-! need nvdll_max to allocate nbdv 
-call allocateAdcircElevationBoundaryArrays(m) 
+! need nvdll_max to allocate nbdv
+call allocateAdcircElevationBoundaryArrays(m)
 if ( m%neta_count.ne.m%neta ) then
    write(6,'("WARNING: Number of open boundary nodes was set to ",i0," but ",i0," were found.")') m%neta, m%neta_count
 endif
@@ -358,7 +358,7 @@ call allocateFluxBoundaryLengths(m)
 m%nvel_count = 0
 m%nvell_max = 0
 do k = 1, m%nbou
-   read(unit=iunit,fmt=*,err=10,end=20,iostat=ios) m%nvell(k), m%ibtype_orig(k)  ! number of nodes and type of kth flux boundary 
+   read(unit=iunit,fmt=*,err=10,end=20,iostat=ios) m%nvell(k), m%ibtype_orig(k)  ! number of nodes and type of kth flux boundary
    lineNum = lineNum + 1
    m%nvell_max = max(m%nvell_max,m%nvell(k))
    do j = 1, m%nvell(k)
@@ -372,10 +372,10 @@ do k = 1, m%nbou
        m%numSimpleFluxBoundaries = m%numSimpleFluxBoundaries + 1
        m%nvel_count = m%nvel_count + m%nvell(k)
    case(3,13,23)
-       m%numExternalFluxBoundaries = m%numExternalFluxBoundaries + 1 
+       m%numExternalFluxBoundaries = m%numExternalFluxBoundaries + 1
        m%nvel_count = m%nvel_count + m%nvell(k)
    case(4,24)
-       m%numInternalFluxBoundaries = m%numInternalFluxBoundaries + 1 
+       m%numInternalFluxBoundaries = m%numInternalFluxBoundaries + 1
        m%nvel_count = m%nvel_count + 2*m%nvell(k)
    case(5,25)
        m%numInternalFluxBoundariesWithPipes = m%numInternalFluxBoundariesWithPipes + 1
@@ -402,7 +402,7 @@ close(iunit)
 write(6,'(A)') 'INFO: Finished reading mesh file dimensions.'
 return
    !
-   ! jump to here on error and end conditions during read   
+   ! jump to here on error and end conditions during read
 10 write(6,'("ERROR: Reading line ",i0," gave the following error code: ",i0,".")')         lineNum, ios
    close(iunit)
    stop
@@ -415,7 +415,7 @@ end subroutine read14_findDims
 
 
 !------------------------------------------------------------------
-!                   S U B R O U T I N E    
+!                   S U B R O U T I N E
 !        F I N D   M E S H   D I M S   N E T C D F
 !------------------------------------------------------------------
 ! Unfinished routine to read the dimensions of mesh data from
@@ -441,21 +441,21 @@ call check(nf90_open(trim(m%meshFileName), NF90_NOWRITE, nc_id))
 !
 call readMeshCommentLineNetCDF(m, nc_id)
 !
-! read the lengths of the dimensions that will always be present in 
+! read the lengths of the dimensions that will always be present in
 ! an adcirc netcdf file that contains a mesh
 call check(nf90_inq_dimid(nc_id, 'node', n%nc_dimid_node))
 call check(nf90_inquire_dimension(nc_id, n%nc_dimid_node, len=m%np))
 call check(nf90_inq_dimid(nc_id, 'nele', n%nc_dimid_nele))
 call check(nf90_inquire_dimension(nc_id, n%nc_dimid_nele, len=m%ne))
 !
-! determine which other dimensions are present and find their lengths 
+! determine which other dimensions are present and find their lengths
 !
 ! open boundaries
 write(6,'(a)') 'INFO: Reading boundary dimensions.'
 dimPres = nf90_inq_dimid(nc_id, 'nope', n%nc_dimid_nope)
 if (dimPres.eq.NF90_NOERR) then
    call check(nf90_inquire_dimension(nc_id, n%nc_dimid_nope, len=m%nope))
-else 
+else
    m%nope = 0
 endif
 ! total number of open boundary nodes
@@ -474,7 +474,7 @@ else
 endif
 ! allocate arrays to hold the data
 call allocateElevationBoundaryLengths(m)
-call allocateAdcircElevationBoundaryArrays(m) 
+call allocateAdcircElevationBoundaryArrays(m)
 !
 ! now read in the lengths of the open boundary segments and the node
 ! numbers on each segment
@@ -483,7 +483,7 @@ if (m%nope.ne.0) then
    call check(nf90_get_var(nc_id, n%nc_varid_nvdll, m%nvdll, (/ 1 /), (/ m%nope /) ))
    call check(nf90_inq_varid(nc_id, 'nbdv', n%nc_varid_nbdv))
    do i=1, m%nope
-      call check(nf90_get_var(nc_id, n%nc_varid_nbdv, m%nbdv(i,:), (/ i, 1 /), (/ 1, m%nvdll(i) /) ))  
+      call check(nf90_get_var(nc_id, n%nc_varid_nbdv, m%nbdv(i,:), (/ i, 1 /), (/ 1, m%nvdll(i) /) ))
    end do
 endif
 !
@@ -498,7 +498,7 @@ endif
 dimPres = nf90_inq_dimid(nc_id, 'nvel', n%nc_dimid_nvel)
 if (dimPres.eq.NF90_NOERR) then
    call check(nf90_inquire_dimension(nc_id, n%nc_dimid_nvel, len=m%nvel))
-else 
+else
    m%nvel = 0
 endif
 ! longest flux boundary segment
@@ -521,7 +521,7 @@ if (m%nbou.ne.0) then
    call check(nf90_get_var(nc_id, n%nc_varid_ibtype, m%ibtype, (/ 1 /) , (/ m%nbou /) ))
    call check(nf90_inq_varid(nc_id, 'nbvv', n%nc_varid_nbvv))
    do i=1, m%nbou
-      call check(nf90_get_var(nc_id, n%nc_varid_nbvv, m%nbvv(i,:), (/ i, 1 /), (/ 1, m%nvell(i) /) ))  
+      call check(nf90_get_var(nc_id, n%nc_varid_nbvv, m%nbvv(i,:), (/ i, 1 /), (/ 1, m%nvell(i) /) ))
    end do
 endif
 !
@@ -546,16 +546,16 @@ end subroutine findMeshDimsNetCDF
 !    S U B R O U T I N E     R E A D   M E S H   N E T C D F
 !------------------------------------------------------------------
 ! Read the mesh data (coordinates, bathy/topo, element table).
-! The subroutine findMeshDimsNetCDF() must be called before this 
-! one. 
+! The subroutine findMeshDimsNetCDF() must be called before this
+! one.
 ! TODO: The NetCDF files written by ADCIRC don't actually contain the
-! levee heights, coefficients of sub/supercritical flow, etc. 
+! levee heights, coefficients of sub/supercritical flow, etc.
 !------------------------------------------------------------------
 subroutine readMeshNetCDF(m, n)
 use netcdf
 use ioutil
 implicit none
-type(mesh_t), intent(inout) :: m ! mesh to operate on 
+type(mesh_t), intent(inout) :: m ! mesh to operate on
 type(meshNetCDF_t), intent(inout) :: n ! netcdf IDs to operate on
 integer :: nc_id ! netcdf ID of the file to read from
 integer :: i, j ! loop counter
@@ -566,7 +566,7 @@ integer :: nc_start(1)
 integer :: nc_ele_count(2) ! element table is 2D
 integer :: nc_ele_start(2)
 !
-integer :: nc_boundmax_count(2) ! max boundary nodes table is 2D 
+integer :: nc_boundmax_count(2) ! max boundary nodes table is 2D
 integer :: nc_boundmax_start(2)
 !
 write(6,'(a)') 'INFO: Reading mesh from the netCDF file.'
@@ -579,7 +579,7 @@ nc_start = (/ 1 /)
 nc_count = (/ m%np /)
 
 call check(nf90_inq_varid(nc_id, 'x', n%nc_varid_x))
-call check(nf90_get_var(nc_id,n%nc_varid_x,m%xyd(1,1:m%np),nc_start,nc_count))     
+call check(nf90_get_var(nc_id,n%nc_varid_x,m%xyd(1,1:m%np),nc_start,nc_count))
 call check(nf90_inq_varid(nc_id, 'y', n%nc_varid_y))
 call check(nf90_get_var(nc_id,n%nc_varid_y,m%xyd(2,1:m%np),nc_start,nc_count))
 call check(nf90_inq_varid(nc_id, 'depth', n%nc_varid_depth))
@@ -608,17 +608,17 @@ if (m%nope.ne.0) then
    nc_count = (/ m%nope /)
    call check(nf90_get_var(nc_id,n%nc_varid_nvdll,m%nvdll,nc_start,nc_count))
    nc_boundmax_start = (/ 1, 1 /)
-   nc_boundmax_count = (/ m%nope, m%nvdll_max /)   
+   nc_boundmax_count = (/ m%nope, m%nvdll_max /)
    call check(nf90_get_var(nc_id,n%nc_varid_nbdv,m%nbdv,nc_boundmax_start,nc_boundmax_count))
 endif
 if (m%nbou.ne.0) then
    nc_count = (/ m%nbou /)
-   call check(nf90_get_var(nc_id,n%nc_varid_nvell,m%nvell,nc_start,nc_count))  
+   call check(nf90_get_var(nc_id,n%nc_varid_nvell,m%nvell,nc_start,nc_count))
    nc_count = (/ m%nbou /)
-   call check(nf90_get_var(nc_id,n%nc_varid_ibtype,m%ibtype,nc_start,nc_count))     
+   call check(nf90_get_var(nc_id,n%nc_varid_ibtype,m%ibtype,nc_start,nc_count))
    nc_boundmax_start = (/ 1, 1 /)
    nc_boundmax_count = (/ m%nbou, m%nvell_max /)
-   call check(nf90_get_var(nc_id,n%nc_varid_nbvv,m%nbvv,nc_boundmax_start,nc_boundmax_count))     
+   call check(nf90_get_var(nc_id,n%nc_varid_nbvv,m%nbvv,nc_boundmax_start,nc_boundmax_count))
 end if
 call check(nf90_close(nc_id))
 write(6,'(a)') 'INFO: Mesh has been read from the netCDF file.'
@@ -629,13 +629,13 @@ end subroutine readMeshNetCDF
 
 
 !------------------------------------------------------------------
-!                   S U B R O U T I N E    
+!                   S U B R O U T I N E
 !   R E A D   M E S H   C O M M E N T   L I N E   N E T C D F
 !------------------------------------------------------------------
-! Reads the mesh comment line from the netcdf file, taking into 
+! Reads the mesh comment line from the netcdf file, taking into
 ! account the fact that this comment line has been written with
-! two different variable names at different times by different 
-! programs. 
+! two different variable names at different times by different
+! programs.
 !------------------------------------------------------------------
 subroutine readMeshCommentLineNetCDF(m, nc_id)
 use netcdf
@@ -656,7 +656,9 @@ agold = nf90_get_att(nc_id,nf90_global,'grid',m%agrid)
 if (agold.EQ.NF90_NOERR) then
    return
 endif
-call check(agold)
+! This can happen if a minimal hotstart file was created, e.g., by adcirpolate
+write(6,'(a)') 'WARNING: Could not find the fort.14 comment line (grid or agrid attribute).'
+m%agrid='WARNING: Could not find the fort.14 comment line (grid or agrid attribute).'
 
 !----------------------------------------------------------------------
 end subroutine readMeshCommentLineNetCDF
@@ -670,7 +672,7 @@ use ioutil
 implicit none
 type(mesh_t), intent(inout) :: m
 integer :: i, j, k, jn, je, nhy
-integer :: iunit 
+integer :: iunit
 integer :: ios     ! i/o status
 integer :: lineNum ! line number currently being read
 !
@@ -688,16 +690,16 @@ call allocateNodalAndElementalArrays(m)
 if (m%readBoundaryTable.eqv..true.) then
    call allocateBoundaryArrays(m)
    !
-   if (verbose.eqv..true.) then 
+   if (verbose.eqv..true.) then
       write(6,'("Number of elevation specified boundaries (nope): ",i0,".")') m%nope
       write(6,'("Number of simple flux specified boundaries (0,1,2,etc): ",i0,".")') m%numSimpleFluxBoundaries
-      write(6,'("Number of external flux boundaries (3,etc): ",i0,".")') m%numExternalFluxBoundaries         
+      write(6,'("Number of external flux boundaries (3,etc): ",i0,".")') m%numExternalFluxBoundaries
       write(6,'("Number of internal flux boundaries (4,etc): ",i0,".")') m%numInternalFluxBoundaries
       write(6,'("Number of internal flux boundaries with pipes (5,etc): ",i0,".")') m%numInternalFluxBoundariesWithPipes
    endif
 endif
 write(6,'(A)') 'INFO: Reading mesh file coordinates, connectivity, and boundary data.'
-iunit = availableUnitNumber() 
+iunit = availableUnitNumber()
 call openFileForRead(iunit, m%meshFileName, ios)
 lineNum = 1
 read(unit=iunit,fmt='(a)',err=10,end=20,iostat=ios) m%agrid
@@ -748,7 +750,7 @@ lineNum = lineNum + 1
 m%sfCount = 1
 m%efCount = 1
 m%ifCount = 1
-m%ifwpCount = 1      
+m%ifwpCount = 1
 do k = 1, m%nbou
    read(unit=iunit,fmt=*,err=10,end=20,iostat=ios) m%nvell(k), m%ibtype_orig(k)
    lineNum = lineNum + 1
@@ -763,9 +765,9 @@ do k = 1, m%nbou
       end do
       m%sfCount = m%sfCount + 1
    case(3,13,23)
-      m%externalFluxBoundaries(m%efCount)%indexNum = k         
+      m%externalFluxBoundaries(m%efCount)%indexNum = k
       do j = 1, m%nvell(k)
-         read(unit=iunit,fmt=*,err=10,end=20,iostat=ios) & 
+         read(unit=iunit,fmt=*,err=10,end=20,iostat=ios) &
                        m%externalFluxBoundaries(m%efCount)%nodes(j), &
                        m%externalFluxBoundaries(m%efCount)%barlanht(j), &
                        m%externalFluxBoundaries(m%efCount)%barlancfsp(j)
@@ -799,7 +801,7 @@ do k = 1, m%nbou
                        m%internalFluxBoundariesWithPipes(m%ifwpCount)%pipecoef(j), &
                        m%internalFluxBoundariesWithPipes(m%ifwpCount)%pipediam(j)
          m%nbvv(k,j) = m%internalFluxBoundariesWithPipes(m%ifwpCount)%nodes(j)
-         lineNum = lineNum + 1                                           
+         lineNum = lineNum + 1
       end do
       m%ifwpCount = m%ifwpCount + 1
    case default
@@ -808,14 +810,14 @@ do k = 1, m%nbou
    end select
 end do
 close(iunit)
-! 
+!
 ! initialize ibtype array
 m%ibtype = m%ibtype_orig
 !
 write(6,'(A)') 'INFO: Finished reading mesh file coordinates, connectivity, and boundary data.'
 return
       !
-      ! jump to here on error and end conditions during read   
+      ! jump to here on error and end conditions during read
 10    write(6,'("ERROR: Reading line ",i0," gave the following error code: ",i0,".")')         lineNum, ios
       close(iunit)
       stop
@@ -827,12 +829,12 @@ end subroutine read14
 !-----+---------+---------+---------+---------+---------+---------+
 
 !------------------------------------------------------------------
-!                      S U B R O U T I N E    
+!                      S U B R O U T I N E
 ! A L L O C A T E   N O D A L   A N D   E L E M E N T A L   A R R A Y S
 !------------------------------------------------------------------
 ! Mesh related memory allocation for any array that is
-! dimensioned by the number of nodes in the mesh or the number of 
-! elements in the mesh. Mirrors the subroutine of the same name in 
+! dimensioned by the number of nodes in the mesh or the number of
+! elements in the mesh. Mirrors the subroutine of the same name in
 ! the mesh module in adcirc.
 !------------------------------------------------------------------
 subroutine allocateNodalAndElementalArrays(m)
@@ -850,7 +852,7 @@ end subroutine allocateNodalAndElementalArrays
 !------------------------------------------------------------------
 
 !------------------------------------------------------------------
-!                   S U B R O U T I N E  
+!                   S U B R O U T I N E
 ! A L L O C A T E   E L E V A T I O N   B O U N D A R Y   L E N G T H S
 !------------------------------------------------------------------
 ! Allocate the arrays that hold the number of nodes on each elevation
@@ -870,10 +872,10 @@ end subroutine allocateElevationBoundaryLengths
 !------------------------------------------------------------------
 
 !------------------------------------------------------------------
-!                   S U B R O U T I N E  
+!                   S U B R O U T I N E
 !      A L L O C A T E  F L U X  B O U N D A R Y   L E N G T H S
 !------------------------------------------------------------------
-! Allocate the arrays that hold the number of nodes (primary nodes 
+! Allocate the arrays that hold the number of nodes (primary nodes
 ! in the case of paired node boundaries like levees) on each flux
 ! boundary segment
 !------------------------------------------------------------------
@@ -893,8 +895,8 @@ end subroutine allocateFluxBoundaryLengths
 !------------------------------------------------------------------
 
 !------------------------------------------------------------------
-!                   S U B R O U T I N E  
-!      A L L O C A T E   A D C I R C  E L E V A T I O N  
+!                   S U B R O U T I N E
+!      A L L O C A T E   A D C I R C  E L E V A T I O N
 !               B O U N D A R Y  A R R A Y S
 !------------------------------------------------------------------
 ! Allocate space for elevation boundary-related variables
@@ -913,8 +915,8 @@ end subroutine allocateAdcircElevationBoundaryArrays
 !------------------------------------------------------------------
 
 !------------------------------------------------------------------
-!                       S U B R O U T I N E  
-!              A L L O C A T E  A D C I R C   F L U X  
+!                       S U B R O U T I N E
+!              A L L O C A T E  A D C I R C   F L U X
 !                   B O U N D A R Y  A R R A Y S
 !------------------------------------------------------------------
 !     jgf51.21.11 Allocate space for flux boundary-related variables
@@ -960,7 +962,7 @@ end subroutine allocateAdcircFluxBoundaryArrays
 !------------------------------------------------------------------
 
 !------------------------------------------------------------------
-!                   S U B R O U T I N E  
+!                   S U B R O U T I N E
 !        A L L O C A T E  B O U N D A R Y  A R R A Y S
 !------------------------------------------------------------------
 ! Allocate space for boundary-related variables
@@ -973,7 +975,7 @@ integer :: i
 allocate(m%elevationBoundaries(m%nope))
 do i=1,m%nope
    allocate(m%elevationBoundaries(i)%nodes(m%nvdll(i)))
-end do   
+end do
 allocate(m%simpleFluxBoundaries(m%numSimpleFluxBoundaries))
 allocate(m%externalFluxBoundaries(m%numExternalFluxBoundaries))
 allocate(m%internalFluxBoundaries(m%numInternalFluxBoundaries))
@@ -981,7 +983,7 @@ allocate(m%internalFluxBoundariesWithPipes(m%numInternalFluxBoundariesWithPipes)
 m%sfCount = 1
 m%efCount = 1
 m%ifCount = 1
-m%ifwpCount = 1      
+m%ifwpCount = 1
 do i=1,m%nbou
    if (verbose.eqv..true.) then
       write(6,'("i=",i0)') i
@@ -995,7 +997,7 @@ do i=1,m%nbou
       allocate(m%externalFluxBoundaries(m%efCount)%barlanht(m%nvell(i)))
       allocate(m%externalFluxBoundaries(m%efCount)%barlancfsp(m%nvell(i)))
       m%efCount = m%efCount + 1
-   case(4,24)        
+   case(4,24)
       allocate(m%internalFluxBoundaries(m%ifCount)%nodes(m%nvell(i)))
       allocate(m%internalFluxBoundaries(m%ifCount)%ibconn(m%nvell(i)))
       allocate(m%internalFluxBoundaries(m%ifCount)%barinht(m%nvell(i)))
@@ -1011,7 +1013,7 @@ do i=1,m%nbou
       allocate(m%internalFluxBoundariesWithPipes(m%ifwpCount)%pipeht(m%nvell(i)))
       allocate(m%internalFluxBoundariesWithPipes(m%ifwpCount)%pipecoef(m%nvell(i)))
       allocate(m%internalFluxBoundariesWithPipes(m%ifwpCount)%pipediam(m%nvell(i)))
-      m%ifwpCount = m%ifwpCount + 1            
+      m%ifwpCount = m%ifwpCount + 1
    case default
        write(6,'("ERROR: The boundary type ",i0," was found in the file but is not valid.")') m%ibtype_orig(i)
        stop
@@ -1052,7 +1054,7 @@ end subroutine allocateBoundaryArrays
 !------------------------------------------------------------------
 
 !-----+---------+---------+---------+---------+---------+---------+
-!                   S U B R O U T I N E     
+!                   S U B R O U T I N E
 !  C O N S T R U C T   F L U X   B O U N D A R I E S   A R R A Y
 !-----+---------+---------+---------+---------+---------+---------+
 subroutine constructFluxBoundaryTypesArray(m)
@@ -1082,9 +1084,9 @@ end subroutine constructFluxBoundaryTypesArray
 !-----+---------+---------+---------+---------+---------+---------+
 
 !------------------------------------------------------------------
-!   S U B R O U T I N E   W R I T E   M E S H 
+!   S U B R O U T I N E   W R I T E   M E S H
 !------------------------------------------------------------------
-!  Writes the mesh file data to adcirc ascii fort.14 format. 
+!  Writes the mesh file data to adcirc ascii fort.14 format.
 !------------------------------------------------------------------
 subroutine writeMesh(m)
 use ioutil
@@ -1096,7 +1098,7 @@ integer :: ios     ! i/o status
 integer :: lineNum ! line number currently being read
 !
 ! initialization
-m%nfluxf = 0 
+m%nfluxf = 0
 nhy = 3
 !
 if (trim(m%meshFileName).eq."null") then
@@ -1105,10 +1107,10 @@ if (trim(m%meshFileName).eq."null") then
 endif
 iunit = availableUnitNumber()
 open(unit=iunit,file=trim(m%meshFileName),status='replace',action='write')
-if (verbose.eqv..true.) then 
+if (verbose.eqv..true.) then
    write(6,'("Number of elevation specified boundaries (m%nope): ",i0,".")') m%nope
    write(6,'("Number of simple flux specified boundaries (0,1,2,etc): ",i0,".")') m%numSimpleFluxBoundaries
-   write(6,'("Number of external flux boundaries (3,etc): ",i0,".")') m%numExternalFluxBoundaries         
+   write(6,'("Number of external flux boundaries (3,etc): ",i0,".")') m%numExternalFluxBoundaries
    write(6,'("Number of internal flux boundaries (4,etc): ",i0,".")') m%numInternalFluxBoundaries
    write(6,'("Number of internal flux boundaries with pipes (5,etc): ",i0,".")') m%numInternalFluxBoundariesWithPipes
 endif
@@ -1129,7 +1131,7 @@ do k = 2, m%np
 enddo
 write(6,'(a)') 'INFO: Writing element table to ' // trim(m%meshFileName) // '".'
 write(unit=iunit,fmt='(5(i0,2x),a)',err=10,iostat=ios) 1, nhy, ( m%nm(1,j), j = 1, 3 ), &
-   '! element table : element number, number of nodes per element, node numbers counter clockwise around the element ' 
+   '! element table : element number, number of nodes per element, node numbers counter clockwise around the element '
 lineNum = lineNum + 1
 do k = 2, m%ne
    write(unit=iunit,fmt='(5(i0,2x))',err=10,iostat=ios) k, nhy, ( m%nm(k,j), j = 1, 3 )
@@ -1137,14 +1139,14 @@ do k = 2, m%ne
 enddo
 write(6,'(a)') 'INFO: Writing boundaries to '  // trim(m%meshFileName) // '".'
 write(unit=iunit,fmt='(i0,a)',err=10,iostat=ios) m%nope, &
-   ' ! total number of elevation specified boundary segments (nope)'  
+   ' ! total number of elevation specified boundary segments (nope)'
 lineNum = lineNum + 1
 write(unit=iunit,fmt='(i0,a)',err=10,iostat=ios) m%neta, &
-   ' ! total number of nodes on elevation specified boundaries (neta) (consistency check)' 
+   ' ! total number of nodes on elevation specified boundaries (neta) (consistency check)'
 lineNum = lineNum + 1
 do k = 1, m%nope
    write(unit=iunit,fmt='(i0,1x,i0,a,i0)',err=10,iostat=ios) m%nvdll(k), 0, &
-   ' ! number of nodes and boundary type of elevation specified boundary (nvdll, ibtypee) segment number ', k 
+   ' ! number of nodes and boundary type of elevation specified boundary (nvdll, ibtypee) segment number ', k
    lineNum = lineNum + 1
    write(unit=iunit,fmt='(i0,a)',err=10,iostat=ios) m%elevationBoundaries(k)%nodes(1), &
       ' ! list of nodes on this elevation specified boundary segment (nbdv)'
@@ -1163,7 +1165,7 @@ lineNum = lineNum + 1
 m%sfCount = 1
 m%efCount = 1
 m%ifCount = 1
-m%ifwpCount = 1      
+m%ifwpCount = 1
 do k = 1, m%nbou
    write(unit=iunit,fmt='(2(i0,2x),a)',err=10,iostat=ios) m%nvell(k), m%ibtype_orig(k), &
       '! number of nodes and boundary type of flux boundary (m%nvell, ibtype)'
@@ -1171,7 +1173,7 @@ do k = 1, m%nbou
    select case(m%ibtype_orig(k))
    case(0,1,2,10,11,12,20,21,22,30,52)
       write(unit=iunit,fmt='(i0,a)',err=10,iostat=ios)  &
-         m%simpleFluxBoundaries(m%sfCount)%nodes(1), ' ! nodes on this boundary (nbvv)' 
+         m%simpleFluxBoundaries(m%sfCount)%nodes(1), ' ! nodes on this boundary (nbvv)'
          lineNum = lineNum + 1
       do j = 2, m%nvell(k)
          write(unit=iunit,fmt='(i0)',err=10,iostat=ios)  &
@@ -1180,14 +1182,14 @@ do k = 1, m%nbou
       end do
       m%sfCount = m%sfCount + 1
    case(3,13,23)
-      write(unit=iunit,fmt='(i0,1x,f8.3,1x,f8.3,a)',err=10,iostat=ios) & 
+      write(unit=iunit,fmt='(i0,1x,f8.3,1x,f8.3,a)',err=10,iostat=ios) &
                        m%externalFluxBoundaries(m%efCount)%nodes(1), &
                        m%externalFluxBoundaries(m%efCount)%barlanht(1), &
                        m%externalFluxBoundaries(m%efCount)%barlancfsp(1), &
       ' ! boundary node (nbvv), barrier height (barlanht), and coef of. supercritical flow (barlancfsp)'
       lineNum = lineNum + 1
       do j = 2, m%nvell(k)
-         write(unit=iunit,fmt='(i0,1x,f8.3,1x,f8.3)',err=10,iostat=ios) & 
+         write(unit=iunit,fmt='(i0,1x,f8.3,1x,f8.3)',err=10,iostat=ios) &
                        m%externalFluxBoundaries(m%efCount)%nodes(j), &
                        m%externalFluxBoundaries(m%efCount)%barlanht(j), &
                        m%externalFluxBoundaries(m%efCount)%barlancfsp(j)
@@ -1228,8 +1230,8 @@ do k = 1, m%nbou
       ' ! boundary node (nbvv), connected backface node (ibconn), ' // &
       'barrier height (barinht), coef. of subcrit. flow (barincfsb), ' // &
       'coef. of supercrit. flow (barincfsp), pipe height (pipeht), ' // &
-      ' pipe coef. (pipecoef), pipediameter(pipediam)' 
-      lineNum = lineNum + 1                                              
+      ' pipe coef. (pipecoef), pipediameter(pipediam)'
+      lineNum = lineNum + 1
       do j = 2, m%nvell(k)
          write(unit=iunit,fmt='(2(i0,1x),6(f8.3))',err=10,iostat=ios) &
                        m%internalFluxBoundariesWithPipes(m%ifCount)%nodes(j), &
@@ -1240,7 +1242,7 @@ do k = 1, m%nbou
                        m%internalFluxBoundariesWithPipes(m%ifCount)%pipeht(j), &
                        m%internalFluxBoundariesWithPipes(m%ifCount)%pipecoef(j), &
                        m%internalFluxBoundariesWithPipes(m%ifCount)%pipediam(j)
-         lineNum = lineNum + 1                                           
+         lineNum = lineNum + 1
       end do
       m%ifwpCount = m%ifwpCount + 1
    case default
@@ -1252,7 +1254,7 @@ close(iunit)
 write(6,'(a)') 'INFO: Finished writing ascii mesh file.'
 return
       !
-      ! jump to here on error and end conditions during read   
+      ! jump to here on error and end conditions during read
 10    write(6,'("ERROR: The error code ",i0," occurred when writing line ",i0,".")')         ios, lineNum
       close(iunit)
       stop
@@ -1261,26 +1263,34 @@ end subroutine writeMesh
 !------------------------------------------------------------------
 
 !----------------------------------------------------------------------
-!                  S U B R O U T I N E   
-!     W R I T E   M E S H   D E F I N I T I O N S  T O   N E T C D F 
+!                  S U B R O U T I N E
+!     W R I T E   M E S H   D E F I N I T I O N S  T O   N E T C D F
 !----------------------------------------------------------------------
-!     This subroutine writes the mesh parameters to the netcdf file. 
+!     This subroutine writes the mesh parameters to the netcdf file.
 !----------------------------------------------------------------------
 subroutine writeMeshDefinitionsToNetCDF(m, n, nc_id, deflate)
 use netcdf
 use ioutil
 implicit none
-type(mesh_t), intent(inout) :: m ! mesh to operate on 
-type(meshNetCDF_t), intent(inout) :: n ! netcdf IDs for the target file 
+type(mesh_t), intent(inout) :: m ! mesh to operate on
+type(meshNetCDF_t), intent(inout) :: n ! netcdf IDs for the target file
 integer, intent(in) :: nc_id
 logical, intent(in) :: deflate
 integer             :: NC_DimID_single
+integer :: ncStatus
 !
-! create and store mesh dimensions 
+! create and store mesh dimensions
 write(6,'(a)') 'INFO: Writing mesh definitions to netcdf.'
 CALL Check(NF90_PUT_ATT(NC_ID,NF90_GLOBAL,'agrid',trim(m%agrid)))
-CALL Check(NF90_DEF_DIM(NC_ID,'node',m%np,n%NC_DimID_node))
-CALL Check(NF90_DEF_DIM(NC_ID,'nele',m%ne,n%NC_DimID_nele))
+! check to see if the node dimension is already there
+ncStatus = nf90_inq_dimid(NC_ID,'node',n%NC_DimID_node)
+if ( ncStatus.ne.NF90_NOERR ) then
+   CALL Check(NF90_DEF_DIM(NC_ID,'node',m%np,n%NC_DimID_node))
+endif
+ncStatus = nf90_inq_dimid(NC_ID,'nele',n%NC_DimID_nele)
+if ( ncStatus.ne.NF90_NOERR ) then
+   CALL Check(NF90_DEF_DIM(NC_ID,'nele',m%ne,n%NC_DimID_nele))
+endif
 CALL Check(NF90_DEF_DIM(NC_ID,'nvertex',3,n%NC_DimID_nvertex))
 CALL Check(NF90_DEF_DIM(NC_ID,'single',1,NC_DimID_single))
 ! boundary parameters
@@ -1316,27 +1326,27 @@ if (m%readBoundaryTable.eqv..true.) then
       CALL Check(NF90_DEF_VAR(NC_ID,'nvdll',NF90_DOUBLE,n%NC_DimID_nope,n%NC_VarID_nvdll))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_nvdll,'long_name','total number of nodes in each elevation specified & boundary segment'))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_nvdll,'units','nondimensional'))
-   
+
       CALL Check(NF90_DEF_VAR(NC_ID,'max_nvdll',NF90_int,NC_DimID_single,n%NC_VarID_max_nvdll))
-      CALL Check(NF90_DEF_VAR(NC_ID,'max_m%nvell',NF90_int,NC_DimID_single,n%NC_VarID_max_nvell))      
+      CALL Check(NF90_DEF_VAR(NC_ID,'max_nvell',NF90_int,NC_DimID_single,n%NC_VarID_max_nvell))
       CALL Check(NF90_DEF_VAR(NC_ID,'neta',NF90_int,NC_DimID_single,n%NC_VarID_neta))
-      CALL Check(NF90_DEF_VAR(NC_ID,'m%nope',NF90_int,NC_DimID_single,n%NC_VarID_nope))
+      CALL Check(NF90_DEF_VAR(NC_ID,'nope',NF90_int,NC_DimID_single,n%NC_VarID_nope))
       CALL Check(NF90_DEF_VAR(NC_ID,'nvel',NF90_int,NC_DimID_single,n%NC_VarID_nvel))
-   
+
       CALL Check(NF90_DEF_VAR(NC_ID,'nbdv',NF90_DOUBLE,(/ n%NC_DimID_nope, n%NC_DimID_max_nvdll /), n%NC_VarID_nbdv))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_nbdv,'long_name','node numbers on each elevation specified boundary & segment'))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_nbdv,'units','nondimensional'))
    endif
-   
+
    if (m%nbou.ne.0) then
       CALL Check(NF90_DEF_VAR(NC_ID,'nvell',NF90_DOUBLE,n%NC_DimID_nbou,n%NC_VarID_nvell))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_nvell,'long_name','number of nodes in each normal flow specified boundary segment'))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_nvell,'units','nondimensional'))
-   
+
       CALL Check(NF90_DEF_VAR(NC_ID,'ibtype',NF90_DOUBLE,n%NC_DimID_nbou,n%NC_VarID_ibtype))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_ibtype,'long_name','type of normal flow (discharge) boundary'))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_ibtype,'units','nondimensional'))
-   
+
       CALL Check(NF90_DEF_VAR(NC_ID,'nbvv',NF90_DOUBLE,(/ n%NC_DimID_nbou, n%NC_DimID_max_nvell /),n%NC_VarID_nbvv))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_nbvv,'long_name','node numbers on normal flow boundary segment'))
       CALL Check(NF90_PUT_ATT(NC_ID,n%NC_VarID_nbvv,'units','nondimensional'))
@@ -1389,10 +1399,10 @@ end subroutine writeMeshDefinitionsToNetCDF
 !----------------------------------------------------------------------
 
 !----------------------------------------------------------------------
-!                    S U B R O U T I N E   
-!         W R I T E   M E S H   D A T A   T O   N E T C D F 
+!                    S U B R O U T I N E
+!         W R I T E   M E S H   D A T A   T O   N E T C D F
 !----------------------------------------------------------------------
-!     This subroutine writes the mesh parameters to the netcdf file. 
+!     This subroutine writes the mesh parameters to the netcdf file.
 !----------------------------------------------------------------------
 subroutine writeMeshDataToNetCDF(m, n, nc_id)
 use netcdf
@@ -1424,8 +1434,8 @@ if (m%nope.ne.0) then
    CALL Check(NF90_PUT_VAR(NC_ID,n%NC_VarID_nope,m%nope))
    CALL Check(NF90_PUT_VAR(NC_ID,n%NC_VarID_max_nvell,m%nvell_max))
    CALL Check(NF90_PUT_VAR(NC_ID,n%NC_VarID_max_nvdll,m%nvdll_max))
-   CALL Check(NF90_PUT_VAR(NC_ID,n%NC_VarID_neta,m%neta))      
-   CALL Check(NF90_PUT_VAR(NC_ID,n%NC_VarID_nvel,m%nvel))            
+   CALL Check(NF90_PUT_VAR(NC_ID,n%NC_VarID_neta,m%neta))
+   CALL Check(NF90_PUT_VAR(NC_ID,n%NC_VarID_nvel,m%nvel))
    NC_Count = (/ m%nope, 1 /)
    CALL Check(NF90_PUT_VAR(NC_ID,n%NC_VarID_nvdll,m%nvdll,NC_Start,NC_Count))
    NC_Count = (/ m%nope, m%nvdll_max /)
@@ -1449,46 +1459,46 @@ end subroutine writeMeshDataToNetCDF
 ! S U B R O U T I N E    C O M P U T E   N E I G H B O R   T A B L E
 !-----------------------------------------------------------------------
 !
-!  Subroutine to generate neighbor tables from a connectivity table.   
-!                                                                     
-!  NOTES                                                               
+!  Subroutine to generate neighbor tables from a connectivity table.
+!
+!  NOTES
 !  a node neighbor table is generated with the node itself is listed as
-!     neighbor #1 and all other neighbors are sorted and placed in cw  
-!     order from east                                                  
-!  a neighbor element table is generated with:                         
-!     entry 1 = element # defined by neighbors 1,2,3                   
-!     entry 2 = element # defined by neighbors 1,3,4                   
-!     entry 3 = element # defined by neighbors 1,4,5                   
-!      .......                                                         
-!     entry last = element # defined by neighbors 1,nneigh,2           
-!     a zero area means that the defined triangle lies outside the domain 
-!                                                                      
-!                                                                      
-!    v1.0   R.L.   6/29/99  used in 3D code                            
-!    v2.0   R.L.   5/23/02  adapted to provide neighbor el table       
+!     neighbor #1 and all other neighbors are sorted and placed in cw
+!     order from east
+!  a neighbor element table is generated with:
+!     entry 1 = element # defined by neighbors 1,2,3
+!     entry 2 = element # defined by neighbors 1,3,4
+!     entry 3 = element # defined by neighbors 1,4,5
+!      .......
+!     entry last = element # defined by neighbors 1,nneigh,2
+!     a zero area means that the defined triangle lies outside the domain
+!
+!
+!    v1.0   R.L.   6/29/99  used in 3D code
+!    v2.0   R.L.   5/23/02  adapted to provide neighbor el table
 !-----------------------------------------------------------------------
-!                                                                      
+!
 ! -  PARAMETERS WHICH MUST BE SET TO CONTROL THE DIMENSIONING OF ARRAYS
-!       ARE AS FOLLOWS:                                                
-!                                                                      
-!     MNP = MAXIMUM NUMBER OF NODAL POINTS                             
-!     MNE = MAXIMUM NUMBER OF ELEMENTS                                 
-!     MNEI= 1+MAXIMUM NUMBER OF NODES CONNECTED TO ANY ONE NODE IN THE 
-!              FINITE ELEMENT GRID                                     
-!                                                                      
+!       ARE AS FOLLOWS:
+!
+!     MNP = MAXIMUM NUMBER OF NODAL POINTS
+!     MNE = MAXIMUM NUMBER OF ELEMENTS
+!     MNEI= 1+MAXIMUM NUMBER OF NODES CONNECTED TO ANY ONE NODE IN THE
+!              FINITE ELEMENT GRID
+!
 !-----------------------------------------------------------------------
-!                                                                      
-! VARIABLE DEFINITIONS:                                                
-!   NE - NUMBER OF ELEMENTS                                            
-!   NP - NUMBER OF NODES                                               
-!   NM(MNE,3) - NODE NUMBERS ASSOCIATED WITH EACH ELEMENT              
-!   NNeigh(MNP) NUMBER OF NEIGHBORS FOR EACH NODE                      
-!   NeiTab(MNP,NEIMAX) 2D ARRAY OF NEIGHBORS FOR EACH NODE             
+!
+! VARIABLE DEFINITIONS:
+!   NE - NUMBER OF ELEMENTS
+!   NP - NUMBER OF NODES
+!   NM(MNE,3) - NODE NUMBERS ASSOCIATED WITH EACH ELEMENT
+!   NNeigh(MNP) NUMBER OF NEIGHBORS FOR EACH NODE
+!   NeiTab(MNP,NEIMAX) 2D ARRAY OF NEIGHBORS FOR EACH NODE
 !   NeiTabEle(MNP,NEIMAX) 2D ARRAY OF NEIGHBOR ELEMENTS FOR EACH NODE
 !   nNeighEle(MNP) Number of neighbor elements at each node
-!   NEIMIN - 1+MINIMUM NUMBER OF NEIGHBORS FOR ANY NODE                
-!   NEIMAX - 1+MAXIMUM NUMBER OF NEIGHBORS FOR ANY NODE               
-!                                                                     
+!   NEIMIN - 1+MINIMUM NUMBER OF NEIGHBORS FOR ANY NODE
+!   NEIMAX - 1+MAXIMUM NUMBER OF NEIGHBORS FOR ANY NODE
+!
 !-----------------------------------------------------------------------
 subroutine computeNeighborTable(m)
 implicit none
@@ -1520,7 +1530,7 @@ m%nneigh = 0
 do i=1,m%ne
    do j=1,3
       ! increment the number of nodal neighbors this node has
-      m%nneigh(m%nm(i,j)) = m%nneigh(m%nm(i,j)) + 1 
+      m%nneigh(m%nm(i,j)) = m%nneigh(m%nm(i,j)) + 1
    end do
 end do
 m%mnei = maxval(m%nneigh)
@@ -1534,7 +1544,7 @@ m%neighborTableComputed = .true.
 allocate(m%neiTabGenerated(m%np,m%mnei))
 allocate(m%neiTabEleGenerated(m%np,m%mnei))
 !
-! initialize neighbor tables to invalid values to make it easy to 
+! initialize neighbor tables to invalid values to make it easy to
 ! spot issues
 m%NNeigh=0
 m%NNeighEle=0
@@ -1550,7 +1560,7 @@ DO 10 N=1,m%NE
    m%NeiTabEle(NN1,m%NNeighEle(NN1))=N ! add element n to the neighboring elements list for this node
    m%NeiTabEle(NN2,m%NNeighEle(NN2))=N
    m%NeiTabEle(NN3,m%NNeighEle(NN3))=N
-   ! 
+   !
    ! repeat for the number of nodal neighbors of node 1 on element n
    DO J=1,m%NNeigh(NN1)
       ! check to see if node 2 is already in node 1's neighbor list; if so skip adding it
@@ -1602,8 +1612,8 @@ DO I=1,m%NP
       DELX=m%x_cpp(NEITEM(J))-m%x_cpp(I)
       DELY=m%y_cpp(NEITEM(J))-m%y_cpp(I)
       DIST=SQRT(DELX*DELX+DELY*DELY)
-      ! check for identical coordinates 
-      IF(DIST.EQ.0.0d0) GOTO 998  
+      ! check for identical coordinates
+      IF(DIST.EQ.0.0d0) GOTO 998
       ! compute the trigonometric angle between node i and
       ! its jth neighbor in degrees
       IF(DELY.NE.0.0d0) THEN
@@ -1621,7 +1631,7 @@ DO I=1,m%NP
       ! initialize the value of the low angle???
       ANGLELOW=400.d0
       ! loop over the neighbors of node i
-      DO J=1,m%NNeigh(I)       
+      DO J=1,m%NNeigh(I)
          IF((ANGLE(J).LT.ANGLELOW).AND.(ANGLE(J).GT.ANGLEMORE)) THEN
             ANGLELOW=ANGLE(J)
             JLOW=J
@@ -1653,9 +1663,9 @@ DO I=1,m%NP
       if (J.NE.m%NNeigh(I)) then
          NN2=m%NeiTab(I,J+1)
       endif
-      ! 
-      ! if j is the last neighbor, then node 2 is the first nodal neighbor 
-      if (J.EQ.m%NNeigh(I)) then 
+      !
+      ! if j is the last neighbor, then node 2 is the first nodal neighbor
+      if (J.EQ.m%NNeigh(I)) then
          NN2=m%NeiTab(I,2)
       endif
       !
@@ -1665,14 +1675,14 @@ DO I=1,m%NP
          ! (why do we need to check this??)
          IF((NEITEM(K).NE.-99).and.(neitem(k).ne.0)) THEN
             ! if resident node 1 of the kth elemental neighbor is the same
-            ! as node i, then set the node order 1, 2, 3 
+            ! as node i, then set the node order 1, 2, 3
             IF(m%NM(NEITEM(K),1).EQ.NN1) THEN
                NE1=m%NM(NEITEM(K),1)
                NE2=m%NM(NEITEM(K),2)
                NE3=m%NM(NEITEM(K),3)
             ENDIF
             ! if resident node 2 of the kth elemental neighbor is the same
-            ! as node i, then set the node order 2, 3, 1            
+            ! as node i, then set the node order 2, 3, 1
             IF(m%NM(NEITEM(K),2).EQ.NN1) THEN
                NE1=m%NM(NEITEM(K),2)
                NE2=m%NM(NEITEM(K),3)
@@ -1685,7 +1695,7 @@ DO I=1,m%NP
                NE2=m%NM(NEITEM(K),1)
                NE3=m%NM(NEITEM(K),2)
             ENDIF
-            ! if 
+            ! if
             IF((NE2.EQ.NN2).AND.(NE3.EQ.NN3)) THEN
                m%NeiTabEle(I,J-1)=NEITEM(K)
                NEITEM(K)=0
@@ -1717,8 +1727,8 @@ END SUBROUTINE computeNeighborTable
 
 
 !-----------------------------------------------------------------------
-!                         S U B R O U T I N E   
-!   C O M P U T E   N E I G H B O R   E D G E   L E N G T H   T A B L E 
+!                         S U B R O U T I N E
+!   C O M P U T E   N E I G H B O R   E D G E   L E N G T H   T A B L E
 !-----------------------------------------------------------------------
 !     jgf: Very short subroutine to compute the length of each edge
 !     attached to a node. Also finds the minimum edge length in the mesh.
@@ -1749,24 +1759,24 @@ end subroutine computeNeighborEdgeLengthTable
 !-----------------------------------------------------------------------
 
 !-----------------------------------------------------------------------
-!                         S U B R O U T I N E   
+!                         S U B R O U T I N E
 !     C O M P U T E  A L B E R S   E Q U A L   A R E A   C O N I C
 !-----------------------------------------------------------------------
 !     jgf: Very short subroutine to compute the albers equal area
-!     conic projection of the mesh node locations, allocating memory 
-!     in the process if necessary, and not overwriting the 
+!     conic projection of the mesh node locations, allocating memory
+!     in the process if necessary, and not overwriting the
 !     original lat/lon data.
 !-----------------------------------------------------------------------
 SUBROUTINE computeAlbersEqualAreaConic(m)
 IMPLICIT NONE
 type(mesh_t), intent(inout) :: m ! mesh to operate on
 real(8), parameter :: PHI1 = 29.5d0
-real(8), parameter :: PHI2 = 45.5d0       
-real(8), parameter :: LON0 = -96.0d0                 
-real(8), parameter :: LAT0 = 23.0d0                 
+real(8), parameter :: PHI2 = 45.5d0
+real(8), parameter :: LON0 = -96.0d0
+real(8), parameter :: LAT0 = 23.0d0
 real(8), parameter :: EE = 0.0066943800229d0
-real(8), parameter :: E = 0.0818191910428d0 
-! 
+real(8), parameter :: E = 0.0818191910428d0
+!
 ! variables used in conversion of adcirc mesh point locations
 ! (in geographic projection) to Albers Equal Area Conic
 real(8) :: alpha
@@ -1793,12 +1803,12 @@ if (m%albersComputed.eqv..false.) then
    m%albersComputed = .true.
 endif
 write(6,'("INFO: Generating Albers Equal Area Conic coordinates.")')
-e1 = 1.d0-ee                                            
+e1 = 1.d0-ee
 o = (0.5d0/e)*e1
 m1 = cos(phi1*deg2rad)/(1.d0-ee*sin(phi1*deg2rad)**2)**0.5d0
 m2 = cos(phi2*deg2rad)/(1.d0-ee*sin(phi2*deg2rad)**2)**0.5d0
 alphaa = (0.5d0/e)*log((1.d0-e*sin(lat0*deg2rad))/(1.d0+e*sin(lat0*deg2rad)))
-alpha0 = e1*sin(lat0*deg2rad)/(1.d0-ee*dsin(lat0*deg2rad)**2)-e1*alphaa 
+alpha0 = e1*sin(lat0*deg2rad)/(1.d0-ee*dsin(lat0*deg2rad)**2)-e1*alphaa
 alphab = (0.5d0/e)*log((1.d0-e*sin(phi1*deg2rad))/(1.d0+e*sin(phi1*deg2rad)))
 alpha1 = e1*sin(phi1*deg2rad)/(1.d0-ee*dsin(phi1*deg2rad)**2)-e1*alphab
 alphac = (0.5d0/e)*log((1.d0-e*sin(phi2*deg2rad))/(1.d0+e*sin(phi2*deg2rad)))
@@ -1809,8 +1819,8 @@ rho0 = r*((c-n*alpha0)**(0.5d0))/n
 do i=1,m%np
    ! project mesh node locations into albers equal area conic
    P = O*DLOG((1.d0-E*DSIN(m%xyd(2,i)*deg2rad))/(1.d0+E*DSIN(m%xyd(2,i)*deg2rad)))
-   ALPHA = E1*DSIN(m%xyd(2,i)*deg2rad)/(1.d0-EE*DSIN(m%xyd(2,i)*deg2rad)**2)-P      
-   THETA = N*(m%xyd(1,i)-LON0) 
+   ALPHA = E1*DSIN(m%xyd(2,i)*deg2rad)/(1.d0-EE*DSIN(m%xyd(2,i)*deg2rad)**2)-P
+   THETA = N*(m%xyd(1,i)-LON0)
    RHO = R*(sqrt(C-N*ALPHA))/N
    m%xalbers(i) = RHO*DSIN(THETA*deg2rad)
    m%yalbers(i) = RHO0-RHO*DCOS(THETA*deg2rad)
@@ -1822,10 +1832,10 @@ END SUBROUTINE computeAlbersEqualAreaConic
 !-----------------------------------------------------------------------
 
 !-----------------------------------------------------------------------
-!     S U B R O U T I N E   C O M P U T E  C P P 
+!     S U B R O U T I N E   C O M P U T E  C P P
 !-----------------------------------------------------------------------
-!     jgf: Very short subroutine to compute the CPP projection, 
-!     allocating memory in the process, and not overwriting the 
+!     jgf: Very short subroutine to compute the CPP projection,
+!     allocating memory in the process, and not overwriting the
 !     original lat/lon data.
 !-----------------------------------------------------------------------
 SUBROUTINE computeCPP(m)
@@ -1847,7 +1857,7 @@ END SUBROUTINE computeCPP
 !-----------------------------------------------------------------------
 !     S U B R O U T I N E   C O M P U T E   2 X   A R E A S
 !-----------------------------------------------------------------------
-!     jgf: Compute 2x the elemental areas ... requires that the 
+!     jgf: Compute 2x the elemental areas ... requires that the
 !     the CPP projection has already been computed.
 !-----------------------------------------------------------------------
 SUBROUTINE compute2xAreas(m)
@@ -1879,7 +1889,7 @@ END SUBROUTINE compute2xAreas
 !-----------------------------------------------------------------------
 
 !-----------------------------------------------------------------------
-!                    S U B R O U T I N E   
+!                    S U B R O U T I N E
 !     C O M P U T E   W E I G H T I N G   C O E F F I C I E N T S
 !-----------------------------------------------------------------------
 !     jgf: Compute the solution weighting coefficients.
@@ -1903,7 +1913,7 @@ m%sfac(:)=cos(m%sfea0*deg2rad)/cos(m%xyd(2,:)*deg2rad)
 write(6,'("INFO: Computing weighting coefficients.")')
 do i=1,m%ne
    myNodes(1:3) = m%nm(i,1:3)
-   ! wrap the values around so we can easily implement a loop 
+   ! wrap the values around so we can easily implement a loop
    ! around the element
    myNodes(0) = myNodes(3)
    myNodes(4) = myNodes(1)
@@ -1912,7 +1922,7 @@ do i=1,m%ne
    do j=1,3
       m%fdy(j,i) = m%x_cpp(myNodes(j-1))-m%x_cpp(myNodes(j+1))         ! a1, a2, a3
       m%fdx(j,i) = ( m%y_cpp(myNodes(j+1))-m%y_cpp(myNodes(j-1)) ) * m%sFacAvg(i) ! b1, b2, b3
-   end do        
+   end do
 end do
 m%weightingCoefficientsComputed = .true.
 write(6,'("INFO: Finished computing weighting coefficients.")')
@@ -1921,7 +1931,7 @@ write(6,'("INFO: Finished computing weighting coefficients.")')
 !-----------------------------------------------------------------------
 
 !-----------------------------------------------------------------------
-!                     S U B R O U T I N E  
+!                     S U B R O U T I N E
 !         C O M P U T E   E L E M E N T   C E N T R O I D S
 !-----------------------------------------------------------------------
 !     jgf: Compute the solution weighting coefficients.
@@ -1945,7 +1955,7 @@ write(6,'("INFO: Finished computing element centroids.")')
 !-----------------------------------------------------------------------
 
 !-----------------------------------------------------------------------
-!                     S U B R O U T I N E  
+!                     S U B R O U T I N E
 !         C O M P U T E   E L E M E N T   D E P T H S
 !-----------------------------------------------------------------------
 !     jgf: Compute the solution weighting coefficients.
@@ -1981,7 +1991,7 @@ do e=1,m%ne
    m%eledepths(e) =                      &
       m%xyd(3,m%nm(e,1)) * w1 &
     + m%xyd(3,m%nm(e,2)) * w2 &
-    + m%xyd(3,m%nm(e,3)) * w3 
+    + m%xyd(3,m%nm(e,3)) * w3
 end do
 m%elementDepthsComputed = .true.
 write(6,'("INFO: Finished computing element depths.")')
@@ -2017,7 +2027,7 @@ if (station%elementFound.eqv..false.) then
       Y2 = m%xyd(2,m%nm(e,2))
       Y3 = m%xyd(2,m%nm(E,3))
       SubArea1 = ABS((X2*Y3-X3*Y2)-(X1*Y3-X3*Y1)+(X1*Y2-X2*Y1))
-   
+
       X1 = m%xyd(1,m%nm(e,1))
       X2 = station%lon
       X3 = m%xyd(1,m%nm(e,3))
@@ -2025,7 +2035,7 @@ if (station%elementFound.eqv..false.) then
       Y2 = station%lat
       Y3 = m%xyd(2,m%nm(e,3))
       SubArea2 = ABS((X2*Y3-X3*Y2)-(X1*Y3-X3*Y1)+(X1*Y2-X2*Y1))
-   
+
       X1 = m%xyd(1,m%nm(e,1))
       X2 = m%xyd(1,m%nm(e,2))
       X3 = station%lon
@@ -2033,7 +2043,7 @@ if (station%elementFound.eqv..false.) then
       Y2 = m%xyd(2,m%nm(e,2))
       Y3 = station%lat
       SubArea3 = ABS((X2*Y3-X3*Y2)-(X1*Y3-X3*Y1)+(X1*Y2-X2*Y1))
-   
+
       X1 = m%xyd(1,m%nm(e,1))
       X2 = m%xyd(1,m%nm(e,2))
       X3 = m%xyd(1,m%nm(e,3))
@@ -2041,7 +2051,7 @@ if (station%elementFound.eqv..false.) then
       Y2 = m%xyd(2,m%nm(e,2))
       Y3 = m%xyd(2,m%nm(e,3))
       TotalArea = ABS((X2*Y3-X3*Y2)-(X1*Y3-X3*Y1)+(X1*Y2-X2*Y1))
-   
+
       if ((SubArea1+SubArea2+SubArea3).LE.(1.01*TotalArea))THEN
          station%elementIndex = e
          station%elementFound = .true.
@@ -2065,11 +2075,11 @@ if (station%elementFound.eqv..true.) then
       call compute2xAreas(m)
    endif
    station%elementArea = 0.5d0*m%areas(e)
-else  
+else
    station%elementIndex = 0
-   station%elementArea = -99999.d0   
+   station%elementArea = -99999.d0
    station%w = -99999.0
-endif    
+endif
 
 !-----------------------------------------------------------------------
 END SUBROUTINE computeStationWeights
